@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:insync/widgets/project_row.dart';
-import 'ticket_row.dart'; 
 
 class ProjectList extends StatelessWidget {
 
@@ -25,8 +24,6 @@ class ProjectList extends StatelessWidget {
             showDivider: true,
           ),
 
-
-          // Second Row: Feed the Cats
           ProjectRow(
             projectName: "mssemm",
             ticketsLeft: 221,
