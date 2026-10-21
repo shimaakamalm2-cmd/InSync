@@ -14,17 +14,24 @@ class Tag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+      decoration: ShapeDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(20), // the tag shape
+        shape: RoundedRectangleBorder(
+          // side: BorderSide(
+          //   width: 1,
+          //   color: const Color(0x3F525252),
+          // ),
+          borderRadius: BorderRadius.circular(80),
+        ),
       ),
+
       child: Text(
         text,
         style: TextStyle(
           color: textColor,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
+          fontSize: 11,
+          fontWeight: FontWeight.w900,
         ),
       ),
     );

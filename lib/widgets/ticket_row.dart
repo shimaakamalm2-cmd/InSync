@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'tag.dart';
 
@@ -18,50 +20,71 @@ class TicketRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 233, 230, 230), 
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(23),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // arrow far right 
+            mainAxisAlignment: .spaceBetween,
+            crossAxisAlignment: .center,
             children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding: .directional(top: 15, bottom: 15, start: 15),
+                child: Column(
+                  spacing: 7,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
+                    Row(
+                      spacing: 0,
+                      children: [
+                        const Tag(text : "Project Name" , backgroundColor: Color.fromARGB(62, 83, 83, 83), textColor: Colors.black,),
+                        const SizedBox(width: 5),
+                        const Tag(text : "Due" , backgroundColor: Color.fromARGB(62, 83, 83, 83), textColor: Colors.black,),
+                        const SizedBox(width: 5),
+                        Tag(text: priorityText, backgroundColor: priorityColor),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios, //tried to find ziad's arrow shape
-                color: Colors.grey,
-                size: 18,
+              Container(
+                padding: .directional(end: 15),
+                child: BackdropFilter(
+                  filterConfig: .blur(),
+                  blendMode: .exclusion,
+                  child: const Icon(
+                    Icons.arrow_forward_ios_rounded, //tried to find ziad's arrow shape
+                    color: Color.fromARGB(217, 34, 34, 34),
+                    size: 20,
+                  ),
+                ),
               ),
-            ],
-          ),
-          
-         const SizedBox(height: 10),
-          
-          Row(
-            children: [
-              const Tag(text : "Project Name" , backgroundColor: Color.fromARGB(255, 146, 145, 145)),
-              const SizedBox(width: 5),
-              const Tag(text : "Due" , backgroundColor:  Color.fromARGB(255, 146, 145, 145)),
-              const SizedBox(width: 5),
-              Tag(text: priorityText, backgroundColor: priorityColor),
             ],
           ),
           if (showDivider) ...[
-            const SizedBox(height: 10),
-            const Divider(
-              height: 1,
-              thickness: 0.8,
-              color: Color.fromARGB(255, 133, 133, 133),
+            // const SizedBox(height: 10),
+            Container(
+              padding: .directional(start: 25),
+              child: BackdropFilter(
+                filterConfig: .blur(),
+                blendMode: .exclusion,
+                child:
+                const Divider(
+                  height: 2,
+                  thickness: 1,
+                  color: Color.fromARGB(99, 55, 55, 55),
+                ),
+              ),
             ),
           ],
         ],

@@ -7,18 +7,18 @@ class PriorityTicketsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        
-        color: const Color.fromARGB(255, 233, 230, 230), 
+
+        color: const Color.fromARGB(215, 239, 239, 239),
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
+        spacing: -5,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           TicketRow(
-            title: 'study',
+            title: 'Study',
             priorityText: '!!! High',
             priorityColor: const Color(0xFFFF3B30),
             showDivider: true,
@@ -27,7 +27,7 @@ class PriorityTicketsCard extends StatelessWidget {
 
           // Second Row: Feed the Cats
           TicketRow(
-            title: 'eat',
+            title: 'Eat',
             priorityText: '!! Medium',
             priorityColor: const Color(0xFFFFCC00),
             showDivider: true,
@@ -35,7 +35,7 @@ class PriorityTicketsCard extends StatelessWidget {
 
           // Third Row: Feed the Chickens
           TicketRow(
-            title: 'die',
+            title: 'Die',
             priorityText: '! Low',
             priorityColor: const Color(0xFF34C759),
             showDivider: false,
