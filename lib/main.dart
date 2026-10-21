@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:insync/widgets/priority_tickets.dart';
+import 'package:insync/widgets/project_list.dart';
+
 
 
 void main() {
@@ -30,9 +32,13 @@ class MyApp extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: const PriorityTicketsCard(),
             ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: const ProjectList(),
+            )
           ],
         ),
-        ),
+      ),
     );
   }
 }
