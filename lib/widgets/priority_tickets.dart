@@ -10,10 +10,10 @@ class PriorityTicketsCard extends StatelessWidget {
       decoration: BoxDecoration(
 
         color: const Color.fromARGB(215, 239, 239, 239),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(28),
       ),
       child: Column(
-        spacing: -5,
+        spacing: 0,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
