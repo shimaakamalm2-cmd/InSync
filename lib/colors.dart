@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// InSyncColors is an extension on Flutter's base Colors class
 /// with additional Colors and the app primary Color Scheme
 
-class InSyncColors {
+extension InSyncColors on Colors {
 
   static const Color dividerColor = Color.fromARGB(99, 55, 55, 55);
 
@@ -25,7 +25,7 @@ class InSyncColors {
   // MARK: - Brand Colors
 
   static const Color primary = Color.fromARGB(255, 255, 162, 62);
-  static const Color secondary = Color.fromARGB(255, 255, 177, 99);
+  static const Color secondary = Color.fromARGB(255, 239, 180, 112);
   static const Color contenderSecondary = Color.fromARGB(255, 31, 31, 31);
   static const Color tertiary = Color.fromARGB(255, 255, 213, 166);
   static const Color quaternary = Color.fromARGB(255, 255, 229, 200);
