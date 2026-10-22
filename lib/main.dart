@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(fontFamily: 'Inter', colorScheme: ColorScheme(brightness: .dark, primary: InSyncColors.primary, onPrimary: InSyncColors.quaternary, secondary: InSyncColors.secondary, onSecondary: InSyncColors.white, error: InSyncColors.red, onError: InSyncColors.red.withAlpha(128), surface: InSyncColors.primaryBackground.dark, onSurface: InSyncColors.primaryText.dark, secondaryContainer: InSyncColors.secondaryBackground.dark, onSurfaceVariant: InSyncColors.secondaryText.dark, tertiaryContainer: InSyncColors.tertiaryBackground.dark),
           navigationBarTheme: .new(
-            backgroundColor: InSyncColors.secondaryBackground.dark.withAlpha(255),
+            backgroundColor: InSyncColors.black.withAlpha(235),
+            shadowColor: Colors.transparent,
             height: 70,
             iconTheme: .resolveWith((callback) {
               if (callback.isNotEmpty && callback.single == .selected ) {
