@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
 import 'tag.dart';
 
 class TicketRow extends StatelessWidget {
@@ -45,12 +44,10 @@ class TicketRow extends StatelessWidget {
                     ),
 
                     Row(
-                      spacing: 0,
+                      spacing: 5,
                       children: [
-                        const Tag(text : "Project Name" , backgroundColor: Color.fromARGB(62, 83, 83, 83), textColor: Colors.black,),
-                        const SizedBox(width: 5),
-                        const Tag(text : "Due" , backgroundColor: Color.fromARGB(62, 83, 83, 83), textColor: Colors.black,),
-                        const SizedBox(width: 5),
+                        Tag(text : "Project Name" , backgroundColor: InSyncColors.tertiaryBackground.light, textColor: Colors.black,),
+                        Tag(text : "Due" , backgroundColor: InSyncColors.tertiaryBackground.light, textColor: Colors.black,),
                         Tag(text: priorityText, backgroundColor: priorityColor),
                       ],
                     ),
@@ -59,15 +56,14 @@ class TicketRow extends StatelessWidget {
               ),
               Container(
                 padding: .directional(end: 15),
-                child: BackdropFilter(
-                  filterConfig: .blur(),
-                  blendMode: .exclusion,
-                  child: const Icon(
-                    Icons.arrow_forward_ios_rounded, //tried to find ziad's arrow shape
-                    color: Color.fromARGB(217, 34, 34, 34),
-                    size: 20,
-                  ),
-                ),
+                child: ExclusionFilter(
+                  child:
+                    Icon(
+                      Icons.arrow_forward_ios_rounded, //tried to find ziad's arrow shape
+                      color: InSyncColors.prominentItemColor,
+                      size: 20,
+                    ),
+                )
               ),
             ],
           ),
@@ -75,14 +71,12 @@ class TicketRow extends StatelessWidget {
             // const SizedBox(height: 10),
             Container(
               padding: .directional(start: 25),
-              child: BackdropFilter(
-                filterConfig: .blur(),
-                blendMode: .exclusion,
+              child: ExclusionFilter(
                 child:
-                const Divider(
+                Divider(
                   height: 2,
                   thickness: 1,
-                  color: Color.fromARGB(99, 55, 55, 55),
+                  color: InSyncColors.dividerColor,
                 ),
               ),
             ),
