@@ -41,7 +41,7 @@ class ContributionCardState extends State<ContributionCard> {
                     RichText(text: TextSpan(
                         text: "Closed ",
                         style: .new(fontSize: 31,
-                            fontWeight: .bold, color: InSyncColors.quaternary),
+                            fontWeight: .bold, color: InSyncColors.quaternary, fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily.toString()),
                         children: [
                           TextSpan(
                             text: "${widget.closedTickets}",

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         ),
 
         navigationBarTheme: .new(
-          height: 70,
+          // height: 70,
           iconTheme: .resolveWith((callback) {
             if (callback.isNotEmpty && callback.single == .selected) {
               return IconThemeData(color: InSyncColors.primary);
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
               return .new(color: InSyncColors.black);
             }
           }),
-          indicatorColor: Colors.transparent,
+          // indicatorColor: Colors.transparent,
           labelTextStyle: .resolveWith((callback) {
             if (callback.isNotEmpty && callback.single == .selected) {
               return TextStyle(color: InSyncColors.primary, fontWeight: .bold);
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         navigationBarTheme: .new(
           backgroundColor: InSyncColors.black.withAlpha(235),
           shadowColor: Colors.transparent,
-          height: 70,
+          // height: 70,
           iconTheme: .resolveWith((callback) {
             if (callback.isNotEmpty && callback.single == .selected) {
               return IconThemeData(color: InSyncColors.primary);
@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
               return .new(color: InSyncColors.white);
             }
           }),
-          indicatorColor: Colors.transparent,
+          // indicatorColor: Colors.transparent,
           labelTextStyle: .resolveWith((callback) {
             if (callback.isNotEmpty && callback.single == .selected) {
               return TextStyle(color: InSyncColors.primary, fontWeight: .bold);
