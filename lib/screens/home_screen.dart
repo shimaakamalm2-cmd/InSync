@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           SliverAppBar.large(
             pinned: true,
             actions: [
-              Icon(CupertinoIcons.settings_solid)
+              Icon(CupertinoIcons.settings_solid, color: Theme.of(context).colorScheme.onSurface,)
             ],
             actionsPadding: .directional(end: 20, start: 20),
             // stretch: true,

@@ -29,7 +29,7 @@ class Tag extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: backgroundColor == Theme.of(context).colorScheme.tertiaryContainer ? null : textColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
