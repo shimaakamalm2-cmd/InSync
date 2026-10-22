@@ -41,6 +41,7 @@ dependencies:
   home_widget: ^0.10.0
   quick_actions: ^1.1.1
   google_fonts: ^9.0.0
+  native_liquid_glass: ^0.3.1
 
 
 dev_dependencies:
@@ -101,3 +102,14 @@ flutter:
         - asset: assets/fonts/Inter-VariableFont_opsz,wght.ttf
         - asset: assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf
           style: italic
+    - family: SF-Pro-Rounded
+      fonts:
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-UltraLight.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Light.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Thin.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Regular.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Medium.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Semibold.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Bold.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Heavy.otf
+        - asset: assets/fonts/SF-Pro-Rounded/SF-Pro-Rounded-Black.otf

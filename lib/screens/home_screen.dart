@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
+import 'package:insync/widgets/Contribution_card.dart';
 import 'package:insync/widgets/bottem_bav_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
 import 'package:insync/widgets/project_list.dart';
@@ -49,18 +50,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 15.0,
                 children: [
-                  Container( //its trying to make it SizedBox for some reason
-                    height: 188,
-                    width: double.infinity,
-                    child: Card(
-                      shadowColor: Colors.transparent,
-                      color: InSyncColors.secondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                      // child: ,
-                    ),
-                  ),
+                  ContributionCard(closedTickets: 83, dayOfWeek: 7),
                   Column(
                     crossAxisAlignment: .start,
                     spacing: 7,

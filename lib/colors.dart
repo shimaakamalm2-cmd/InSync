@@ -41,12 +41,12 @@ extension InSyncColors on Colors {
 
   // MARK: - Generic Colors
 
-  static Color red = Color.fromARGB(255, 255, 57, 57);
-  static Color blue = Color.fromARGB(255, 29, 139, 249);
-  static Color yellow = Color.fromARGB(255, 251, 209, 0);
-  static Color green = Color.fromARGB(255, 0, 206, 34);
-  static Color lime = Color.fromARGB(255, 149, 255, 0);
-  static Color magenta = Color.fromARGB(255, 249, 87, 255);
+  static Color red = Color.fromARGB(255, 235, 76, 68);
+  static Color blue = Color.fromARGB(255, 67, 137, 241);
+  static Color yellow = Color.fromARGB(255, 244, 211, 71);
+  static Color green = Color.fromARGB(255, 93, 203, 69);
+  static Color lime = Color.fromARGB(255, 174, 252, 79);
+  static Color magenta = Color.fromARGB(255, 231, 99, 247);
   static Color black = Color.fromARGB(255, 0, 0, 0);
   static Color white = Color.fromARGB(255, 255, 255, 255);
 }
@@ -138,5 +138,17 @@ class ExclusionFilter extends Widget {
   @override
   Element createElement() {
     return BackdropFilter(blendMode: .exclusion, filterConfig: .blur(),child: child).createElement();
+  }
+}
+
+class ColorDodgeFilter extends Widget {
+
+  final Widget? child;
+
+  const ColorDodgeFilter({super.key, required this.child});
+
+  @override
+  Element createElement() {
+    return BackdropFilter(blendMode: .colorDodge, filterConfig: .blur(),child: child).createElement();
   }
 }
