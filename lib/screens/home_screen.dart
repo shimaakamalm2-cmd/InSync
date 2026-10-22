@@ -25,20 +25,19 @@ class HomeScreen extends StatelessWidget {
             expandedHeight: 150,
             flexibleSpace: FlexibleSpaceBar(
               title: Expanded(child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: .center,
                 mainAxisAlignment: .end,
                 children: [
                   Text("Home", style: TextStyle(fontWeight: .bold), textAlign: .start,),
                 ],
               ))
               ,
-              expandedTitleScale: 1.9,
+              expandedTitleScale: 2,
               collapseMode: .parallax,
               centerTitle: false,
               titlePadding: .directional(start: 20, end: 20, bottom: 10),
               stretchModes: [
                     .zoomBackground,
-                    .zoomBackground
               ],
             ),
           ),
@@ -61,22 +60,42 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Text(
-                    'Priority tickets',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    crossAxisAlignment: .start,
+                    spacing: 7,
+                    children: [
+                      Container(
+                        padding: .directional(start: 10, end: 10),
+                        child: Text(
+                          'Priority Tickets',
+                          style: TextStyle(
+                            color: InSyncColors.secondaryText.light,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      PriorityTicketsCard(),
+                    ],
                   ),
-                  PriorityTicketsCard(),
-                  const Text(
-                    'My Projects',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    crossAxisAlignment: .start,
+                    spacing: 7,
+                    children: [
+                      Container(
+                        padding: .directional(start: 10, end: 10),
+                        child: Text(
+                          'My Projects',
+                          style: TextStyle(
+                            color: InSyncColors.secondaryText.light,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      ProjectList(),
+                    ],
                   ),
-                  ProjectList(),
                 ],
               ),
             )

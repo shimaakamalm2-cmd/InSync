@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: GoogleFonts.inter().fontFamily, colorScheme: ColorScheme(brightness: .light, primary: InSyncColors.primary, onPrimary: InSyncColors.quaternary, secondary: InSyncColors.secondary, onSecondary: InSyncColors.white, error: InSyncColors.red, onError: InSyncColors.red.withAlpha(128), surface: InSyncColors.primaryBackground.light, onSurface: InSyncColors.primaryText.light, secondaryContainer: InSyncColors.secondaryBackground.light),
+      theme: ThemeData(fontFamily: 'Inter', colorScheme: ColorScheme(brightness: .light, primary: InSyncColors.primary, onPrimary: InSyncColors.quaternary, secondary: InSyncColors.secondary, onSecondary: InSyncColors.white, error: InSyncColors.red, onError: InSyncColors.red.withAlpha(128), surface: InSyncColors.primaryBackground.light, onSurface: InSyncColors.primaryText.light, secondaryContainer: InSyncColors.secondaryBackground.light),
           navigationBarTheme: .new(
             height: 70,
             iconTheme: .resolveWith((callback) {
