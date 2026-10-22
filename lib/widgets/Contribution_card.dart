@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../colors.dart';
 
 class ContributionCard extends StatefulWidget {
@@ -19,7 +18,7 @@ class ContributionCardState extends State<ContributionCard> {
   @override
   Widget build(BuildContext context) {
 
-    return Container( //its trying to make it SizedBox for some reason
+    return Container( 
       height: 195,
       width: double.infinity,
       child: Card(

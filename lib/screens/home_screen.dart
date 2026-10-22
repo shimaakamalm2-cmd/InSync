@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
 import 'package:insync/widgets/Contribution_card.dart';
 import 'package:insync/widgets/bottom_bav_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
@@ -97,15 +98,16 @@ class HomeScreen extends StatelessWidget {
     ? LiquidGlassTabBar(
     items: const [
       LiquidGlassTabItem(label: 'Home', icon: NativeLiquidGlassIcon.sfSymbol('house')),
-      LiquidGlassTabItem(label: 'Profile', icon: NativeLiquidGlassIcon.sfSymbol('ticket')),
+      LiquidGlassTabItem(label: 'Ticket', icon: NativeLiquidGlassIcon.sfSymbol('ticket')),
       LiquidGlassTabItem(label: 'Search', icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass')),
     ],
     currentIndex: 0,
     onTabSelected: (_) {},
-    iosActionButton: .new(label: "New", icon: NativeLiquidGlassIcon.sfSymbol('plus'), iconSize: 19, selectedItemColor: Theme.of(context).colorScheme.primary),
+    iosActionButton: .new(label: "New", icon: NativeLiquidGlassIcon.sfSymbol('plus'), iconSize: 19, selectedItemColor: Theme.of(context).colorScheme.primary ),
     selectedItemColor: Theme.of(context).colorScheme.primary,
     )
-        : const PlaceholderNavBar(),
+        : const PlaceholderNavBar()
+
     );
   }
 }

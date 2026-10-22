@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-//GENERATED CRAP
+//GENERATED 
+// used as fallback if liquidglassbar is not supported (if not ios 27+)
 class PlaceholderNavBar extends StatelessWidget {
   const PlaceholderNavBar({super.key});
 

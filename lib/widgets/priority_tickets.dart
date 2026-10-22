@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
-import 'ticket_row.dart'; // Import your TicketRow widget
+import 'ticket_row.dart'; 
 
 class PriorityTicketsCard extends StatelessWidget {
   const PriorityTicketsCard({super.key});
@@ -18,6 +18,7 @@ class PriorityTicketsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          // all properties will be replaced with dynamic values 
           TicketRow(
             title: 'Feed the Dogs',
             priorityText: '!!! High',
@@ -25,8 +26,6 @@ class PriorityTicketsCard extends StatelessWidget {
             showDivider: true,
           ),
 
-
-          // Second Row: Feed the Cats
           TicketRow(
             title: 'Feed the Cats',
             priorityText: '!! Medium',
@@ -34,7 +33,6 @@ class PriorityTicketsCard extends StatelessWidget {
             showDivider: true,
           ),
 
-          // Third Row: Feed the Chickens
           TicketRow(
             title: 'Feed the Chickens',
             priorityText: '! Low',

@@ -18,10 +18,6 @@ class Tag extends StatelessWidget {
       decoration: ShapeDecoration(
         color: backgroundColor,
         shape: RoundedRectangleBorder(
-          // side: BorderSide(
-          //   width: 1,
-          //   color: const Color(0x3F525252),
-          // ),
           borderRadius: BorderRadius.circular(80),
         ),
       ),
