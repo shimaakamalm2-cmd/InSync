@@ -10,6 +10,7 @@ class ProjectRow extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    Theme.of(context).colorScheme.onSurface;
     return Container(
       padding: const .directional(start: 15),
       child: Column(
@@ -25,8 +26,8 @@ class ProjectRow extends StatelessWidget{
                   children: [
                     Text(
                       projectName,
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -34,7 +35,7 @@ class ProjectRow extends StatelessWidget{
                     Text(
                       '$ticketsLeft tickets left',
                       style: TextStyle(
-                        color: InSyncColors.secondaryText.light,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 11,
                       ),
                     ),

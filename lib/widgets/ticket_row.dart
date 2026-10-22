@@ -36,8 +36,8 @@ class TicketRow extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -46,8 +46,8 @@ class TicketRow extends StatelessWidget {
                     Row(
                       spacing: 5,
                       children: [
-                        Tag(text : "Project Name" , backgroundColor: InSyncColors.tertiaryBackground.light, textColor: Colors.black,),
-                        Tag(text : "Due in X days" , backgroundColor: InSyncColors.tertiaryBackground.light, textColor: Colors.black,),
+                        Tag(text : "Project Name" , backgroundColor: Theme.of(context).colorScheme.tertiaryContainer, textColor: Colors.black,),
+                        Tag(text : "Due in X days" , backgroundColor: Theme.of(context).colorScheme.tertiaryContainer, textColor: Colors.black,),
                         Tag(text: priorityText, backgroundColor: priorityColor),
                       ],
                     ),

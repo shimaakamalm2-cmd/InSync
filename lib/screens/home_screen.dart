@@ -58,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(32),
                       ),
+                      // child: ,
                     ),
                   ),
                   Column(
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                         child: Text(
                           'Priority Tickets',
                           style: TextStyle(
-                            color: InSyncColors.secondaryText.light,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -87,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                         child: Text(
                           'My Projects',
                           style: TextStyle(
-                            color: InSyncColors.secondaryText.light,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
