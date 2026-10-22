@@ -14,24 +14,16 @@ class PlaceholderNavBar extends StatelessWidget {
       },
       destinations: const [
         NavigationDestination(
-          icon: Icon(Icons.home_outlined),
-          selectedIcon: Icon(Icons.home),
+          icon: Icon(Icons.home_rounded),
           label: 'Home',
         ),
         NavigationDestination(
-          icon: Icon(Icons.explore_outlined),
-          selectedIcon: Icon(Icons.explore),
-          label: 'Explore',
+          icon: Icon(Icons.airplane_ticket_rounded),
+          label: 'My Ticket',
         ),
         NavigationDestination(
-          icon: Icon(Icons.bookmark_border),
-          selectedIcon: Icon(Icons.bookmark),
-          label: 'Saved',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.person_outline),
-          selectedIcon: Icon(Icons.person),
-          label: 'Profile',
+          icon: Icon(Icons.search_rounded),
+          label: 'Search',
         ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
 import 'ticket_row.dart'; // Import your TicketRow widget
 
 class PriorityTicketsCard extends StatelessWidget {
@@ -9,7 +10,7 @@ class PriorityTicketsCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
 
-        color: const Color.fromARGB(215, 239, 239, 239),
+        color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.circular(28),
       ),
       child: Column(
@@ -18,26 +19,26 @@ class PriorityTicketsCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TicketRow(
-            title: 'Study',
+            title: 'Feed the Dogs',
             priorityText: '!!! High',
-            priorityColor: const Color(0xFFFF3B30),
+            priorityColor: InSyncColors.red,
             showDivider: true,
           ),
 
 
           // Second Row: Feed the Cats
           TicketRow(
-            title: 'Eat',
+            title: 'Feed the Cats',
             priorityText: '!! Medium',
-            priorityColor: const Color(0xFFFFCC00),
+            priorityColor: InSyncColors.yellow,
             showDivider: true,
           ),
 
           // Third Row: Feed the Chickens
           TicketRow(
-            title: 'Die',
+            title: 'Feed the Chickens',
             priorityText: '! Low',
-            priorityColor: const Color(0xFF34C759),
+            priorityColor: InSyncColors.green,
             showDivider: false,
           ),
         ],

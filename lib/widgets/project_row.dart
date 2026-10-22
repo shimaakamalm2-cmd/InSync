@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../colors.dart';
+
 class ProjectRow extends StatelessWidget{
   final String projectName;
   final int ticketsLeft;
@@ -9,54 +11,63 @@ class ProjectRow extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 233, 230, 230), 
-        borderRadius: BorderRadius.circular(12),
-      ),
+      padding: const .directional(start: 15),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // arrow far right 
+            mainAxisAlignment: .spaceBetween,
+            crossAxisAlignment: .center,
             children: [
-              Text(
-                projectName,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              Container(
+                child: Column(
+                  spacing: 3,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      projectName,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '$ticketsLeft tickets left',
+                      style: TextStyle(
+                        color: InSyncColors.secondaryText.light,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios, //tried to find ziad's arrow shape
-                color: Colors.grey,
-                size: 18,
-              ),
+              Container(
+                padding: .directional(end: 15),
+                child: ExclusionFilter(
+                  child:
+                  const Icon(
+                    Icons.arrow_forward_ios, //tried to find ziad's arrow shape
+                    color: InSyncColors.prominentItemColor,
+                    size: 20,
+                  ),
+                ),
+              )
             ],
           ),
-          Row(
-            children: [
-              Text(
-                '$ticketsLeft tickets left',
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
+          if (showDivider) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: .directional(start: 8),
+              child: ExclusionFilter(
+                child:
+                const Divider(
+                  height: 1,
+                  thickness: 0.8,
+                  color: InSyncColors.dividerColor,
                 ),
               ),
-            ],
-          ),
-          
-         const SizedBox(height: 10),
-         if (showDivider) ...[
-            const SizedBox(height: 10),
-            const Divider(
-              height: 1,
-              thickness: 0.8,
-              color: Color.fromARGB(255, 133, 133, 133),
-            ),
+            )
           ],
-         
         ],
       ),
     );

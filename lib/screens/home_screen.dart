@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
 import 'package:insync/widgets/bottem_bav_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
 import 'package:insync/widgets/project_list.dart';
@@ -15,19 +16,20 @@ class HomeScreen extends StatelessWidget {
         centerTitle: false,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 16.0,
+            spacing: 15.0,
             children: [
               Container( //its trying to make it SizedBox for some reason
                 height: 188,
                 width: double.infinity,
                 child: Card(
-                  color: const Color(0xFFFAB163),
+                  shadowColor: Colors.transparent,
+                  color: InSyncColors.secondary,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24.0),
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
               ),

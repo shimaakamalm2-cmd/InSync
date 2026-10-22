@@ -30,7 +30,7 @@ class Tag extends StatelessWidget {
         text,
         style: TextStyle(
           color: textColor,
-          fontSize: 11,
+          fontSize: 10,
           fontWeight: FontWeight.w900,
         ),
       ),
