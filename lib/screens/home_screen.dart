@@ -14,102 +14,112 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar.large(
-            pinned: true,
-            actions: [
-              NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("gear")) :
-              IconButton(onPressed: (){}, icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onSurface,))
-
-            ],
-            actionsPadding: .directional(end: 20, start: 20),
-            // stretch: true,
-            // floating: true,
-            expandedHeight: 125,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Expanded(child: Column(
-                crossAxisAlignment: .center,
-                mainAxisAlignment: .end,
-                children: [
-                  Text("Home", style: TextStyle(fontWeight: .bold), textAlign: .start,),
-                ],
-              )),
-
-              expandedTitleScale: 2,
-              collapseMode: .parallax,
-              centerTitle: false,
-              titlePadding: .directional(start: 20, end: 20, bottom: 10),
-              stretchModes: [
-                    .zoomBackground,
-              ],
-            ),
+      appBar: AppBar(
+        title: Text(
+          'Home',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
-
-          SliverList.list(children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 15.0,
-                children: [
-                  ContributionCard(closedTickets: 83, dayOfWeek: 7),
-                  Column(
-                    crossAxisAlignment: .start,
-                    spacing: 7,
-                    children: [
-                      Container(
-                        padding: .directional(start: 10, end: 10),
-                        child: Text(
-                          'Priority Tickets',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      PriorityTicketsCard(),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: .start,
-                    spacing: 7,
-                    children: [
-                      Container(
-                        padding: .directional(start: 10, end: 10),
-                        child: Text(
-                          'My Projects',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      ProjectList(),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ])
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(CupertinoIcons.settings_solid),
+          ),
         ],
       ),
 
-      bottomNavigationBar: NativeLiquidGlassUtils.supportsLiquidGlass
-    ? LiquidGlassTabBar(
-    items: const [
-      LiquidGlassTabItem(label: 'Home', icon: NativeLiquidGlassIcon.sfSymbol('house')),
-      LiquidGlassTabItem(label: 'My Tickets', icon: NativeLiquidGlassIcon.sfSymbol('ticket')),
-      LiquidGlassTabItem(label: 'Search', icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass')),
-    ],
-    currentIndex: 0,
-    onTabSelected: (_) {},
-    iosActionButton: .new(label: "New", icon: NativeLiquidGlassIcon.sfSymbol('plus'), iconSize: 19, selectedItemColor: Theme.of(context).colorScheme.primary),
-    selectedItemColor: Theme.of(context).colorScheme.primary,
-    )
-        : const PlaceholderNavBar(),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 15.0,
+              children: [
+                ContributionCard(
+                  closedTickets: 83,
+                  dayOfWeek: 7,
+                ),
+
+                Column(
+                  crossAxisAlignment: .start,
+                  spacing: 7,
+                  children: [
+                    Container(
+                      padding: .directional(start: 10, end: 10),
+                      child: Text(
+                        'Priority Tickets',
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme.onSurfaceVariant,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    PriorityTicketsCard(),
+                  ],
+                ),
+
+                Column(
+                  crossAxisAlignment: .start,
+                  spacing: 7,
+                  children: [
+                    Container(
+                      padding: .directional(start: 10, end: 10),
+                      child: Text(
+                        'My Projects',
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme.onSurfaceVariant,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                     ProjectList(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+
+      bottomNavigationBar:
+          NativeLiquidGlassUtils.supportsLiquidGlass
+              ? LiquidGlassTabBar(
+                  items: const [
+                    LiquidGlassTabItem(
+                      label: 'Home',
+                      icon: NativeLiquidGlassIcon.sfSymbol('house'),
+                    ),
+                    LiquidGlassTabItem(
+                      label: 'Ticket',
+                      icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
+                    ),
+                    LiquidGlassTabItem(
+                      label: 'Search',
+                      icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass'),
+                    ),
+                  ],
+                  currentIndex: 0,
+                  onTabSelected: (_) {},
+                  iosActionButton: .new(
+                    label: 'New',
+                    icon: NativeLiquidGlassIcon.sfSymbol('plus'),
+                    iconSize: 19,
+                    selectedItemColor:
+                        Theme.of(context).colorScheme.primary,
+                  ),
+                  selectedItemColor:
+                      Theme.of(context).colorScheme.primary,
+                )
+              : const PlaceholderNavBar(),
     );
   }
 }

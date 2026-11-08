@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../colors.dart';
 
 class ProjectRow extends StatelessWidget{
@@ -47,7 +46,7 @@ class ProjectRow extends StatelessWidget{
                 child: ExclusionFilter(
                   child:
                   const Icon(
-                    Icons.arrow_forward_ios, //tried to find ziad's arrow shape
+                    Icons.arrow_forward_ios, 
                     color: InSyncColors.prominentItemColor,
                     size: 20,
                   ),
