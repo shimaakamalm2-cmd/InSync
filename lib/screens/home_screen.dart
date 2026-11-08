@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/widgets/Contribution_card.dart';
-import 'package:insync/widgets/bottom_bav_bar.dart';
+import 'package:insync/widgets/bottom_nav_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
 import 'package:insync/widgets/project_list.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
@@ -13,17 +13,20 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
             pinned: true,
             actions: [
-              Icon(CupertinoIcons.settings_solid, color: Theme.of(context).colorScheme.onSurface,)
+              NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("gear")) :
+              IconButton(onPressed: (){}, icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onSurface,))
+
             ],
             actionsPadding: .directional(end: 20, start: 20),
             // stretch: true,
             // floating: true,
-            expandedHeight: 150,
+            expandedHeight: 125,
             flexibleSpace: FlexibleSpaceBar(
               title: Expanded(child: Column(
                 crossAxisAlignment: .center,
@@ -31,8 +34,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text("Home", style: TextStyle(fontWeight: .bold), textAlign: .start,),
                 ],
-              ))
-              ,
+              )),
+
               expandedTitleScale: 2,
               collapseMode: .parallax,
               centerTitle: false,
@@ -42,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          
+
           SliverList.list(children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -93,11 +96,12 @@ class HomeScreen extends StatelessWidget {
           ])
         ],
       ),
+
       bottomNavigationBar: NativeLiquidGlassUtils.supportsLiquidGlass
     ? LiquidGlassTabBar(
     items: const [
       LiquidGlassTabItem(label: 'Home', icon: NativeLiquidGlassIcon.sfSymbol('house')),
-      LiquidGlassTabItem(label: 'Profile', icon: NativeLiquidGlassIcon.sfSymbol('ticket')),
+      LiquidGlassTabItem(label: 'My Tickets', icon: NativeLiquidGlassIcon.sfSymbol('ticket')),
       LiquidGlassTabItem(label: 'Search', icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass')),
     ],
     currentIndex: 0,

@@ -19,7 +19,7 @@ class PlaceholderNavBar extends StatelessWidget {
         ),
         NavigationDestination(
           icon: Icon(Icons.airplane_ticket_rounded),
-          label: 'My Ticket',
+          label: 'My Tickets',
         ),
         NavigationDestination(
           icon: Icon(Icons.search_rounded),
