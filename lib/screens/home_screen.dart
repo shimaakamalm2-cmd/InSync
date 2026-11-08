@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ProjectList(),
+                     ProjectList(),
                   ],
                 ),
               ],
