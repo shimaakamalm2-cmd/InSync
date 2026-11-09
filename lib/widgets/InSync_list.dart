@@ -132,8 +132,10 @@ class _InSyncListItemState extends State<InSyncListItem> {
         ),
         if (widget.showDivider)
           const Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Divider(height: 1, thickness: 0.8, color: Color(0xFFE0E0E0)),
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: SizedBox(
+              width: 350,
+              child: Divider(height: 0.8, thickness: 0.8, color: Color.fromARGB(255, 101, 99, 99))),
           ),
       ],
     );
@@ -187,6 +189,7 @@ List<InSyncListItem> getTickets(BuildContext context) {
           size: 20,
         ),
       ),
+      showDivider: false,
     ),
   ];
 }
