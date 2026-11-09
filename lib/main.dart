@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/screens/home_screen.dart';
+import 'package:insync/screens/start_page.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 void main() {
@@ -93,7 +94,7 @@ class MyApp extends StatelessWidget {
       ),
 
       navigatorObservers: [LiquidGlassNavigatorObserver()],
-      home: const HomeScreen(),
+      home: StartPage(),
     );
   }
 }

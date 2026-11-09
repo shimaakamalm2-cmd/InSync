@@ -5,7 +5,10 @@ import 'package:native_liquid_glass/native_liquid_glass.dart';
 // used as fallback if liquidglassbar is not supported (if not ios 27+)
 // update: now automatically adjusts between tab bars according to the OS and version
 class AppNavBar extends StatelessWidget {
-  const AppNavBar({super.key});
+  int selectedIndex;
+  Function(int index) onTabChange;
+
+  AppNavBar({super.key, this.selectedIndex = 0, required this.onTabChange});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +28,11 @@ class AppNavBar extends StatelessWidget {
           icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass'),
         ),
       ],
-      currentIndex: 0,
-      onTabSelected: (_) {},
+      currentIndex: selectedIndex,
+      onTabSelected: (int index) {
+
+        onTabChange(index);
+      },
       iosActionButton: .new(
         label: 'New',
         icon: NativeLiquidGlassIcon.sfSymbol('plus'),
@@ -39,10 +45,10 @@ class AppNavBar extends StatelessWidget {
     )
         :
     NavigationBar(
-      selectedIndex: 0, // Highlights the first item as default
+      selectedIndex: selectedIndex,
       onDestinationSelected: (int index) {
-        // Placeholder action when an item is tapped
-        print('Selected tab: $index');
+
+        onTabChange(index);
       },
       destinations: const [
         NavigationDestination(
