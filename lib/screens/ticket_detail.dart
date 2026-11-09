@@ -1,10 +1,6 @@
-import 'dart:io';
-import 'dart:js_interop';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:insync/colors.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
