@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             ],
             onItemSelected: (id) {
               if (id == "sample_ticket") {
-                Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: null,)));
+                Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage()));
               }
             },
             color: InSyncColors.secondary,
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
               PopupMenuItem(
                 child: Text('Sample Ticket'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: null,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage()));
                 },
               ),
             ];

@@ -6,17 +6,26 @@ import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 import '../model/ticket.dart';
 
-class TicketDetailPage extends StatelessWidget {
+class TicketDetailPage extends StatefulWidget {
 
-  Ticket? ticket;
+  @override
+  State<StatefulWidget> createState() => TicketDetailPageState();
+}
 
-  TicketDetailPage({super.key, required this.ticket});
+class TicketDetailPageState extends State<TicketDetailPage> {
+
+  double radius = 0;
+
+  // Ticket? ticket;
+  //
+  // TicketDetailPage({super.key, required this.ticket});
 
   @override
   Widget build(BuildContext context) {
+    computeDisplayBorderRadius();
     // TODO: implement build
     return Container(
-      decoration: BoxDecoration(borderRadius: .all(.circular(computeDisplayBorderRadius())), gradient: RadialGradient(colors: [InSyncColors.red, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: 0.8)),
+      decoration: BoxDecoration(borderRadius: .all(.circular(radius)), gradient: RadialGradient(colors: [InSyncColors.mediumPriority, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: 0.8)),
       clipBehavior: .hardEdge,
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -66,23 +75,21 @@ class TicketDetailPage extends StatelessWidget {
     );
   }
 
-  double computeDisplayBorderRadius() {
+  void computeDisplayBorderRadius() {
 
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     Future<IosDeviceInfo> deviceInfo = deviceInfoPlugin.iosInfo;
 
-    double radius = 0;
-
     deviceInfo.then((onValue) {
       if (onValue.modelName.contains("iPhone SE")) {
-        radius = 2;
-      } else if ((onValue.modelName.contains("17") || onValue.modelName.contains("18") || onValue.modelName.contains("16")) && !onValue.modelName.contains("e")) {
+        radius = 6;
+      } else if ((onValue.modelName.contains("iPhone 17") || onValue.modelName.contains("iPhone 18") || onValue.modelName.contains("iPhone 16")) && !onValue.modelName.contains("e", 7)) {
         radius = 65;
       } else if (onValue.modelName.contains("iPhone")) {
         radius = 56;
       }
-    });
 
-    return radius;
+      setState(() {});
+    });
   }
 }

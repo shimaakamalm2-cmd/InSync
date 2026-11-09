@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:insync/model/project.dart';
 import 'package:insync/model/user.dart';
 import 'package:uuid/uuid.dart';
@@ -30,5 +31,18 @@ enum Priority {
   high,
   medium,
   low,
-  undetermined
+  undetermined;
+
+  Color getPriorityColor() {
+    switch (this) {
+      case high:
+        return Colors.red;
+      case medium:
+        return Colors.yellow;
+      case low:
+        return Colors.green;
+      case undetermined:
+        return Colors.grey;
+    }
+  }
 }

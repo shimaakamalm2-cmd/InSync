@@ -49,6 +49,13 @@ extension InSyncColors on Colors {
   static Color magenta = Color.fromARGB(255, 231, 99, 247);
   static Color black = Color.fromARGB(255, 0, 0, 0);
   static Color white = Color.fromARGB(255, 255, 255, 255);
+
+  // MARK: - Priority Colors
+
+  static Color highPriority = Color.fromARGB(230, 235, 76, 67);
+  static Color mediumPriority = Color.fromARGB(230, 235, 199, 67);
+  static Color lowPriority = Color.fromARGB(230, 92, 235, 67);
+
 }
 
 abstract class AdaptiveColors {
