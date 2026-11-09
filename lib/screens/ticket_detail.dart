@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'dart:js_interop';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:insync/colors.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
@@ -15,10 +20,11 @@ class TicketDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      decoration: BoxDecoration(borderRadius: .all(.circular(65)), gradient: RadialGradient(colors: [InSyncColors.red, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: 0.8)),
+      decoration: BoxDecoration(borderRadius: .all(.circular(computeDisplayBorderRadius())), gradient: RadialGradient(colors: [InSyncColors.red, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: 0.8)),
       clipBehavior: .hardEdge,
       child: Scaffold(
         backgroundColor: Colors.transparent,
+
         appBar: PreferredSize(
           preferredSize: .fromHeight(80),
           child: Container(
@@ -34,6 +40,7 @@ class TicketDetailPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               backgroundColor: Colors.transparent,
               leading: LiquidGlassButton.icon(onPressed: (){
                 Navigator.pop(context);
@@ -56,11 +63,30 @@ class TicketDetailPage extends StatelessWidget {
 
         body: Column(
           children: [
-            
+
           ],
         ),
       ),
     );
   }
 
+  double computeDisplayBorderRadius() {
+
+    DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    Future<IosDeviceInfo> deviceInfo = deviceInfoPlugin.iosInfo;
+
+    double radius = 0;
+
+    deviceInfo.then((onValue) {
+      if (onValue.modelName.contains("iPhone SE")) {
+        radius = 2;
+      } else if ((onValue.modelName.contains("17") || onValue.modelName.contains("18") || onValue.modelName.contains("16")) && !onValue.modelName.contains("e")) {
+        radius = 65;
+      } else if (onValue.modelName.contains("iPhone")) {
+        radius = 56;
+      }
+    });
+
+    return radius;
+  }
 }

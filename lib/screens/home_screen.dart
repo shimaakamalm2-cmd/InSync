@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/screens/ticket_detail.dart';
 import 'package:insync/widgets/Contribution_card.dart';
-import 'package:insync/widgets/bottom_nav_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
 import 'package:insync/widgets/project_list.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
