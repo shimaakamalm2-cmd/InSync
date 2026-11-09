@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/screens/ticket_detail.dart';
 import 'package:insync/widgets/Contribution_card.dart';
+import 'package:insync/widgets/app_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
 import 'package:insync/widgets/project_list.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
@@ -15,57 +16,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      appBar: AppBar(
-        centerTitle: false,
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 65,
-        title: Text(
-          'Home',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          NativeLiquidGlassUtils.supportsLiquidGlass ?
-              LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("gear")) :
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(CupertinoIcons.settings_solid),
-              ),
-          SizedBox.fromSize(size: const Size(6, 1)),
-          NativeLiquidGlassUtils.supportsLiquidGlass ?
-          LiquidGlassMenu(
-            items: const [
-              LiquidGlassMenuItem(
-                id: 'sample_ticket',
-                title: 'Sample Ticket',
-                icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
-              ),
-            ],
-            onItemSelected: (id) {
-              if (id == "sample_ticket") {
-                Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage()));
-              }
-            },
-            color: InSyncColors.secondary,
-            icon: NativeLiquidGlassIcon.sfSymbol('ladybug'),
-            menuTitle: "DEBUG",
-          ) :
-          PopupMenuButton(itemBuilder: (itemBuilder) {
-            return [
-              PopupMenuItem(
-                child: Text('Sample Ticket'),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage()));
-                },
-              ),
-            ];
-          })
-        ],
-        actionsPadding: .directional(end: 15),
-        titleSpacing: 25,
+      appBar: InSyncAppBar(
+        title: 'Home',
+        showBackButton: false,
       ),
 
       body: ListView(
