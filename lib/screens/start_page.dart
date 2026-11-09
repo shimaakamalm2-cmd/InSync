@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:insync/screens/home_screen.dart';
-import 'package:insync/screens/my_tickets.dart';
+import 'package:insync/screens/my_ticket_screen.dart';
 import 'package:insync/screens/placeholder_page.dart';
 import 'package:insync/widgets/bottom_nav_bar.dart';
 
 class StartPage extends StatefulWidget {
 
   int selectedIndex = 0;
-  List<Widget> tabs = [HomeScreen(), MyTickets(), PlaceholderPage()];
+  List<Widget> tabs = [HomeScreen(), MyTicketScreen(), PlaceholderPage()];
 
   StartPage({super.key,});
 

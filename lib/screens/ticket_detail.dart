@@ -25,7 +25,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
     computeDisplayBorderRadius();
     // TODO: implement build
     return Container(
-      decoration: BoxDecoration(borderRadius: .all(.circular(radius)), gradient: RadialGradient(colors: [InSyncColors.mediumPriority, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: 0.8)),
+      decoration: BoxDecoration(borderRadius: .all(.circular(radius)), gradient: RadialGradient(colors: [InSyncColors.mediumPriority, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: MediaQuery.heightOf(context) * 0.0009)),
       clipBehavior: .hardEdge,
       child: Scaffold(
         backgroundColor: Colors.transparent,

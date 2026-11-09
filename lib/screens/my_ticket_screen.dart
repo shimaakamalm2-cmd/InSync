@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
 import "package:insync/widgets/InSync_list.dart";
 import "package:insync/widgets/app_bar.dart";
-import "package:insync/widgets/priority_tickets.dart";
-import "package:insync/widgets/ticket_row.dart";
+import "package:insync/widgets/calendar_carousel.dart";
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 class MyTicketScreen extends StatefulWidget {
@@ -82,14 +81,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
         padding: const EdgeInsets.all(15),
         children: [
           
-          Container(
-            color: Colors.grey[850],
-            height: 100.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('Calaendar things')],
-            ),
-          ),
+          CalendarCarousel(),
           SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

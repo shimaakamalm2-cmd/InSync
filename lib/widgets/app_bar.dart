@@ -59,7 +59,7 @@ material.Size get preferredSize => const material.Size.fromHeight(65);
                       context,
                       material.MaterialPageRoute(
                         builder: (builder) =>
-                            TicketDetailPage(ticket: null),
+                            TicketDetailPage(),
                       ),
                     );
                   }
@@ -78,7 +78,7 @@ material.Size get preferredSize => const material.Size.fromHeight(65);
                           context,
                           material.MaterialPageRoute(
                             builder: (builder) =>
-                                TicketDetailPage(ticket: null),
+                                TicketDetailPage(),
                           ),
                         );
                       },
