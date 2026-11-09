@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
+import 'package:insync/screens/ticket_detail.dart';
 import 'package:insync/widgets/Contribution_card.dart';
 import 'package:insync/widgets/bottom_nav_bar.dart';
 import 'package:insync/widgets/priority_tickets.dart';
@@ -15,20 +17,56 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
+        centerTitle: false,
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 65,
         title: Text(
           'Home',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(CupertinoIcons.settings_solid),
-          ),
+          NativeLiquidGlassUtils.supportsLiquidGlass ?
+              LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("gear")) :
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(CupertinoIcons.settings_solid),
+              ),
+          SizedBox.fromSize(size: const Size(6, 1)),
+          NativeLiquidGlassUtils.supportsLiquidGlass ?
+          LiquidGlassMenu(
+            items: const [
+              LiquidGlassMenuItem(
+                id: 'sample_ticket',
+                title: 'Sample Ticket',
+                icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
+              ),
+            ],
+            onItemSelected: (id) {
+              if (id == "sample_ticket") {
+                Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: null,)));
+              }
+            },
+            color: InSyncColors.secondary,
+            icon: NativeLiquidGlassIcon.sfSymbol('ladybug'),
+            menuTitle: "DEBUG",
+          ) :
+          PopupMenuButton(itemBuilder: (itemBuilder) {
+            return [
+              PopupMenuItem(
+                child: Text('Sample Ticket'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: null,)));
+                },
+              ),
+            ];
+          })
         ],
+        actionsPadding: .directional(end: 15),
+        titleSpacing: 25,
       ),
 
       body: ListView(
@@ -90,36 +128,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
 
-      bottomNavigationBar:
-          NativeLiquidGlassUtils.supportsLiquidGlass
-              ? LiquidGlassTabBar(
-                  items: const [
-                    LiquidGlassTabItem(
-                      label: 'Home',
-                      icon: NativeLiquidGlassIcon.sfSymbol('house'),
-                    ),
-                    LiquidGlassTabItem(
-                      label: 'Ticket',
-                      icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
-                    ),
-                    LiquidGlassTabItem(
-                      label: 'Search',
-                      icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass'),
-                    ),
-                  ],
-                  currentIndex: 0,
-                  onTabSelected: (_) {},
-                  iosActionButton: .new(
-                    label: 'New',
-                    icon: NativeLiquidGlassIcon.sfSymbol('plus'),
-                    iconSize: 19,
-                    selectedItemColor:
-                        Theme.of(context).colorScheme.primary,
-                  ),
-                  selectedItemColor:
-                      Theme.of(context).colorScheme.primary,
-                )
-              : const PlaceholderNavBar(),
+      bottomNavigationBar: const AppNavBar(),
     );
   }
 }
