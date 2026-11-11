@@ -50,42 +50,39 @@ class TicketDetailPageState extends State<TicketDetailPage> {
           backgroundColor: Colors.transparent,
 
           appBar:
-            AppBar(
-              toolbarOpacity: 1,
-              automaticallyImplyLeading: NativeLiquidGlassUtils.supportsLiquidGlass ? false : true,
-              animateColor: true,
-              centerTitle: false,
-              toolbarHeight: 65,
-              title: Text(
-                'Ticket',
-                style: TextStyle(
-                  color: InSyncColors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
+          PreferredSize(
+            preferredSize: .fromHeight(70),
+            child: Container(
+              padding: .directional(start: 15, end: 15),
+              child: AppBar(
+                automaticallyImplyLeading: NativeLiquidGlassUtils.supportsLiquidGlass ? false : true,
+                centerTitle: false,
+                toolbarHeight: 65,
+                title: Text(
+                  'Ticket',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
 
-              backgroundColor: Colors.transparent,
-              leading: Container(
-                padding: .directional(start: 15),
-                child: NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassButton.icon(onPressed: () { Navigator.of(context).pop(); }, icon: NativeLiquidGlassIcon.sfSymbol("chevron.left")) : IconButton(onPressed: () { Navigator.pop(context); }, icon: Icon(Icons.arrow_back_ios_new),),
-              ),
+                backgroundColor: Colors.transparent,
+                leading: NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassButton.icon(onPressed: () { Navigator.pop(context); }, icon: NativeLiquidGlassIcon.sfSymbol("chevron.left")) : IconButton(onPressed: () { Navigator.pop(context); }, icon: Icon(Icons.arrow_back_ios_new),),
 
-              actions: [
-                Container(
-                padding: .directional(end: 15),
-                child:
+                actions: [
                   NativeLiquidGlassUtils.supportsLiquidGlass ?
                   LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("ellipsis")) :
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(CupertinoIcons.ellipsis),
-                    ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(CupertinoIcons.ellipsis),
                   ),
-              ],
+                ],
 
-              leadingWidth: 0,
-              titleSpacing: 72,
+                leadingWidth: 45,
+                titleSpacing: 25,
+              ),
+            ),
           ),
 
           body: Container(

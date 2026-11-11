@@ -1,7 +1,5 @@
-import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/screens/ticket_detail.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
@@ -114,7 +112,8 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                   //   context,
                   //   "ticket_detail"
                   // );
-                  Navigator.push(context,
+                  Navigator.push(
+                      context,
                       MaterialPageRoute(builder: (builder) => TicketDetailPage()));
                 } else if (id.contains('tab_index_')) {
                   prefs.then((onValue) {
@@ -141,8 +140,9 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                   //   context,
                   //   "ticket_detail",
                   // );
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (builder) => TicketDetailPage()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (builder) => TicketDetailPage()));
                 },
               ),
             ];
