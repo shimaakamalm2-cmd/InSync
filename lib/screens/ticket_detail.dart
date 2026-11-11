@@ -102,10 +102,10 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                           spacing: 10,
                           title: "InSync",
                           subtext: "The ultimate project manager",
-                          trailingAccessory: Container(
+                          leadingAccessory: Container(
                               padding: .all(2),
                               child: Image.asset("assets/images/logo.png", width: 46, height: 46)),
-                          leadingAccessory: ExclusionFilter(
+                          trailingAccessory: ExclusionFilter(
                             child: Icon(
                               Icons.arrow_forward_ios_rounded,
                               color: InSyncColors.prominentItemColor,
@@ -123,17 +123,17 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         InSyncListItem(
                           boldTitle: true,
                           title: "Due Date",
-                          leadingAccessory: Text("Thu 8 Nov, 2026", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                          trailingAccessory: Text("Thu 8 Nov, 2026", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                         InSyncListItem(
                             boldTitle: true,
                             title: "Assigned by",
-                            leadingAccessory: Text("Your dog", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                            trailingAccessory: Text("Your dog", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                         InSyncListItem(
                             boldTitle: true,
                             title: "Assigned to",
-                            leadingAccessory: Text("+46173", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                            trailingAccessory: Text("+46173", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                       ]
                     ),
@@ -145,7 +145,9 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         items: [
                           InSyncListItem(
                               boldTitle: true,
-                              title: "Last Modified"
+                              // title: "Last Modified",
+                              leadingAccessory:
+                              Flexible(child: Text("hiiiii this is a flutter app how aree youuu are you okay ...."))
                           ),
                         ]
                     ),
@@ -156,8 +158,8 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         items: [
                           InSyncListItem(
                               boldTitle: true,
-                              title: "Last Modified",
-                              leadingAccessory: Text("Thu 8 Nov, 2026", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                              title: "Description",
+                              trailingAccessory: Text("Thu 8 Nov, 2026", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                           ),
                         ]
                     ),

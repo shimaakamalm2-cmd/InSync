@@ -175,8 +175,8 @@ class InSyncListItem extends StatefulWidget {
   final String? subtext;
   final bool boldTitle;
 
-  final Widget? trailingAccessory;
   final Widget? leadingAccessory;
+  final Widget? trailingAccessory;
   final Widget? bottomAccessory;
 
   final EdgeInsetsGeometry? padding;
@@ -188,8 +188,8 @@ class InSyncListItem extends StatefulWidget {
     this.title,
     this.boldTitle = false,
     this.subtext,
-    this.trailingAccessory,
     this.leadingAccessory,
+    this.trailingAccessory,
     this.bottomAccessory,
     this.padding,
     this.spacing = 5.0,
@@ -215,10 +215,10 @@ class _InSyncListItemState extends State<InSyncListItem> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (widget.trailingAccessory != null)
+              if (widget.leadingAccessory != null)
                 Padding(
                   padding: EdgeInsets.only(right: widget.spacing),
-                  child: widget.trailingAccessory,
+                  child: widget.leadingAccessory,
                 ),
               Expanded(
                 child: Column(
@@ -251,10 +251,10 @@ class _InSyncListItemState extends State<InSyncListItem> {
                 ),
               ),
 
-              if (widget.leadingAccessory != null)
+              if (widget.trailingAccessory != null)
                 Padding(
                   padding: EdgeInsets.only(left: widget.spacing),
-                  child: widget.leadingAccessory,
+                  child: widget.trailingAccessory,
                 ),
             ],
           ),
@@ -298,7 +298,7 @@ List<InSyncListItem> getTickets(BuildContext context) {
         ],
       ),
 
-      leadingAccessory: ExclusionFilter(
+      trailingAccessory: ExclusionFilter(
         child: Icon(
           Icons.arrow_forward_ios_rounded,
           color: InSyncColors.prominentItemColor,
@@ -324,7 +324,7 @@ List<InSyncListItem> getTickets(BuildContext context) {
           Tag(text: 'Medium Priority', backgroundColor: InSyncColors.yellow),
         ],
       ),
-      leadingAccessory: ExclusionFilter(
+      trailingAccessory: ExclusionFilter(
         child: Icon(
           Icons.arrow_forward_ios_rounded,
           color: InSyncColors.prominentItemColor,

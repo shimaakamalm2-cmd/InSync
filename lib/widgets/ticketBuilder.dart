@@ -11,7 +11,7 @@ class TicketListItemBuilder {
     return tickets.map((ticket) {
       return InSyncListItem(
         title: ticket.title,
-        leadingAccessory: ListChevronAccessory(),
+        trailingAccessory: ListChevronAccessory(),
         bottomAccessory: Row(
           spacing: 5,
           children: [

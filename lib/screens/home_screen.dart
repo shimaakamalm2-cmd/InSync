@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 items: [
                   InSyncListItem(
                     title: "Feed the Dogs",
-                    leadingAccessory: ListChevronAccessory(),
+                    trailingAccessory: ListChevronAccessory(),
                     bottomAccessory: Row(
                       spacing: 5,
                       children: [
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   InSyncListItem(
                     title: "Feed the Cats",
-                    leadingAccessory: ListChevronAccessory(),
+                    trailingAccessory: ListChevronAccessory(),
                     bottomAccessory: Row(
                         spacing: 5,
                         children: [
@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   InSyncListItem(
                     title: "Feed the Chickens",
-                    leadingAccessory: ListChevronAccessory(),
+                    trailingAccessory: ListChevronAccessory(),
                     bottomAccessory: Row(
                         spacing: 5,
                         children: [
@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                 items: [
                   InSyncListItem(
                     title: "Dog Feeding",
-                    leadingAccessory: ListChevronAccessory(),
+                    trailingAccessory: ListChevronAccessory(),
                     bottomAccessory: Row(
                         spacing: 5,
                         children: [
@@ -110,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   InSyncListItem(
                     title: "Cat Feeding",
-                    leadingAccessory: ListChevronAccessory(),
+                    trailingAccessory: ListChevronAccessory(),
                     bottomAccessory: Row(
                         spacing: 5,
                         children: [
@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   InSyncListItem(
                     title: "Chicken Feeding",
-                    leadingAccessory: ListChevronAccessory(),
+                    trailingAccessory: ListChevronAccessory(),
                     bottomAccessory: Row(
                         spacing: 5,
                         children: [
