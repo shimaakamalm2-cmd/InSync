@@ -144,10 +144,11 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         physics: NeverScrollableScrollPhysics(),
                         items: [
                           InSyncListItem(
-                              boldTitle: true,
-                              // title: "Last Modified",
-                              leadingAccessory:
-                              Flexible(child: Text("hiiiii this is a flutter app how aree youuu are you okay ...."))
+                              spacing: 0,
+                              bottomAccessory: Text(
+                                "hiiiii this is a flutter app how aree youuu are you okay ....",
+                                softWrap: true,
+                              ),
                           ),
                         ]
                     ),
