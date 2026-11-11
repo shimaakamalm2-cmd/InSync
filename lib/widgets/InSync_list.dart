@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/widgets/tag.dart';
+import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 class InSyncList extends StatefulWidget {
   final List<InSyncListItem>? items;
@@ -10,36 +10,116 @@ class InSyncList extends StatefulWidget {
   final bool shrinkWrap;
   final ScrollPhysics? physics;
   final EdgeInsetsGeometry? padding;
+  final String? title;
 
-  InSyncList({
+  const InSyncList({
     super.key,
     this.items,
     this.isLoading = false,
     this.shrinkWrap = false,
     this.physics,
     this.padding,
+    this.title
   });
 
   @override
   State<StatefulWidget> createState() => _InSyncListState();
 }
 
+const double _listBorderRadius = 23;
+
 class _InSyncListState extends State<InSyncList> {
   @override
   Widget build(BuildContext context) {
-    //added loading since its statful
+    // added loading since its stateful
     if (widget.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return NativeLiquidGlassUtils.supportsLiquidGlass ? const LiquidGlassActivityIndicator() : const Center(child: CircularProgressIndicator());
     }
-    return ListView.builder(
-      shrinkWrap: widget.shrinkWrap,
-      physics: widget.physics,
-      padding: widget.padding,
 
-      itemCount: widget.items?.length ?? 0,
-      itemBuilder: (context, index) {
-        return widget.items![index];
-      },
+    return Column(
+        crossAxisAlignment: .start,
+        spacing: 5,
+        children: [
+          if (widget.title != null)
+            Container(
+                padding: .directional(start: 15),
+                child: Text(widget.title!, style: TextStyle(
+                  color: Theme.of(context)
+                      .colorScheme.onSurfaceVariant,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ))),
+          ListView.builder(
+            shrinkWrap: widget.shrinkWrap,
+            physics: widget.physics,
+            padding: widget.padding,
+
+            itemCount: widget.items?.length ?? 0,
+            itemBuilder: (context, index) {
+              if (index == widget.items!.length - 1) {
+                return Container(
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(bottomStart: .circular(_listBorderRadius), bottomEnd: .circular(_listBorderRadius))),
+                  child: widget.items![index],
+                );
+              } else {
+                return Column(
+                  children: [
+                    if (index == 0)
+                      widget.items![index].onTap != null ?
+                      InkResponse(
+                        borderRadius: .vertical(top: .circular(_listBorderRadius)),
+                        onTap: () {
+                          widget.items![index].onTap?.call();
+                        },
+                        containedInkWell: true,
+                        highlightShape: .rectangle,
+                        splashColor: Colors.grey,
+                        splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+                        child: Container(
+                          decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(topStart: .circular(_listBorderRadius), topEnd: .circular(_listBorderRadius))),
+                          child: widget.items![index],
+                        ),
+                      ) :
+                      Container(
+                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(topStart: .circular(_listBorderRadius), topEnd: .circular(_listBorderRadius))),
+                        child: widget.items![index],
+                      ),
+                    if (index != 0)
+                      widget.items![index].onTap != null ?
+                      InkResponse(
+                        onTap: () {
+                          widget.items![index].onTap?.call();
+                        },
+                        containedInkWell: true,
+                        highlightShape: .rectangle,
+                        splashColor: Colors.grey,
+                        splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+                        child: Container(
+                          decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer),
+                          child: widget.items![index],
+                        ),
+                      ) :
+                      Container(
+                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer),
+                        child: widget.items![index],
+                      ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child:
+                        ExclusionFilter(
+                          child: Divider(
+                            height: 0,
+                            thickness: 0.3,
+                            color: Color.fromARGB(180, 94, 94, 94)
+                          ),
+                        )
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+        ],
     );
   }
 }
@@ -48,25 +128,24 @@ class InSyncListItem extends StatefulWidget {
   final String? title;
   final String? subtext;
 
-  final Widget? leadingAccessory;
   final Widget? trailingAccessory;
+  final Widget? leadingAccessory;
   final Widget? bottomAccessory;
-
-  final bool showDivider;
 
   final EdgeInsetsGeometry? padding;
   final double spacing;
+  final Function()? onTap;
 
-  InSyncListItem({
+  const InSyncListItem({
     super.key,
     this.title,
     this.subtext,
-    this.leadingAccessory,
     this.trailingAccessory,
+    this.leadingAccessory,
     this.bottomAccessory,
-    this.showDivider = true,
     this.padding,
     this.spacing = 5.0,
+    this.onTap,
   });
 
   @override
@@ -74,22 +153,24 @@ class InSyncListItem extends StatefulWidget {
 }
 
 class _InSyncListItemState extends State<InSyncListItem> {
+
   @override
   Widget build(BuildContext context) {
+
     return Column(
-      mainAxisSize: MainAxisSize.min, // accupy vertical space as u need
+      mainAxisSize: MainAxisSize.min, // occupy vertical space as u need
       children: [
         Padding(
           padding:
               widget.padding ??
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              const EdgeInsets.fromLTRB(15, 15, 15, 15),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (widget.leadingAccessory != null)
+              if (widget.trailingAccessory != null)
                 Padding(
                   padding: EdgeInsets.only(right: widget.spacing),
-                  child: widget.leadingAccessory,
+                  child: widget.trailingAccessory,
                 ),
               Expanded(
                 child: Column(
@@ -122,31 +203,44 @@ class _InSyncListItemState extends State<InSyncListItem> {
                 ),
               ),
 
-              if (widget.trailingAccessory != null)
+              if (widget.leadingAccessory != null)
                 Padding(
                   padding: EdgeInsets.only(left: widget.spacing),
-                  child: widget.trailingAccessory,
+                  child: widget.leadingAccessory,
                 ),
             ],
           ),
         ),
-        if (widget.showDivider)
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: SizedBox(
-              width: 350,
-              child: Divider(height: 0.8, thickness: 0.8, color: Color.fromARGB(255, 101, 99, 99))),
-          ),
       ],
     );
   }
+}
+
+class ListChevronAccessory extends StatelessWidget {
+
+  const ListChevronAccessory({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ExclusionFilter(
+      child:
+      const Icon(
+        Icons.arrow_forward_ios,
+        color: InSyncColors.prominentItemColor,
+        size: 20,
+      ),
+    );
+  }
+
 }
 
 List<InSyncListItem> getTickets(BuildContext context) {
   return [
     InSyncListItem(
       title: 'Fix login issue',
-
+      onTap: () {
+      },
       bottomAccessory: Row(
         spacing: 5,
         children: [
@@ -156,7 +250,7 @@ List<InSyncListItem> getTickets(BuildContext context) {
         ],
       ),
 
-      trailingAccessory: ExclusionFilter(
+      leadingAccessory: ExclusionFilter(
         child: Icon(
           Icons.arrow_forward_ios_rounded,
           color: InSyncColors.prominentItemColor,
@@ -179,17 +273,16 @@ List<InSyncListItem> getTickets(BuildContext context) {
             backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
             textColor: Colors.black,
           ),
-          Tag(text: 'Medium Priority', backgroundColor: Colors.orange),
+          Tag(text: 'Medium Priority', backgroundColor: InSyncColors.yellow),
         ],
       ),
-      trailingAccessory: ExclusionFilter(
+      leadingAccessory: ExclusionFilter(
         child: Icon(
           Icons.arrow_forward_ios_rounded,
           color: InSyncColors.prominentItemColor,
           size: 20,
         ),
       ),
-      showDivider: false,
     ),
   ];
 }

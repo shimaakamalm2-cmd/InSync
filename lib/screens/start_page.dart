@@ -3,13 +3,20 @@ import 'package:insync/screens/home_screen.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
 import 'package:insync/screens/placeholder_page.dart';
 import 'package:insync/widgets/bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+int _selectedIndex = 0;
 
 class StartPage extends StatefulWidget {
 
-  int selectedIndex = 0;
+  final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   List<Widget> tabs = [HomeScreen(), MyTicketScreen(), PlaceholderPage()];
 
-  StartPage({super.key,});
+  StartPage({super.key}) {
+    prefs.then((value) {
+      _selectedIndex = value.getInt("tab_index") ?? _selectedIndex;
+    });
+  }
 
   @override
   State<StatefulWidget> createState() => _StartPageState();
@@ -18,13 +25,23 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
 
   @override
+  void initState() {
+    super.initState();
+    widget.prefs.then((value) {
+      setState(() {
+        _selectedIndex = value.getInt("tab_index") ?? _selectedIndex;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: widget.tabs[widget.selectedIndex],
-      bottomNavigationBar: AppNavBar(selectedIndex: widget.selectedIndex, onTabChange: (index) {
+      body: widget.tabs[_selectedIndex],
+      bottomNavigationBar: AppNavBar(selectedIndex: _selectedIndex, onTabChange: (index) {
         setState(() {
-          widget.selectedIndex = index;
+          _selectedIndex = index;
         });
       },),
     );

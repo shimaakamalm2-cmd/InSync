@@ -1,21 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:insync/colors.dart';
+import 'package:insync/utils.dart';
 
 class CalendarCarousel extends StatelessWidget {
 
+  CarouselScrollPhysics carouselScrollPhysics = CarouselScrollPhysics();
+
   @override
   Widget build(BuildContext context) {
+    // carouselScrollPhysics.carriedMomentum(80);
 
-    return Row(
-      children: [
-        _CalendarCarouselPiece(),
-      ],
+    return Container(
+      height: 80,
+      child: CustomScrollView(
+        // physics: CarouselScrollPhysics(),
+        scrollDirection: .horizontal,
+        slivers: [
+          SliverList.builder(itemBuilder: (buildContext, number) {
+            return Container(
+                padding: .directional(start: 5, end: 5),
+                child: _CalendarCarouselPiece(date: DateTime.now().add(Duration(days: number))));
+          })
+        ],
+      ),
     );
   }
 }
 
 class _CalendarCarouselPiece extends StatelessWidget {
+
+  DateTime date;
+
+  _CalendarCarouselPiece({required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +44,8 @@ class _CalendarCarouselPiece extends StatelessWidget {
       child: Column(
         mainAxisAlignment: .spaceAround,
         children: [
-          Text("30"),
-          Text("Mon")
+          Text("${date.day}", style: TextStyle(fontWeight: .w900, fontFamily: "SF Pro Rounded", fontSize: 24),),
+          Text(getWeekDay(date.weekday % 7), style: TextStyle(fontWeight: .w900, fontFamily: "SF Pro Rounded", fontSize: 14),),
         ]
       )
     );

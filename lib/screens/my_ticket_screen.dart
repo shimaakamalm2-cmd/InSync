@@ -18,34 +18,39 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
 
   Widget _buildFilterMenu(BuildContext context) {
     return NativeLiquidGlassUtils.supportsLiquidGlass
-        ? LiquidGlassMenu(
-          menuTitle: 'Sort by',
-            items: const [
-              LiquidGlassMenuItem(id: 'priority', title: 'Priority'),
-              LiquidGlassMenuItem(
-                id: 'alphabetical',
-                title: 'Alphabetical',
-              ),
-              LiquidGlassMenuItem(id: 'project', title: 'Project'),
-            ],
-            onItemSelected: (id) {
-              setState(() {
-                switch (id) {
-                  case 'priority':
-                    sortLabel = 'Priority';
-                    break;
-                  case 'alphabetical':
-                    sortLabel = 'Alphabetical';
-                    break;
-                  case 'project':
-                    sortLabel = 'Project';
-                    break;
-                }
-              });
-            },
-            icon: NativeLiquidGlassIcon.sfSymbol('line.3.horizontal.decrease.circle'),
-            color: Theme.of(context).colorScheme.secondary,
-          )
+        ? LiquidGlassContainer(
+          animateChanges: true,
+          config: LiquidGlassConfig(cornerRadius: 80, interactive: true),
+          child: LiquidGlassMenu(
+            height: 37,
+            menuTitle: 'Sort',
+              items: const [
+                LiquidGlassMenuItem(id: 'priority', title: 'By priority'),
+                LiquidGlassMenuItem(
+                  id: 'alphabetical',
+                  title: 'Alphabetically',
+                ),
+                LiquidGlassMenuItem(id: 'project', title: 'By project'),
+              ],
+              onItemSelected: (id) {
+                setState(() {
+                  switch (id) {
+                    case 'priority':
+                      sortLabel = 'By priority';
+                      break;
+                    case 'alphabetical':
+                      sortLabel = 'Alphabetically';
+                      break;
+                    case 'project':
+                      sortLabel = 'By project';
+                      break;
+                  }
+                });
+              },
+              icon: NativeLiquidGlassIcon.sfSymbol('line.3.horizontal.decrease.circle'),
+              color: Theme.of(context).colorScheme.inverseSurface,
+            ),
+        )
         : PopupMenuButton<String>(
             onSelected: (String value) {
               setState(() {
@@ -85,6 +90,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
           SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: .center,
             children: [
               Text(
                 'Section Title',
@@ -96,12 +102,14 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: .center,
                 children: [
                   Text(
-                    sortLabel,
+                    "Sorted ${sortLabel.toLowerCase()}",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 12,
+                      fontWeight: .bold
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -111,18 +119,11 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
             ],
           ),
           const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(28),
-            ),
-            child: InSyncList(
+          InSyncList(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               items: getTickets(context),
-            ),
           ),
         ],
       ),

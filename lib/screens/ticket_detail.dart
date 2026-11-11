@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
-import '../model/ticket.dart';
-
 class TicketDetailPage extends StatefulWidget {
 
   @override
@@ -35,6 +33,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
           child: Container(
             padding: .directional(start: 15, end: 15),
             child: AppBar(
+              automaticallyImplyLeading: NativeLiquidGlassUtils.supportsLiquidGlass ? false : true,
               centerTitle: false,
               toolbarHeight: 65,
               title: Text(
@@ -47,9 +46,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
               ),
 
               backgroundColor: Colors.transparent,
-              leading: LiquidGlassButton.icon(onPressed: (){
-                Navigator.pop(context);
-              }, icon: NativeLiquidGlassIcon.sfSymbol("chevron.left")),
+              leading: NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassButton.icon(onPressed: () { Navigator.pop(context); }, icon: NativeLiquidGlassIcon.sfSymbol("chevron.left")) : IconButton(onPressed: () { Navigator.pop(context); }, icon: Icon(Icons.arrow_back_ios_new),),
 
               actions: [
                 NativeLiquidGlassUtils.supportsLiquidGlass ?
@@ -68,7 +65,6 @@ class TicketDetailPageState extends State<TicketDetailPage> {
 
         body: Column(
           children: [
-
           ],
         ),
       ),

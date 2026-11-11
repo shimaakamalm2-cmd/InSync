@@ -9,7 +9,6 @@ class ProjectRow extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    Theme.of(context).colorScheme.onSurface;
     return Container(
       padding: const .directional(start: 15),
       child: Column(
