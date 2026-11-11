@@ -109,10 +109,13 @@ class InSyncAppBarState extends State<InSyncAppBar> {
               ],
               onItemSelected: (id) {
                 if (id == 'sample_ticket') {
-                  Navigator.pushNamed(
-                    context,
-                    "ticket_detail"
-                  );
+                  // TODO: Resolve Navigator issue
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   "ticket_detail"
+                  // );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (builder) => TicketDetailPage()));
                 } else if (id.contains('tab_index_')) {
                   prefs.then((onValue) {
                     setState(() {
@@ -133,10 +136,13 @@ class InSyncAppBarState extends State<InSyncAppBar> {
               PopupMenuItem(
                 child: const Text('Sample Ticket'),
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    "ticket_detail",
-                  );
+                  // TODO: Resolve Navigator issue
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   "ticket_detail",
+                  // );
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (builder) => TicketDetailPage()));
                 },
               ),
             ];
