@@ -8,7 +8,7 @@ class Ticket {
   Uuid ticketId;
   Project belongingProject;
 
-  Priority priority = .undetermined;
+  Priority priority = Priority.undetermined;
 
   String title;
   String description;
@@ -24,6 +24,8 @@ class Ticket {
       this.description, this.dueDate, this.lastUpdated, this.creationDate,
       this.assignedTo, this.assignedBy);
 
+    String get priorityText => priority.priorityText;  
+
 }
 
 enum Priority {
@@ -32,7 +34,20 @@ enum Priority {
   medium,
   low,
   undetermined;
-
+  
+  //made a getter to return the priority as a string
+  String get priorityText {
+    switch (this) {
+      case Priority.high:
+        return 'High';
+      case Priority.medium:
+        return 'Medium';
+      case Priority.low:
+        return 'Low';
+      case Priority.undetermined:
+        return 'Undetermined';
+    }
+  }
   Color getPriorityColor() {
     switch (this) {
       case high:
