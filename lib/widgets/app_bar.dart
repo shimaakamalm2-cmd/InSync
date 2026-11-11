@@ -4,8 +4,50 @@ import 'package:insync/colors.dart';
 import 'package:insync/screens/ticket_detail.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:insync/model/ticket.dart';
+import 'package:insync/model/project.dart';
+import 'package:insync/model/user.dart';
+import 'package:uuid/uuid.dart';
 
 const _defaultDebugPropertiesValue = true;
+
+final Project _costBreakdownProject = Project(
+  'Cost Breakdown',
+  'Analyze and improve the cost breakdown of products.',
+);
+final Project _mobileAppProject = Project(
+  'InSync Mobile',
+  'Tasks for improving the InSync mobile app.',
+);
+final User _sampleAssignee = User(Uuid(), 'Shimaa');
+final User _sampleReporter = User(Uuid(), 'Ahmed');
+
+final List<Ticket> sampleTickets = [
+  Ticket(
+    Uuid(),
+    _costBreakdownProject,
+    Priority.high,
+    'Review product costs',
+    'Check supplier pricing and update the cost breakdown for this quarter.',
+    DateTime.now().add(const Duration(days: 3)),
+    DateTime.now(),
+    DateTime.now().subtract(const Duration(days: 2)),
+    _sampleAssignee,
+    [_sampleReporter],
+  ),
+  Ticket(
+    Uuid(),
+    _mobileAppProject,
+    Priority.medium,
+    'Polish ticket details screen',
+    'Improve the ticket detail layout and make long descriptions wrap correctly.',
+    DateTime.now().add(const Duration(days: 7)),
+    DateTime.now(),
+    DateTime.now().subtract(const Duration(days: 1)),
+    _sampleReporter,
+    [_sampleAssignee],
+  ),
+];
 
 class InSyncAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -114,7 +156,7 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                   // );
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (builder) => TicketDetailPage()));
+                      MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: sampleTickets[0])));
                 } else if (id.contains('tab_index_')) {
                   prefs.then((onValue) {
                     setState(() {
@@ -142,7 +184,7 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                   // );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (builder) => TicketDetailPage()));
+                    MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: sampleTickets[0])));
                 },
               ),
             ];

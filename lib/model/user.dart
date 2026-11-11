@@ -6,4 +6,9 @@ class User {
   String name;
 
   User(this.userId, this.name);
+  @override
+  String toString() {
+    // TODO: implement toString
+    return name;
+  }
 }

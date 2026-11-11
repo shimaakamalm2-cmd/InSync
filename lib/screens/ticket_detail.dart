@@ -3,15 +3,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/widgets/InSync_list.dart';
+import 'package:insync/model/ticket.dart';
+import 'package:insync/widgets/bottom_nav_bar.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 class TicketDetailPage extends StatefulWidget {
+  final Ticket ticket;
+  const TicketDetailPage({
+    super.key,
+    required this.ticket,
+  });
 
   @override
   State<StatefulWidget> createState() => TicketDetailPageState();
+
 }
 
 class TicketDetailPageState extends State<TicketDetailPage> {
+
+  final DraggableScrollableController _drawerController = DraggableScrollableController();
+  bool _drawerVisible = true;
 
   double radius = 0;
   RadialGradient backgroundRadialGradient = RadialGradient(colors: [Colors.transparent, Colors.transparent]);
@@ -24,9 +35,23 @@ class TicketDetailPageState extends State<TicketDetailPage> {
   @override
   void initState() {
     super.initState();
+    _drawerController.addListener(_handleDrawerExtentChange);
     Future.delayed(Duration(microseconds: 1), () {
       opacity = 1;
     });
+  }
+
+  void _handleDrawerExtentChange() {
+    if (_drawerController.isAttached && _drawerController.size <= 0.081 && _drawerVisible) {
+      setState(() => _drawerVisible = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    _drawerController.removeListener(_handleDrawerExtentChange);
+    _drawerController.dispose();
+    super.dispose();
   }
 
   @override
@@ -100,8 +125,8 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         InSyncListItem(
                           boldTitle: true,
                           spacing: 10,
-                          title: "InSync",
-                          subtext: "The ultimate project manager",
+                          title: widget.ticket.title,
+                          subtext: widget.ticket.description,
                           leadingAccessory: Container(
                               padding: .all(2),
                               child: Image.asset("assets/images/logo.png", width: 46, height: 46)),
@@ -123,12 +148,12 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         InSyncListItem(
                           boldTitle: true,
                           title: "Due Date",
-                          trailingAccessory: Text("Thu 8 Nov, 2026", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                          trailingAccessory: Text(widget.ticket.dueDate.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                         InSyncListItem(
                             boldTitle: true,
                             title: "Assigned by",
-                            trailingAccessory: Text("Your dog", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                            trailingAccessory: Text(widget.ticket.assignedBy.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                         InSyncListItem(
                             boldTitle: true,
@@ -146,7 +171,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                           InSyncListItem(
                               spacing: 0,
                               bottomAccessory: Text(
-                                "hiiiii this is a flutter app how aree youuu are you okay ....",
+                                widget.ticket.description,
                                 softWrap: true,
                               ),
                           ),
@@ -159,14 +184,98 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         items: [
                           InSyncListItem(
                               boldTitle: true,
-                              title: "Description",
-                              trailingAccessory: Text("Thu 8 Nov, 2026", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                              title: "Last Modified",
+                              trailingAccessory: Text(widget.ticket.lastUpdated.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                           ),
                         ]
                     ),
                   ],
                 )
               ],
+            ),
+          ),
+          bottomSheet: _drawerVisible ? DraggableScrollableSheet(
+            controller: _drawerController,
+            expand: false,
+            initialChildSize: 0.25,
+            minChildSize: 0.08,
+            maxChildSize: 0.42,
+            snap: true,
+            snapSizes: const [0.08, 0.25, 0.42],
+            builder: (context, scrollController) => Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(36),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.55),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
+                    borderRadius: BorderRadius.circular(36),
+                    backgroundBlendMode: BlendMode.luminosity,
+                    boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 18)],
+                  ),
+                  child: SafeArea(
+                    top: false,
+                    child: ListView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+                      children: [
+                    Center(
+                      child: Container(
+                        width: 64,
+                        height: 5,
+                        decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: () {},
+                          style: FilledButton.styleFrom(
+                            backgroundColor: InSyncColors.mediumPriority,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                          ),
+                          child: const Text('Mark Complete'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                          ),
+                          child: const Text('Request extension'),
+                        ),
+                      ),
+                    ],
+                  ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ) : Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              heightFactor: 1,
+              child: IconButton.filledTonal(
+                tooltip: 'Show ticket actions',
+                onPressed: () => setState(() => _drawerVisible = true),
+                icon: const Icon(Icons.keyboard_arrow_up_rounded),
+              ),
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+              child: AppNavBar(onTabChange: (_) {}),
             ),
           ),
           ),
