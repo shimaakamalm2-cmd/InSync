@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/widgets/tag.dart';
@@ -26,7 +28,7 @@ class InSyncList extends StatefulWidget {
   State<StatefulWidget> createState() => _InSyncListState();
 }
 
-const double _listBorderRadius = 23;
+const double _listBorderRadius = 26;
 
 class _InSyncListState extends State<InSyncList> {
   @override
@@ -56,8 +58,52 @@ class _InSyncListState extends State<InSyncList> {
 
             itemCount: widget.items?.length ?? 0,
             itemBuilder: (context, index) {
-              if (index == widget.items!.length - 1) {
-                return Container(
+              if (widget.items?.length == 1) {
+                return widget.items![index].onTap != null ?
+                InkResponse(
+                  onTap: () {
+                    widget.items![index].onTap?.call();
+                  },
+                  containedInkWell: true,
+                  highlightShape: .rectangle,
+                  splashColor: Colors.grey,
+                  splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+                  child: BackdropFilter(
+                    // TODO: Temporarily disabled while until the backdrop effect issue is resolved
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    blendMode: .srcOver,
+                    enabled: false,
+                    child: Container(
+                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, backgroundBlendMode: .colorDodge, borderRadius: .all(.circular(_listBorderRadius))),
+                      child: widget.items![index],
+                    ),
+                  ),
+                ) :
+                BackdropFilter(
+                  // TODO: Also temporarily disabled while until the backdrop effect issue is resolved
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                  enabled: false,
+                  child: Container(
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .all(.circular(_listBorderRadius))),
+                    child: widget.items![index],
+                  ),
+                );
+              } else if (index == widget.items!.length - 1) {
+                return widget.items![index].onTap != null ?
+                InkResponse(
+                  onTap: () {
+                    widget.items![index].onTap?.call();
+                  },
+                  containedInkWell: true,
+                  highlightShape: .rectangle,
+                  splashColor: Colors.grey,
+                  splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+                  child: Container(
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(bottomStart: .circular(_listBorderRadius), bottomEnd: .circular(_listBorderRadius))),
+                    child: widget.items![index],
+                  ),
+                ) :
+                Container(
                   decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(bottomStart: .circular(_listBorderRadius), bottomEnd: .circular(_listBorderRadius))),
                   child: widget.items![index],
                 );
@@ -127,6 +173,7 @@ class _InSyncListState extends State<InSyncList> {
 class InSyncListItem extends StatefulWidget {
   final String? title;
   final String? subtext;
+  final bool boldTitle;
 
   final Widget? trailingAccessory;
   final Widget? leadingAccessory;
@@ -139,6 +186,7 @@ class InSyncListItem extends StatefulWidget {
   const InSyncListItem({
     super.key,
     this.title,
+    this.boldTitle = false,
     this.subtext,
     this.trailingAccessory,
     this.leadingAccessory,
@@ -183,7 +231,7 @@ class _InSyncListItemState extends State<InSyncListItem> {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurface,
                           fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: widget.boldTitle ? .bold : FontWeight.w500,
                         ),
                       )),
 

@@ -1,11 +1,8 @@
-import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/widgets/Contribution_card.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/widgets/app_bar.dart';
-import 'package:insync/widgets/priority_tickets.dart';
-import 'package:insync/widgets/project_list.dart';
 import 'package:insync/widgets/tag.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,6 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: InSyncAppBar(
         title: 'Home',

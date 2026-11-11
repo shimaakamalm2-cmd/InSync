@@ -109,12 +109,9 @@ class InSyncAppBarState extends State<InSyncAppBar> {
               ],
               onItemSelected: (id) {
                 if (id == 'sample_ticket') {
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (builder) =>
-                          TicketDetailPage(),
-                    ),
+                    "ticket_detail"
                   );
                 } else if (id.contains('tab_index_')) {
                   prefs.then((onValue) {
@@ -136,12 +133,9 @@ class InSyncAppBarState extends State<InSyncAppBar> {
               PopupMenuItem(
                 child: const Text('Sample Ticket'),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (builder) =>
-                          TicketDetailPage(),
-                    ),
+                    "ticket_detail",
                   );
                 },
               ),

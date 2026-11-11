@@ -75,9 +75,9 @@ class _PrimaryBackground implements AdaptiveColors {
 
 class _SecondaryBackground implements AdaptiveColors {
   @override
-  Color get light => Color.fromARGB(215, 239, 239, 239);
+  Color get light => Color.fromARGB(178, 239, 239, 239);
   @override
-  Color get dark => Color.fromARGB(215, 43, 43, 43);
+  Color get dark => Color.fromARGB(178, 43, 43, 43);
 }
 
 class _TertiaryBackground implements AdaptiveColors {
