@@ -3,7 +3,7 @@ import 'package:insync/colors.dart';
 import 'package:insync/model/ticket.dart';
 import 'package:insync/screens/ticket_detail.dart';
 import 'package:insync/widgets/InSync_list.dart';
-import 'package:insync/widgets/tag.dart';
+import 'package:insync/widgets/tickets/tag.dart';
 
 // the class takes the ticket objects and puts displays it with appropriate UI
 class TicketListItemBuilder {

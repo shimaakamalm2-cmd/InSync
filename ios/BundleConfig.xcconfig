@@ -1,0 +1,11 @@
+//
+//  BundleConfig.xcconfig
+//  Runner
+//
+//  Created by Ziad on 12/11/2026.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+BUNDLE_ID = com.ziad.personal.insync

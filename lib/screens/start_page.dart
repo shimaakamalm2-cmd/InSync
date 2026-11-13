@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insync/screens/home_screen.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
 import 'package:insync/screens/placeholder_page.dart';
-import 'package:insync/widgets/bottom_nav_bar.dart';
+import 'package:insync/widgets/commen/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int _selectedIndex = 0;

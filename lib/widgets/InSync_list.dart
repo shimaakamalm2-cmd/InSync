@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
-import 'package:insync/widgets/tag.dart';
+import 'package:insync/widgets/tickets/tag.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 class InSyncList extends StatefulWidget {

@@ -5,11 +5,11 @@ import "package:insync/model/project.dart";
 import "package:insync/model/ticket.dart";
 import "package:insync/model/user.dart";
 import "package:insync/widgets/InSync_list.dart";
-import "package:insync/widgets/Sorting_Tickets.dart";
-import "package:insync/widgets/app_bar.dart";
-import "package:insync/widgets/buildSection.dart";
+import "package:insync/widgets/tickets/Sorting_Tickets.dart";
+import "package:insync/widgets/commen/app_bar.dart";
+import "package:insync/widgets/tickets/buildSection.dart";
 import "package:insync/widgets/calendar_carousel.dart";
-import "package:insync/widgets/ticket_Builder.dart";
+import "package:insync/widgets/tickets/ticket_Builder.dart";
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import "package:uuid/uuid.dart";
 
