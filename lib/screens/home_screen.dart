@@ -6,6 +6,7 @@ import 'package:insync/widgets/Contribution_card.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/widgets/commen/app_bar.dart';
 import 'package:insync/widgets/tickets/tag.dart';
+import 'package:insync/widgets/tickets/ticket_Builder.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -39,68 +40,7 @@ class HomeScreen extends StatelessWidget {
               title: "Priority Tickets",
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              items: [
-                InSyncListItem(
-                  title: getSampleTickets()[0].title,
-                  trailingAccessory: ListChevronAccessory(),
-                  bottomAccessory: Row(
-                      spacing: 5,
-                      children: [
-                        Tag(text: getSampleTickets()[0].belongingProject.name, backgroundColor: Theme.of(context).colorScheme.tertiaryContainer, textColor: Theme.of(context).colorScheme.onInverseSurface),
-                        Tag(
-                          text: 'Due in ${getSampleTickets()[0].dueDate.difference(DateTime.now()).inDays}d',
-                          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-                          textColor: Colors.black,
-                        ),
-                        Tag(text: getSampleTickets()[0].priorityText, backgroundColor: getSampleTickets()[0].priority.getPriorityColor()),
-                      ]
-                  ),
-
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0])));
-                  },
-                ),
-                InSyncListItem(
-                  title: getSampleTickets()[1].title,
-                  trailingAccessory: ListChevronAccessory(),
-                  bottomAccessory: Row(
-                      spacing: 5,
-                      children: [
-                        Tag(text: getSampleTickets()[1].belongingProject.name, backgroundColor: Theme.of(context).colorScheme.tertiaryContainer, textColor: Theme.of(context).colorScheme.onInverseSurface),
-                        Tag(
-                          text: 'Due in ${getSampleTickets()[1].dueDate.difference(DateTime.now()).inDays}d',
-                          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-                          textColor: Colors.black,
-                        ),
-                        Tag(text: getSampleTickets()[1].priorityText, backgroundColor: getSampleTickets()[1].priority.getPriorityColor(), textColor: getSampleTickets()[1].priority == .medium ? InSyncColors.black : InSyncColors.white,),
-                      ]
-                  ),
-
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[1])));
-                  },
-                ),
-                InSyncListItem(
-                  title: getSampleTickets()[2].title,
-                  trailingAccessory: ListChevronAccessory(),
-                  bottomAccessory: Row(
-                      spacing: 5,
-                      children: [
-                        Tag(text: getSampleTickets()[2].belongingProject.name, backgroundColor: Theme.of(context).colorScheme.tertiaryContainer, textColor: Theme.of(context).colorScheme.onInverseSurface),
-                        Tag(
-                          text: 'Due in ${getSampleTickets()[2].dueDate.difference(DateTime.now()).inDays}d',
-                          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-                          textColor: Colors.black,
-                        ),
-                        Tag(text: getSampleTickets()[2].priorityText, backgroundColor: getSampleTickets()[2].priority.getPriorityColor()),
-                      ]
-                  ),
-
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[2])));
-                  },
-                ),
-              ],
+               items: TicketListItemBuilder.build(context, getSampleTickets().take(3).toList())
             ),
           ),
 
