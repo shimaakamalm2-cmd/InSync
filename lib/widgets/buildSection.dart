@@ -1,7 +1,5 @@
 import "package:flutter/material.dart";
-import "package:insync/model/ticket.dart";
 import "package:insync/widgets/InSync_list.dart";
-import "package:insync/widgets/tag.dart";
 
 // this class is specifically for the priority section lists and late for the projects 
 class BuildSection extends StatelessWidget {

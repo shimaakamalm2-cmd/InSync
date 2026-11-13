@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/model/ticket.dart';
-import 'package:insync/widgets/bottom_nav_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 class TicketDetailPage extends StatefulWidget {
@@ -27,10 +27,6 @@ class TicketDetailPageState extends State<TicketDetailPage> {
   double radius = 0;
   RadialGradient backgroundRadialGradient = RadialGradient(colors: [Colors.transparent, Colors.transparent]);
   double opacity = 0;
-
-  // Ticket? ticket;
-  //
-  // TicketDetailPage({super.key, required this.ticket});
 
   @override
   void initState() {
@@ -65,7 +61,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
           opacity: opacity,
           duration: Duration(milliseconds: 1200),
           child: Container(
-            decoration: BoxDecoration(borderRadius: .all(.circular(radius)), gradient: RadialGradient(colors: [InSyncColors.mediumPriority, Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: MediaQuery.heightOf(context) * 0.0009)),
+            decoration: BoxDecoration(borderRadius: .all(.circular(radius)), gradient: RadialGradient(colors: [widget.ticket.priority.getPriorityColor(), Theme.of(context).scaffoldBackgroundColor], center: .topLeft, radius: MediaQuery.heightOf(context) * 0.0009)),
             clipBehavior: .hardEdge,
           ),
         ),
@@ -84,7 +80,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                 centerTitle: false,
                 toolbarHeight: 65,
                 title: Text(
-                  'Ticket',
+                  widget.ticket.title,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 26,
@@ -105,13 +101,13 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                 ],
 
                 leadingWidth: 45,
-                titleSpacing: 25,
+                titleSpacing: 13,
               ),
             ),
           ),
 
           body: Container(
-            padding: .symmetric(horizontal: 15),
+            padding: .directional(start: 15, end: 15, top: 20),
             decoration: BoxDecoration(borderRadius: .vertical(top: .circular(80))),
             child: ListView(
               children: [
@@ -125,8 +121,8 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         InSyncListItem(
                           boldTitle: true,
                           spacing: 10,
-                          title: widget.ticket.title,
-                          subtext: widget.ticket.description,
+                          title: widget.ticket.belongingProject.name,
+                          subtext: widget.ticket.belongingProject.description,
                           leadingAccessory: Container(
                               padding: .all(2),
                               child: Image.asset("assets/images/logo.png", width: 46, height: 46)),
@@ -148,12 +144,12 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         InSyncListItem(
                           boldTitle: true,
                           title: "Due Date",
-                          trailingAccessory: Text(widget.ticket.dueDate.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                          trailingAccessory: Text(DateFormat.yMMMEd().format(widget.ticket.dueDate), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                         InSyncListItem(
                             boldTitle: true,
                             title: "Assigned by",
-                            trailingAccessory: Text(widget.ticket.assignedBy.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                            trailingAccessory: Text(widget.ticket.assignedBy.name, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                         ),
                         InSyncListItem(
                             boldTitle: true,
@@ -185,7 +181,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                           InSyncListItem(
                               boldTitle: true,
                               title: "Last Modified",
-                              trailingAccessory: Text(widget.ticket.lastUpdated.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
+                              trailingAccessory: Text(DateFormat.yMMMEd().format(widget.ticket.lastUpdated), style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
                           ),
                         ]
                     ),
@@ -194,90 +190,90 @@ class TicketDetailPageState extends State<TicketDetailPage> {
               ],
             ),
           ),
-          bottomSheet: _drawerVisible ? DraggableScrollableSheet(
-            controller: _drawerController,
-            expand: false,
-            initialChildSize: 0.25,
-            minChildSize: 0.08,
-            maxChildSize: 0.42,
-            snap: true,
-            snapSizes: const [0.08, 0.25, 0.42],
-            builder: (context, scrollController) => Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(36),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.55),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-                    borderRadius: BorderRadius.circular(36),
-                    backgroundBlendMode: BlendMode.luminosity,
-                    boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 18)],
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: ListView(
-                      controller: scrollController,
-                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
-                      children: [
-                    Center(
-                      child: Container(
-                        width: 64,
-                        height: 5,
-                        decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.circular(8)),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FilledButton(
-                          onPressed: () {},
-                          style: FilledButton.styleFrom(
-                            backgroundColor: InSyncColors.mediumPriority,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 18),
-                          ),
-                          child: const Text('Mark Complete'),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 18),
-                          ),
-                          child: const Text('Request extension'),
-                        ),
-                      ),
-                    ],
-                  ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ) : Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              heightFactor: 1,
-              child: IconButton.filledTonal(
-                tooltip: 'Show ticket actions',
-                onPressed: () => setState(() => _drawerVisible = true),
-                icon: const Icon(Icons.keyboard_arrow_up_rounded),
-              ),
-            ),
-          ),
-          bottomNavigationBar: SafeArea(
-            top: false,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-              child: AppNavBar(onTabChange: (_) {}),
-            ),
-          ),
+          // bottomSheet: _drawerVisible ? DraggableScrollableSheet(
+          //   controller: _drawerController,
+          //   expand: false,
+          //   initialChildSize: 0.25,
+          //   minChildSize: 0.08,
+          //   maxChildSize: 0.42,
+          //   snap: true,
+          //   snapSizes: const [0.08, 0.25, 0.42],
+          //   builder: (context, scrollController) => Padding(
+          //     padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+          //     child: ClipRRect(
+          //       borderRadius: BorderRadius.circular(36),
+          //       child: Container(
+          //         decoration: BoxDecoration(
+          //           color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.55),
+          //           border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
+          //           borderRadius: BorderRadius.circular(36),
+          //           backgroundBlendMode: BlendMode.luminosity,
+          //           boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 18)],
+          //         ),
+          //         child: SafeArea(
+          //           top: false,
+          //           child: ListView(
+          //             controller: scrollController,
+          //             padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+          //             children: [
+          //           Center(
+          //             child: Container(
+          //               width: 64,
+          //               height: 5,
+          //               decoration: BoxDecoration(color: Colors.white70, borderRadius: BorderRadius.circular(8)),
+          //             ),
+          //           ),
+          //           const SizedBox(height: 18),
+          //         Row(
+          //           children: [
+          //             Expanded(
+          //               child: FilledButton(
+          //                 onPressed: () {},
+          //                 style: FilledButton.styleFrom(
+          //                   backgroundColor: InSyncColors.mediumPriority,
+          //                   foregroundColor: Colors.white,
+          //                   padding: const EdgeInsets.symmetric(vertical: 18),
+          //                 ),
+          //                 child: const Text('Mark Complete'),
+          //               ),
+          //             ),
+          //             const SizedBox(width: 12),
+          //             Expanded(
+          //               child: OutlinedButton(
+          //                 onPressed: () {},
+          //                 style: OutlinedButton.styleFrom(
+          //                   padding: const EdgeInsets.symmetric(vertical: 18),
+          //                 ),
+          //                 child: const Text('Request extension'),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ) : Padding(
+          //   padding: const EdgeInsets.only(bottom: 8),
+          //   child: Align(
+          //     alignment: Alignment.bottomCenter,
+          //     heightFactor: 1,
+          //     child: IconButton.filledTonal(
+          //       tooltip: 'Show ticket actions',
+          //       onPressed: () => setState(() => _drawerVisible = true),
+          //       icon: const Icon(Icons.keyboard_arrow_up_rounded),
+          //     ),
+          //   ),
+          // ),
+          // bottomNavigationBar: SafeArea(
+          //   top: false,
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+          //     child: AppNavBar(onTabChange: (_) {}),
+          //   ),
+          // ),
           ),
       ],
       )
@@ -292,8 +288,8 @@ class TicketDetailPageState extends State<TicketDetailPage> {
     deviceInfo.then((onValue) {
       if (onValue.modelName.contains("iPhone SE")) {
         radius = 6;
-      } else if ((onValue.modelName.contains("iPhone 17") || onValue.modelName.contains("iPhone 18") || onValue.modelName.contains("iPhone 16")) && !onValue.modelName.contains("e", 7)) {
-        radius = 65;
+      } else if (int.parse(onValue.modelName.substring(7,9)) >= 16 && !onValue.modelName.contains("e", 7)) {
+        radius = 61;
       } else if (onValue.modelName.contains("iPhone")) {
         radius = 56;
       }

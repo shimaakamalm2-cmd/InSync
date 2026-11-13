@@ -17,12 +17,12 @@ class Ticket {
   DateTime lastUpdated;
   DateTime creationDate;
 
-  User assignedTo;
-  List<User> assignedBy;
+  User assignedBy;
+  List<User> assignedTo;
 
   Ticket(this.ticketId, this.belongingProject, this.priority, this.title,
       this.description, this.dueDate, this.lastUpdated, this.creationDate,
-      this.assignedTo, this.assignedBy);
+      this.assignedBy, this.assignedTo);
 
     String get priorityText => priority.priorityText;  
 

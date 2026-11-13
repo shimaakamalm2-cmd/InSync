@@ -44,7 +44,8 @@ dependencies:
   google_fonts: ^9.0.0
   native_liquid_glass: ^0.3.1
   device_info_plus: ^13.3.0
-  adaptive_platform_ui: ^1.0.2
+  intl: ^0.20.3
+  cupertino_native_better: ^2.7.2
 
 
 dev_dependencies:

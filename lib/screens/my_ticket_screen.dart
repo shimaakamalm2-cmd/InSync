@@ -1,19 +1,21 @@
+import "package:cupertino_native_better/components/popup_menu_button.dart";
+import "package:cupertino_native_better/style/sf_symbol.dart";
 import "package:flutter/material.dart";
 import "package:insync/model/project.dart";
 import "package:insync/model/ticket.dart";
 import "package:insync/model/user.dart";
 import "package:insync/widgets/InSync_list.dart";
-import "package:insync/widgets/SortingTickets.dart";
+import "package:insync/widgets/Sorting_Tickets.dart";
 import "package:insync/widgets/app_bar.dart";
 import "package:insync/widgets/buildSection.dart";
 import "package:insync/widgets/calendar_carousel.dart";
-import "package:insync/widgets/ticketBuilder.dart";
+import "package:insync/widgets/ticket_Builder.dart";
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import "package:uuid/uuid.dart";
 
 class MyTicketScreen extends StatefulWidget {
 
-  MyTicketScreen({super.key});
+  const MyTicketScreen({super.key});
 
   @override
   State<MyTicketScreen> createState() => _MyTicketScreenState();
@@ -21,64 +23,49 @@ class MyTicketScreen extends StatefulWidget {
 
 //TODO - shimaa: implement by project logic - suggest removing alphabetical?
 
+String sortLabel = 'Alphabetically';
+int _selectedCalIndex = 0;
+
 class _MyTicketScreenState extends State<MyTicketScreen> {
-  String sortLabel = 'Alphabetically';
   late final List<Ticket> tickets = getSampleTickets();
 
   Widget _buildFilterMenu(BuildContext context) {
+
     return NativeLiquidGlassUtils.supportsLiquidGlass
-        ? LiquidGlassContainer(
-            animateChanges: true,
-            config: LiquidGlassConfig(cornerRadius: 80, interactive: true),
-            child: LiquidGlassMenu(
-              height: 37,
-              menuTitle: 'Sort',
+        ? CNPopupMenuButton.icon(
+              size: 30,
+              buttonStyle: .clearGlass,
+              buttonIcon: CNSymbol(sortLabel == 'Alphabetically' ? 'line.3.horizontal.decrease.circle' : 'line.3.horizontal.decrease.circle.fill', size: 15, mode: .monochrome),
               items: [
-                LiquidGlassMenuItem(
-                  id: 'priority',
-                  title: 'By priority',
-                  icon: sortLabel == 'By priority'
-                      ? NativeLiquidGlassIcon.sfSymbol('checkmark')
-                      : null,
+                CNPopupMenuItem(
+                  label: 'By priority',
+                  checked: sortLabel == 'By priority'
                 ),
-                LiquidGlassMenuItem(
-                  id: 'alphabetical',
-                  title: 'Alphabetically',
-                  icon: sortLabel == 'Alphabetically'
-                      ? NativeLiquidGlassIcon.sfSymbol('checkmark')
-                      : null,
+                CNPopupMenuItem(
+                  label: 'Alphabetically',
+                  checked: sortLabel == 'Alphabetically'
                 ),
-                LiquidGlassMenuItem(
-                  id: 'project',
-                  title: 'By project',
-                  icon: sortLabel == 'By project'
-                      ? NativeLiquidGlassIcon.sfSymbol('checkmark')
-                      : null,
+                CNPopupMenuItem(
+                  label: 'By project',
+                  checked: sortLabel == 'By project'
                 ),
               ],
-
-              onItemSelected: (id) {
+              onSelected: (id) {
                 setState(() {
                   switch (id) {
-                    case 'priority':
+                    case 0:
                       sortLabel = 'By priority';
                       break;
-                    case 'alphabetical':
+                    case 1:
                       sortLabel = 'Alphabetically';
                       break;
-                    case 'project':
+                    case 2:
                       sortLabel = 'By project';
                       break;
                   }
                 });
               },
-              icon: NativeLiquidGlassIcon.sfSymbol(
-                'line.3.horizontal.decrease.circle',
-              ),
-              color: Theme.of(context).colorScheme.inverseSurface,
-            ),
-          )
-
+        )
           //fall back section if not ios
         : PopupMenuButton<String>(
             onSelected: (String value) {
@@ -112,66 +99,80 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
     return Scaffold(
       appBar: InSyncAppBar(title: 'My Tickets', showBackButton: true),
       body: ListView(
-        padding: const EdgeInsets.all(15),
+        padding: .only(top: 10),
         children: [
-          CalendarCarousel(),
-          SizedBox(height: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: .center,
+          CalendarCarousel(
+            selectedIndex: _selectedCalIndex,
+            onSelect: (index, date) {
+              _selectedCalIndex = index;
+            },
+          ),
+          ListView(
+            padding: .symmetric(horizontal: 15),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             children: [
-              Text(
-                'Section Title',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: .center,
                 children: [
                   Text(
-                    "Sorted ${sortLabel.toLowerCase()}",
+                    'Tickets Due',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      fontSize: 12,
-                      fontWeight: .bold,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  _buildFilterMenu(context),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: .center,
+                    children: [
+                      Text(
+                        "Sorted ${sortLabel.toLowerCase()}",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 13,
+                          fontWeight: .bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      _buildFilterMenu(context),
+                    ],
+                  ),
                 ],
               ),
+
+              const SizedBox(height: 10),
+
+              //---------sorting logic and display----
+              if (sortLabel == 'By priority')
+              //... refer to the grouped tickets (high, medium, low)
+                ...Priority.values.map((priority) {
+                  final priorityTickets = groupedTickets[priority] ?? [];
+
+                  if (priorityTickets.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  //builds each sectu=ion with its level as title
+                  return BuildSection(
+                    title: priority.priorityText,
+                    tickets: TicketListItemBuilder.build(context, priorityTickets),
+                  );
+                })
+              else
+              //if not sorted by priority, just display the sorted tickets in a single list bas hatkoon alphabetically
+                InSyncList(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  items: TicketListItemBuilder.build(context, sortedTickets),
+                ),
             ],
           ),
 
-          const SizedBox(height: 10),
-
-          //---------sorting logic and display----
-          if (sortLabel == 'By priority')
-          //... refer to the grouped tickets (high, medium, low) 
-            ...Priority.values.map((priority) {
-              final priorityTickets = groupedTickets[priority] ?? [];
-
-              if (priorityTickets.isEmpty) {
-                return const SizedBox.shrink();
-              }
-              //builds each sectu=ion with its level as title
-              return BuildSection(
-                title: priority.priorityText,
-                tickets: TicketListItemBuilder.build(priorityTickets),
-              );
-            })
-          else
-          //if not sorted by priority, just display the sorted tickets in a single list bas hatkoon alphabetically
-            InSyncList(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              items: TicketListItemBuilder.build(sortedTickets),
-            ),
+          // To prevent clipping into the navigation bar at the end of the list
+          const SizedBox(height: 100),
         ],
       ),
     );

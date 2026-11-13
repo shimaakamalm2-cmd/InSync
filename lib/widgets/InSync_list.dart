@@ -64,9 +64,10 @@ class _InSyncListState extends State<InSyncList> {
                   onTap: () {
                     widget.items![index].onTap?.call();
                   },
+                  radius: 800,
                   containedInkWell: true,
                   highlightShape: .rectangle,
-                  splashColor: Colors.grey,
+                  
                   splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
                   child: BackdropFilter(
                     // TODO: Temporarily disabled while until the backdrop effect issue is resolved
@@ -74,7 +75,7 @@ class _InSyncListState extends State<InSyncList> {
                     blendMode: .srcOver,
                     enabled: false,
                     child: Container(
-                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, backgroundBlendMode: .colorDodge, borderRadius: .all(.circular(_listBorderRadius))),
+                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .all(.circular(_listBorderRadius))),
                       child: widget.items![index],
                     ),
                   ),
@@ -94,10 +95,12 @@ class _InSyncListState extends State<InSyncList> {
                   onTap: () {
                     widget.items![index].onTap?.call();
                   },
+                  radius: 800,
                   containedInkWell: true,
                   highlightShape: .rectangle,
-                  splashColor: Colors.grey,
+                  
                   splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+                  borderRadius: .vertical(bottom: .circular(_listBorderRadius)),
                   child: Container(
                     decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(bottomStart: .circular(_listBorderRadius), bottomEnd: .circular(_listBorderRadius))),
                     child: widget.items![index],
@@ -117,9 +120,10 @@ class _InSyncListState extends State<InSyncList> {
                         onTap: () {
                           widget.items![index].onTap?.call();
                         },
+                        radius: 800,
                         containedInkWell: true,
                         highlightShape: .rectangle,
-                        splashColor: Colors.grey,
+                        
                         splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
                         child: Container(
                           decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: .directional(topStart: .circular(_listBorderRadius), topEnd: .circular(_listBorderRadius))),
@@ -136,9 +140,10 @@ class _InSyncListState extends State<InSyncList> {
                         onTap: () {
                           widget.items![index].onTap?.call();
                         },
+                        radius: 800,
                         containedInkWell: true,
                         highlightShape: .rectangle,
-                        splashColor: Colors.grey,
+                        
                         splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
                         child: Container(
                           decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer),

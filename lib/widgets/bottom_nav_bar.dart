@@ -1,3 +1,6 @@
+import 'package:cupertino_native_better/components/native_tab_bar.dart';
+import 'package:cupertino_native_better/components/tab_bar.dart';
+import 'package:cupertino_native_better/cupertino_native.dart';
 import 'package:flutter/material.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
@@ -12,6 +15,23 @@ class AppNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // return CNTabBar(items: [
+    //   CNTabBarItem(label: 'Home', icon: CNSymbol('house.fill')),
+    //   CNTabBarItem(label: 'Ticket', icon: CNSymbol('ticket.fill')),
+    //   CNTabBarItem(label: 'Search', icon: CNSymbol('magnifyingglass')),
+    //   CNTabBarItem(icon: CNSymbol('plus'), menuItems: [
+    //     CNPopupMenuItem(label: 'New Checklist', icon: CNSymbol('checklist')),
+    //   ]),
+    // ], currentIndex: 0, onTap: (onTap){
+    //
+    // },
+    //   splitSpacing: 0,
+    //   iconSize: 18,
+    //   shrinkCentered: false,
+    //   split: true,
+    // );
+
     return NativeLiquidGlassUtils.supportsLiquidGlass
         ? LiquidGlassTabBar(
       items: const [

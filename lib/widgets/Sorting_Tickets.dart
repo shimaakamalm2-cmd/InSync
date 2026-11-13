@@ -1,4 +1,3 @@
-
 import 'package:insync/model/ticket.dart';
 
 class TicketSorting {
