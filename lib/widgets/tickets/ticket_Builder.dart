@@ -19,23 +19,29 @@ class TicketListItemBuilder {
         bottomAccessory: Row(
           spacing: 5,
           children: [
-            Tag(
-              text: ticket.belongingProject.name,
-              backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-              textColor: Colors.white
+            Flexible(
+              child: Tag(
+                text: ticket.belongingProject.name,
+                backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+                textColor: Colors.white
+              ),
             ),
-            Tag(
-              text: 'Due in ${ticket.dueDate.difference(DateTime.now()).inDays}d', //TODO :change it to hard code
-              backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-              textColor: Colors.white,
+            Flexible(
+              child: Tag(
+                text: 'Due in ${ticket.dueDate.difference(DateTime.now()).inDays}d', //TODO :change it to hard code
+                backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+                textColor: Colors.white,
+              ),
             ),
-            Tag(
-              text: ticket.priorityText,
-              backgroundColor: ticket.priority.getPriorityColor(),
-              textColor: ticket.priority == Priority.medium ||
-                      ticket.priority == Priority.undetermined
-                  ? Colors.black
-                  : Colors.white,
+            Flexible(
+              child: Tag(
+                text: ticket.priorityText,
+                backgroundColor: ticket.priority.getPriorityColor(),
+                textColor: ticket.priority == Priority.medium ||
+                        ticket.priority == Priority.undetermined
+                    ? Colors.black
+                    : Colors.white,
+              ),
             ),
           ],
         ),

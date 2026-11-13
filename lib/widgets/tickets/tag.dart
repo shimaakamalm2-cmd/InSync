@@ -24,6 +24,7 @@ class Tag extends StatelessWidget {
 
       child: Text(
         text,
+        maxLines: 1,
         style: TextStyle(
           color: backgroundColor == Theme.of(context).colorScheme.tertiaryContainer ? null : textColor.withAlpha(217),
           fontSize: 10,
