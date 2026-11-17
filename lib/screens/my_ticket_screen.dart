@@ -20,8 +20,6 @@ class MyTicketScreen extends StatefulWidget {
   State<MyTicketScreen> createState() => _MyTicketScreenState();
 }
 
-//TODO - shimaa: implement by project logic - suggest removing alphabetical?
-
 String sortLabel = 'Alphabetically';
 int _selectedCalIndex = 0;
 

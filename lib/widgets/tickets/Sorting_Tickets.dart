@@ -38,6 +38,7 @@ class TicketSorting {
       Priority.high: tickets.where((ticket) => ticket.priority == Priority.high).toList(),
       Priority.medium: tickets.where((ticket) => ticket.priority == Priority.medium).toList(),
       Priority.low: tickets.where((ticket) => ticket.priority == Priority.low).toList(),
+      Priority.undetermined: tickets.where((ticket) => ticket.priority == Priority.low).toList(),
     };
   }
     // Group tickets by project name
