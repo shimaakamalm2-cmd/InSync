@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:insync/colors.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
-import 'package:insync/screens/ticket_detail.dart';
 import 'package:insync/widgets/Contribution_card.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/widgets/commen/app_bar.dart';
-import 'package:insync/widgets/tickets/tag.dart';
 import 'package:insync/widgets/tickets/ticket_Builder.dart';
 
 class HomeScreen extends StatelessWidget {

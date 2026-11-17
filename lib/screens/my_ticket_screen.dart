@@ -14,7 +14,6 @@ import 'package:native_liquid_glass/native_liquid_glass.dart';
 import "package:uuid/uuid.dart";
 
 class MyTicketScreen extends StatefulWidget {
-
   const MyTicketScreen({super.key});
 
   @override
@@ -30,43 +29,48 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
   late final List<Ticket> tickets = getSampleTickets();
 
   Widget _buildFilterMenu(BuildContext context) {
-
     return NativeLiquidGlassUtils.supportsLiquidGlass
         ? CNPopupMenuButton.icon(
-              size: 30,
-              buttonStyle: .clearGlass,
-              buttonIcon: CNSymbol(sortLabel == 'Alphabetically' ? 'line.3.horizontal.decrease.circle' : 'line.3.horizontal.decrease.circle.fill', size: 15, mode: .monochrome),
-              items: [
-                CNPopupMenuItem(
-                  label: 'By priority',
-                  checked: sortLabel == 'By priority'
-                ),
-                CNPopupMenuItem(
-                  label: 'Alphabetically',
-                  checked: sortLabel == 'Alphabetically'
-                ),
-                CNPopupMenuItem(
-                  label: 'By project',
-                  checked: sortLabel == 'By project'
-                ),
-              ],
-              onSelected: (id) {
-                setState(() {
-                  switch (id) {
-                    case 0:
-                      sortLabel = 'By priority';
-                      break;
-                    case 1:
-                      sortLabel = 'Alphabetically';
-                      break;
-                    case 2:
-                      sortLabel = 'By project';
-                      break;
-                  }
-                });
-              },
-        )
-          //fall back section if not ios
+            size: 30,
+            buttonStyle: .clearGlass,
+            buttonIcon: CNSymbol(
+              sortLabel == 'Alphabetically'
+                  ? 'line.3.horizontal.decrease.circle'
+                  : 'line.3.horizontal.decrease.circle.fill',
+              size: 15,
+              mode: .monochrome,
+            ),
+            items: [
+              CNPopupMenuItem(
+                label: 'By priority',
+                checked: sortLabel == 'By priority',
+              ),
+              CNPopupMenuItem(
+                label: 'Alphabetically',
+                checked: sortLabel == 'Alphabetically',
+              ),
+              CNPopupMenuItem(
+                label: 'By project',
+                checked: sortLabel == 'By project',
+              ),
+            ],
+            onSelected: (id) {
+              setState(() {
+                switch (id) {
+                  case 0:
+                    sortLabel = 'By priority';
+                    break;
+                  case 1:
+                    sortLabel = 'Alphabetically';
+                    break;
+                  case 2:
+                    sortLabel = 'By project';
+                    break;
+                }
+              });
+            },
+          )
+        //fall back section if not ios
         : PopupMenuButton<String>(
             onSelected: (String value) {
               setState(() {
@@ -75,7 +79,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               const PopupMenuItem<String>(
-                value: 'Priority',
+                value: 'By priority',
                 child: Text('Priority'),
               ),
               const PopupMenuItem<String>(
@@ -83,7 +87,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
                 child: Text('Alphabetical'),
               ),
               const PopupMenuItem<String>(
-                value: 'Project',
+                value: 'by Project',
                 child: Text('Project'),
               ),
             ],
@@ -93,9 +97,12 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
   @override
   Widget build(BuildContext context) {
     // sorting the tickets
-    final sortedTickets = TicketSorting.sortTickets(tickets,sortLabel,);
+    final sortedTickets = TicketSorting.sortTickets(tickets, sortLabel);
     //grouping the sorted tickets by priority ( if priority is selected)
     final groupedTickets = TicketSorting.groupByPriority(sortedTickets);
+    final groupedProjectTickets = TicketSorting.groupByProjectName(
+      sortedTickets,
+    );
     return Scaffold(
       appBar: InSyncAppBar(title: 'My Tickets', showBackButton: true),
       body: ListView(
@@ -147,7 +154,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
 
               //---------sorting logic and display----
               if (sortLabel == 'By priority')
-              //... refer to the grouped tickets (high, medium, low)
+                //... refer to the grouped tickets (high, medium, low)
                 ...Priority.values.map((priority) {
                   final priorityTickets = groupedTickets[priority] ?? [];
 
@@ -157,11 +164,21 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
                   //builds each sectu=ion with its level as title
                   return BuildSection(
                     title: priority.priorityText,
-                    tickets: TicketListItemBuilder.build(context, priorityTickets),
+                    tickets: TicketListItemBuilder.build(
+                      context,
+                      priorityTickets,
+                    ),
+                  );
+                })
+              else if (sortLabel == 'By project')
+                ...groupedProjectTickets.entries.map((entry) {
+                  return BuildSection(
+                    title: entry.key, //project name
+                    tickets: TicketListItemBuilder.build(context, entry.value), //entry val is the list of tickets with that name
                   );
                 })
               else
-              //if not sorted by priority, just display the sorted tickets in a single list bas hatkoon alphabetically
+                //if not sorted by priority, just display the sorted tickets in a single list bas hatkoon alphabetically
                 InSyncList(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -180,7 +197,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
 }
 
 //example tickets for testing , use it instead of listitem thingy
-//also fix due date to day count not wtv this is ( sorry its generated for testing lol) 
+//also fix due date to day count not wtv this is ( sorry its generated for testing lol)
 List<Ticket> getSampleTickets() {
   final now = DateTime.now();
 

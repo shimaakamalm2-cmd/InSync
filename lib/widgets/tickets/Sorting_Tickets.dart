@@ -7,7 +7,7 @@ class TicketSorting {
 
 //sorting will be alphabetical for all at first, then by priority, then by project( not implemented yet)
     switch (sortType) {
-      case 'Priority':
+      case 'by Priority':
         sortedTickets.sort(
           (a, b) => a.priority.index.compareTo(b.priority.index),
         );
@@ -17,7 +17,7 @@ class TicketSorting {
           (a, b) => a.title.compareTo(b.title),
         );
         break;
-      case 'Project':
+      case 'by Project':
         sortedTickets.sort(
           (a, b) => a.belongingProject.name.compareTo(
             b.belongingProject.name,
@@ -40,5 +40,26 @@ class TicketSorting {
       Priority.low: tickets.where((ticket) => ticket.priority == Priority.low).toList(),
     };
   }
+    // Group tickets by project name
+  static Map<String, List<Ticket>> groupByProjectName(
+    List<Ticket> tickets,
+  ) {
+    final Map<String, List<Ticket>> groupedTickets = {};
+
+    for (final ticket in tickets) {
+      final projectName = ticket.belongingProject.name;
+
+      groupedTickets.putIfAbsent(projectName, () => []);
+      groupedTickets[projectName]!.add(ticket);
+    }
+
+    return groupedTickets;
+  }
   
-}
+} 
+
+
+
+
+
+
