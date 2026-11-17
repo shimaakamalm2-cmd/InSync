@@ -6,7 +6,7 @@ import "package:insync/model/ticket.dart";
 import "package:insync/model/user.dart";
 import "package:insync/widgets/InSync_list.dart";
 import "package:insync/widgets/tickets/Sorting_Tickets.dart";
-import "package:insync/widgets/commen/app_bar.dart";
+import "package:insync/widgets/common/app_bar.dart";
 import "package:insync/widgets/tickets/buildSection.dart";
 import "package:insync/widgets/calendar_carousel.dart";
 import "package:insync/widgets/tickets/ticket_Builder.dart";
@@ -35,7 +35,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
         ? CNPopupMenuButton.icon(
               size: 30,
               buttonStyle: .clearGlass,
-              buttonIcon: CNSymbol(sortLabel == 'Alphabetically' ? 'line.3.horizontal.decrease.circle' : 'line.3.horizontal.decrease.circle.fill', size: 15, mode: .monochrome),
+              buttonIcon: sortLabel == 'Alphabetically' ? CNSymbol('line.3.horizontal.decrease', size: 12, mode: .monochrome) : CNSymbol('line.3.horizontal.decrease.circle.fill', size: 15, mode: .monochrome),
               items: [
                 CNPopupMenuItem(
                   label: 'By priority',

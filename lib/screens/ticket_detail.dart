@@ -2,8 +2,10 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
+import 'package:insync/widget_lib/notched_circle.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/model/ticket.dart';
+import 'package:insync/widgets/profile_stack.dart';
 import 'package:intl/intl.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
@@ -53,7 +55,7 @@ class TicketDetailPageState extends State<TicketDetailPage> {
   @override
   Widget build(BuildContext context) {
     computeDisplayBorderRadius();
-    // TODO: implement build
+
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Stack(children: [
@@ -154,8 +156,19 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                         InSyncListItem(
                             boldTitle: true,
                             title: "Assigned to",
-                            trailingAccessory: Text("+46173", style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: .w600, fontSize: 13))
-                        ),
+                            trailingAccessory:
+                              ProfileStack(children: [
+                                Image.asset("assets/images/placeholder_narcissist.png"),
+                                Image.asset("assets/images/placeholder_narcissist_2.png"),
+                                Image.asset("assets/images/placeholder_narcissist_3.png"),
+                                Image.asset("assets/images/placeholder_narcissist_4.png"),
+                                Image.asset("assets/images/logo.png"),
+                                Image.asset("assets/images/logo.png"),
+                                Image.asset("assets/images/logo.png"),
+                                Image.asset("assets/images/logo.png"),
+                                Image.asset("assets/images/logo.png"),
+                              ]),
+                        )
                       ]
                     ),
                     InSyncList(
