@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
-import 'package:insync/widgets/Contribution_card.dart';
-import 'package:insync/widgets/InSync_list.dart';
-import 'package:insync/widgets/commen/app_bar.dart';
-import 'package:insync/widgets/tickets/ticket_Builder.dart';
+
+import '../widgets/Contribution_card.dart';
+import '../widgets/InSync_list.dart';
+import '../widgets/common/app_bar.dart';
+import '../widgets/tickets/ticket_Builder.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
