@@ -1,10 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/colors.dart';
+import 'package:insync/firebase_options.dart';
 import 'package:insync/screens/auth/onboarding_screen.dart';
 import 'package:insync/screens/start_page.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
-void main() {
+void main() async{
+  // preparing Flutter before running async setup
+  WidgetsFlutterBinding.ensureInitialized();
+  // connecting the app to Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 

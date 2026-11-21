@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "990577040797",
+    "project_id": "insync-c669a",
+    "storage_bucket": "insync-c669a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990577040797:android:f2f2082f3e367696ade374",
+        "android_client_info": {
+          "package_name": "com.example.insync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBHirSQWwkRQqitN6mkDlSqtqjmVd0UT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
