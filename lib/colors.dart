@@ -159,3 +159,15 @@ class ColorDodgeFilter extends Widget {
     return BackdropFilter(blendMode: .colorDodge, filterConfig: .blur(),child: child).createElement();
   }
 }
+
+class ScreenFilter extends Widget {
+
+  final Widget? child;
+
+  const ScreenFilter({super.key, required this.child});
+
+  @override
+  Element createElement() {
+    return BackdropFilter(blendMode: .screen, filterConfig: .blur(),child: child).createElement();
+  }
+}

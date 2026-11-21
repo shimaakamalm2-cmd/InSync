@@ -1,10 +1,12 @@
+import 'package:cupertino_native_better/cupertino_native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:insync/colors.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
 import 'package:insync/screens/ticket_detail.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../screens/auth/onboarding_screen.dart';
 
 const _defaultDebugPropertiesValue = true;
 
@@ -76,61 +78,71 @@ class InSyncAppBarState extends State<InSyncAppBar> {
 
         if (widget.debugProperties)
 
-        NativeLiquidGlassUtils.supportsLiquidGlass
-          ? LiquidGlassMenu.icon(
-              items: [
-                const LiquidGlassMenuItem(
-                  id: 'sample_ticket',
-                  title: 'Show sample ticket',
-                  icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
-                ),
-                LiquidGlassMenuItem(
-                    id: 'tab_index',
-                    title: 'Default tab bar index',
-                    children: [
-                      LiquidGlassMenuItem(
-                        id: 'tab_index_0',
-                        title: 'Home',
-                        icon: selectedTabIndex == 0 ? const NativeLiquidGlassIcon.sfSymbol('checkmark.circle.fill') : NativeLiquidGlassIcon.sfSymbol('circlebadge'),
-                      ),
-                      LiquidGlassMenuItem(
-                        id: 'tab_index_1',
-                        title: 'My Tickets',
-                        icon: selectedTabIndex == 1 ? const NativeLiquidGlassIcon.sfSymbol('checkmark.circle.fill') : NativeLiquidGlassIcon.sfSymbol('circlebadge'),
-                      ),
-                      LiquidGlassMenuItem(
-                        id: 'tab_index_2',
-                        title: 'Search',
-                        icon: selectedTabIndex == 2 ? const NativeLiquidGlassIcon.sfSymbol('checkmark.circle.fill') : NativeLiquidGlassIcon.sfSymbol('circlebadge'),
-                      ),
-                    ]
-                )
-              ],
-              onItemSelected: (id) {
-                if (id == 'sample_ticket') {
-                  // TODO: Resolve Navigator issue
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   "ticket_detail"
-                  // );
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0])));
-                } else if (id.contains('tab_index_')) {
-                  prefs.then((onValue) {
-                    setState(() {
-                      onValue.setInt("tab_index", int.parse(id[id.length - 1]));
-                      selectedTabIndex = int.parse(id[id.length - 1]);
-                    });
-                  });
-                }
-              },
-              color: InSyncColors.secondary,
-              icon: NativeLiquidGlassIcon.sfSymbol('ladybug'),
-              menuTitle: 'DEBUG',
-            )
+        NativeLiquidGlassUtils.supportsLiquidGlass ?
+         CNPopupMenuButton.icon(items: [
+           const CNPopupMenuItem(
+             label: 'Show sample ticket',
+             icon: CNSymbol('ticket', size: 16),
+           ),
+           const CNPopupMenuItem(
+             label: 'Show onboarding',
+             subtitle: "Replaces the current navigation stack with the onboarding sequence",
+             icon: CNSymbol('door.left.hand.open', size: 16),
+           ),
+           CNPopupMenuDivider(),
+           CNPopupMenuSubmenu(label: 'Default tab bar index', items: [
+              CNPopupMenuItem(
+               label: 'Home',
+               checked: selectedTabIndex == 0,
+             ),
+             CNPopupMenuItem(
+               label: 'My Tickets',
+               checked: selectedTabIndex == 1,
+             ),
+             CNPopupMenuItem(
+               label: 'Search',
+               checked: selectedTabIndex == 2,
+             ),
+           ])
+         ],  buttonIcon: CNSymbol('ladybug', size: 18), onSelected: (path) {
 
-        : PopupMenuButton(
+         }, onPathSelected: (path) {
+           switch (path.first) {
+             case 2 :
+               switch (path.last) {
+                 case 0:
+                   setState(() {
+                     selectedTabIndex = 0;
+                   });
+                   break;
+                 case 1:
+                   setState(() {
+                     selectedTabIndex = 1;
+                   });
+                   break;
+                 case 2:
+                 setState(() {
+                   selectedTabIndex = 2;
+                 });
+                 break;
+               }
+             case 1:
+               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => OnboardingScreen()), (_) => false);
+               break;
+             case 0:
+               // TODO: Resolve Navigator issue
+               // Navigator.pushNamed(
+               //   context,
+               //   "ticket_detail"
+               // );
+               Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0])));
+               break;
+           }
+         })
+        :
+        PopupMenuButton(
           itemBuilder: (itemBuilder) {
             return [
               PopupMenuItem(
@@ -142,13 +154,21 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                   //   "ticket_detail",
                   // );
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0])));
+                      context,
+                      MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0]))
+                  );
+                },
+              ),
+              PopupMenuItem(
+                child: const Text('Show Onboarding'),
+                onTap: () {
+
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => OnboardingScreen()), (_) => false);
                 },
               ),
             ];
           },
-        )
+        ),
       ],
       actionsPadding:
           const EdgeInsetsDirectional.only(end: 15),

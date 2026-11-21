@@ -10,7 +10,7 @@ int _selectedIndex = 0;
 class StartPage extends StatefulWidget {
 
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-  List<Widget> tabs = [HomeScreen(), MyTicketScreen(), PlaceholderPage()];
+  final List<Widget> tabs = [HomeScreen(), MyTicketScreen(), PlaceholderPage()];
 
   StartPage({super.key}) {
     prefs.then((value) {
