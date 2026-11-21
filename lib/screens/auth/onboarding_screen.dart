@@ -5,18 +5,6 @@ import 'package:insync/widgets/auth/auth_components.dart';
 
 import '../../widgets/button.dart';
 
-/// Translucent pill used by both the "Text Field" and secondary
-/// "Wide Prominiant Button" components.
-BoxDecoration _glassPill() => BoxDecoration(
-  // screen(rgba(34,34,34,0.85)) == white @ 0.85*34/255
-  color: Colors.white.withValues(alpha: 0.85 * 34 / 255),
-  borderRadius: BorderRadius.circular(80),
-  border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-  boxShadow: [
-    BoxShadow(color: Colors.black.withValues(alpha: 0.07), blurRadius: 10),
-  ],
-);
-
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 

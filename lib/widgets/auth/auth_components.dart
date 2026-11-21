@@ -17,8 +17,6 @@ import 'package:native_liquid_glass/native_liquid_glass.dart';
 const _logoAsset = 'assets/images/logo_sync.svg';
 
 /// Figma canvas width every measurement in the mockups is relative to.
-const _designWidth = 402.0;
-const _bigLogoDesignSize = 476.0;
 
 class OnboardingSkeleton extends StatefulWidget {
   /// Frosted panel content (title, fields, buttons).
@@ -123,7 +121,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                           top = media.padding.top + 25;
                           size = (h - top - 20).clamp(0.0, 200.0);
                         } else {
-                          size = w * _bigLogoDesignSize / _designWidth;
+                          size = media.size.width + 80;
 
                         }
 
