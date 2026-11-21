@@ -3,6 +3,8 @@ import 'package:insync/screens/auth/create_org_screen.dart';
 import 'package:insync/screens/auth/sign_up_screen.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
+import '../../widgets/button.dart';
+
 /// Figma: Pages / Auth – "Join your org." (474:4805)
 class JoinOrgScreen extends StatefulWidget {
   const JoinOrgScreen({super.key});
@@ -28,7 +30,7 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthScaffold(
+    return OnboardingSkeleton(
       children: [
         const AuthTitle('Join your org.'),
         const SizedBox(height: 20),
@@ -44,11 +46,11 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
           onSubmitted: (_) => _next(),
         ),
         const SizedBox(height: 25),
-        AuthButton(label: 'Next', onPressed: _next),
+        ActionButton(label: 'Next', onPressed: _next),
         const SizedBox(height: 15),
-        AuthButton(
+        ActionButton(
           label: 'Create an org',
-          style: AuthButtonStyle.secondary,
+          style: ActionButtonStyle.secondary,
           onPressed: () => Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => const CreateOrgScreen()),
           ),

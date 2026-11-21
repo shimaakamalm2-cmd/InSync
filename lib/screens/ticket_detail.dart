@@ -35,7 +35,9 @@ class TicketDetailPageState extends State<TicketDetailPage> {
     super.initState();
     _drawerController.addListener(_handleDrawerExtentChange);
     Future.delayed(Duration(microseconds: 1), () {
-      opacity = 1;
+      setState(() {
+        opacity = 1;
+      });
     });
   }
 

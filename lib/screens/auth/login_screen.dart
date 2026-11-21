@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:insync/screens/auth/auth_navigation.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
+import '../../widgets/button.dart';
+
 /// Figma: Pages / Auth (474:4930, keyboard open: 466:4382)
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthScaffold(
+    return OnboardingSkeleton(
       children: [
         const AuthTitle('Sign back into\nyour account.'),
         const SizedBox(height: 20),
@@ -47,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           onSubmitted: (_) => _logIn(),
         ),
         const SizedBox(height: 25),
-        AuthButton(label: 'Log in', onPressed: _logIn),
+        ActionButton(label: 'Log in', onPressed: _logIn),
       ],
     );
   }

@@ -1,9 +1,10 @@
-import 'dart:ui';
-
+import 'package:cupertino_native_better/components/button.dart';
+import 'package:cupertino_native_better/style/sf_symbol.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:inspire_blur/inspire_blur.dart';
 import 'package:insync/colors.dart';
+import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 /// Shared building blocks for the onboarding / auth flow (Figma "Pages":
 /// Onboarding, Auth, Create an org).
@@ -19,33 +20,20 @@ const _logoAsset = 'assets/images/logo_sync.svg';
 const _designWidth = 402.0;
 const _bigLogoDesignSize = 476.0;
 
-/// Breathing room above the title so its glow isn't clipped by the panel's
-/// rounded top edge.
-const _panelTopPadding = 30.0;
-
-class AuthScaffold extends StatefulWidget {
+class OnboardingSkeleton extends StatefulWidget {
   /// Frosted panel content (title, fields, buttons).
   final List<Widget> children;
 
-  /// How far the big logo dips behind the panel when the keyboard is closed.
-  final double logoOverlap;
-
-  /// Opacity of the panel's frosted gradient at its bottom edge
-  /// (0.85 for Onboarding / Create an org, 0.15 for Auth screens).
-  final double panelOpacity;
-
-  const AuthScaffold({
+  const OnboardingSkeleton({
     super.key,
     required this.children,
-    this.logoOverlap = 30,
-    this.panelOpacity = 0.15,
   });
 
   @override
-  State<AuthScaffold> createState() => _AuthScaffoldState();
+  State<OnboardingSkeleton> createState() => _OnboardingSkeletonState();
 }
 
-class _AuthScaffoldState extends State<AuthScaffold>
+class _OnboardingSkeletonState extends State<OnboardingSkeleton>
     with SingleTickerProviderStateMixin {
   // Figma motion: rotate 0 → 60° with a spring ease over the first 75% of a
   // ~2s timeline, then hold; plays alternate, infinite.
@@ -56,9 +44,22 @@ class _AuthScaffoldState extends State<AuthScaffold>
 
   late final Animation<double> _turns = Tween<double>(begin: 0, end: 1 / 6)
       .animate(CurvedAnimation(
-        parent: _spin,
-        curve: const Interval(0, 0.75, curve: Curves.easeOutBack),
-      ));
+    parent: _spin,
+    curve: const Interval(0, 0.75, curve: Curves.easeOutBack),
+  ));
+
+  double opacity = 0;
+
+  @override
+  void initState() {
+    Inspire.warmUp();
+    super.initState();
+    Future.delayed(Duration(microseconds: 1), () {
+      setState(() {
+        opacity = 1;
+      });
+    });
+  }
 
   @override
   void dispose() {
@@ -72,102 +73,117 @@ class _AuthScaffoldState extends State<AuthScaffold>
     final keyboardOpen = media.viewInsets.bottom > 0;
     final radius = const Radius.circular(62);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        resizeToAvoidBottomInset: true,
-        body: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.black, InSyncColors.secondary],
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Stack(
+          children: [
+            AnimatedOpacity(
+              opacity: opacity,
+              duration: Duration(milliseconds: 1200),
+              child: Container(
+                // width: 200,
+                // height: 200,
+                decoration: BoxDecoration(borderRadius: .all(.circular(0)), gradient: LinearGradient(begin: .bottomCenter, end: .topCenter, colors: [InSyncColors.secondary, Theme.of(context).scaffoldBackgroundColor])),
+                clipBehavior: .hardEdge,
               ),
             ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    final w = constraints.maxWidth;
-                    final h = constraints.maxHeight;
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              extendBodyBehindAppBar: true,
 
-                    double size;
-                    double top;
-                    if (keyboardOpen) {
-                      top = media.padding.top + 25;
-                      size = (h - top - 20).clamp(0.0, 200.0);
-                    } else {
-                      size = w * _bigLogoDesignSize / _designWidth;
-                      // Keep the logo in the same place relative to the title.
-                      top = h + widget.logoOverlap + _panelTopPadding - size;
-                    }
+              appBar: AppBar(
+                forceMaterialTransparency: true,
+                leadingWidth: 58,
+                toolbarHeight: 44,
+                leading: Navigator.canPop(context) && NativeLiquidGlassUtils.supportsLiquidGlass ? Container(
 
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        AnimatedPositioned(
-                          duration: const Duration(milliseconds: 350),
-                          curve: Curves.easeOutCubic,
-                          left: (w - size) / 2,
-                          top: top,
-                          width: size,
-                          height: size,
-                          child: AnimatedOpacity(
-                            duration: const Duration(milliseconds: 200),
-                            opacity: size < 40 ? 0 : 1,
-                            child: RotationTransition(
-                              turns: _turns,
-                              child: SvgPicture.asset(_logoAsset),
+                  padding: .directional(start: 14),
+                  // width: 120,
+                  // color: Colors.green,
+                  child: CNButton.icon(icon: CNSymbol('chevron.left', size: 16), config: .new(width: 20, minHeight: 40, shrinkWrap: false), onPressed: () {
+                    Navigator.pop(context);
+                  },),
+                ) : null,
+              ),
+              resizeToAvoidBottomInset: true,
+              body: GestureDetector(
+                behavior: .translucent,
+                onTap: () => FocusScope.of(context).unfocus(),
+                child:
+                Column(
+                  children: [
+                    Expanded(
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        final w = constraints.maxWidth;
+                        final h = constraints.maxHeight;
+
+                        double size;
+                        double top;
+                        if (keyboardOpen) {
+                          top = media.padding.top + 25;
+                          size = (h - top - 20).clamp(0.0, 200.0);
+                        } else {
+                          size = w * _bigLogoDesignSize / _designWidth;
+
+                        }
+
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            AnimatedPositioned(
+                              duration: const Duration(milliseconds: 1250),
+                              curve: Curves.easeOutCubic,
+                              left: (w - size) / 2,
+                              top: media.padding.top + 24,
+                              width: size,
+                              height: size,
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 200),
+                                opacity: size < 40 ? 0 : 1,
+                                child: RotationTransition(
+                                  turns: _turns,
+                                  child: SvgPicture.asset(_logoAsset),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
+
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child:
+                            IgnorePointer(
+                                child: Inspire.backdropBlur(
+                                    config: InspireBlurConfig.bottomToTop(sigmaX: 20, sigmaY: 55)
+                                )
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  }),
-                ),
-                ClipRRect(
-                  // Bottom corners follow the device's own screen corners.
-                  borderRadius:
-                      BorderRadius.only(topLeft: radius, topRight: radius),
-                  child: BackdropFilter(
-                    // CSS backdrop-blur(40px) is a radius; Flutter's sigma ≈ radius / 2.
-                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.white.withValues(alpha: 0),
-                            // screen(rgba(136,136,136,a)) == white @ a*136/255
-                            Colors.white.withValues(
-                                alpha: widget.panelOpacity * 136 / 255),
-                          ],
-                        ),
-                      ),
-                      child: SafeArea(
-                        top: false,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              25, _panelTopPadding, 25, keyboardOpen ? 20 : 38),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: widget.children,
+                          SafeArea(
+                            top: false,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  25, 9, 25, keyboardOpen ? 20 : 0),
+                              child: Column(
+                                spacing: 25,
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: widget.children,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
+          ]
       ),
     );
   }
@@ -181,16 +197,18 @@ class AuthTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.bold,
-        height: 1.0,
-        color: const Color.fromRGBO(232, 232, 232, 0.85),
-        shadows: [
-          Shadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 30),
-        ],
+    return ScreenFilter(
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
+          height: 1.0,
+          color: const Color.fromRGBO(232, 232, 232, 0.85),
+          shadows: [
+            Shadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 30),
+          ],
+        ),
       ),
     );
   }
@@ -271,66 +289,6 @@ class AuthTextField extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w600,
             color: Colors.white.withValues(alpha: 0.45),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-enum AuthButtonStyle { primary, secondary }
-
-class AuthButton extends StatelessWidget {
-  final String label;
-  final VoidCallback? onPressed;
-  final AuthButtonStyle style;
-
-  /// 60 on the Onboarding screen, 45 everywhere else.
-  final double height;
-
-  const AuthButton({
-    super.key,
-    required this.label,
-    required this.onPressed,
-    this.style = AuthButtonStyle.primary,
-    this.height = 45,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final primary = style == AuthButtonStyle.primary;
-
-    final decoration = primary
-        ? BoxDecoration(
-            color: const Color.fromRGBO(242, 169, 83, 0.85),
-            borderRadius: BorderRadius.circular(80),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.12), blurRadius: 12),
-            ],
-          )
-        : _glassPill();
-
-    return Container(
-      height: height,
-      decoration: decoration,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(80),
-          onTap: onPressed,
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: height > 50 ? 18 : 16,
-                fontWeight: FontWeight.bold,
-                color: primary
-                    ? Colors.white.withValues(alpha: 0.85)
-                    : Colors.white,
-              ),
-            ),
           ),
         ),
       ),

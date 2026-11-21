@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:insync/screens/auth/auth_navigation.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
+import '../../widgets/button.dart';
+
 /// Figma: Pages / Auth – "Now, It's time to sign you up." (466:4259)
 class SignUpScreen extends StatefulWidget {
   /// Set when coming from "Create an org".
@@ -34,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthScaffold(
+    return OnboardingSkeleton(
       children: [
         const AuthTitle('Now, It’s time to\nsign you up.'),
         const SizedBox(height: 20),
@@ -62,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSubmitted: (_) => _signUp(),
         ),
         const SizedBox(height: 25),
-        AuthButton(label: 'Sign up', onPressed: _signUp),
+        ActionButton(label: 'Sign up', onPressed: _signUp),
       ],
     );
   }
