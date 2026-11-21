@@ -32,28 +32,35 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
   Widget build(BuildContext context) {
     return OnboardingSkeleton(
       children: [
-        const AuthTitle('Join your org.'),
-        const SizedBox(height: 20),
-        const AuthSubtitle(
-          'If you are already part of an organization, ask the administrators '
-          'to issue a code for you to join right away.',
+        Column(
+          crossAxisAlignment: .start,
+          spacing: 20,
+          children: [
+            const AuthTitle('Join your org.'),
+            const AuthSubtitle(
+              'If you are already part of an organization, ask the administrators '
+                  'to issue a code for you to join right away.',
+            ),
+            AuthTextField(
+              hint: 'XXXX-XXXX-XXXX-XXXX',
+              controller: _code,
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => _next(),
+            ),
+          ],
         ),
-        const SizedBox(height: 20),
-        AuthTextField(
-          hint: 'XXXX-XXXX-XXXX-XXXX',
-          controller: _code,
-          textInputAction: TextInputAction.next,
-          onSubmitted: (_) => _next(),
-        ),
-        const SizedBox(height: 25),
-        ActionButton(label: 'Next', onPressed: _next),
-        const SizedBox(height: 15),
-        ActionButton(
-          label: 'Create an org',
-          style: ActionButtonStyle.secondary,
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const CreateOrgScreen()),
-          ),
+        Column(
+          spacing: 15,
+          children: [
+            ActionButton(label: 'Next', onPressed: _next),
+            ActionButton(
+              label: 'Create an org',
+              style: ActionButtonStyle.secondary,
+              onPressed: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const CreateOrgScreen()),
+              ),
+            ),
+          ],
         ),
       ],
     );
