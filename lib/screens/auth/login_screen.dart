@@ -31,9 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // TODO: Authenticate against the backend once it exists.
   void _logIn() {
-    if(_formKey.currentState!.validate()){
+    //if(_formKey.currentState!.validate()){
       enterApp(context);
-    }
+    //}
   }
   
 
@@ -47,12 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             const AuthTitle('Sign back into\nyour account.'),
             Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: .start,
                 spacing: 20,
                 children: [
                   AuthTextField(
-                    key: _formKey,
                     hint: 'Email',
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -66,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   AuthTextField(
-                    key: _formKey,
                     hint: 'Password',
                     controller: _passwordController,
                     obscureText: true,

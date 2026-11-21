@@ -40,24 +40,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   // TODO: Create the account (and org / join via code) once the backend exists.
   void _signUp()  {
-    if(_formKey.currentState!.validate()){
-      //enterApp(context);
-      LoginScreen();
-    }
+    if (_formKey.currentState!.validate()) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
+  }
   }
 
   @override
   Widget build(BuildContext context) {
     return OnboardingSkeleton(
       children: [
-        Form(child:
-        Column(
+        Form(
+          key: _formKey,
+          child:Column(
           crossAxisAlignment: .start,
           spacing: 20,
           children: [
             const AuthTitle('Now, It’s time to\nsign you up.'),
             AuthTextField(
-              key: _formKey,
               hint: 'Display Name',
               controller: _displayNameController,
               textInputAction: TextInputAction.next,
@@ -70,7 +74,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
             ),
             AuthTextField(
-              key: _formKey,
               hint: 'myemail@provider.com',
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -84,7 +87,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
             ),
             AuthTextField(
-              key: _formKey,
               hint: 'mySUpErStrong_Password@12345',
               controller: _passwordController,
               obscureText: true,
