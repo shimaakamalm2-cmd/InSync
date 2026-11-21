@@ -247,6 +247,7 @@ class AuthTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Iterable<String>? autofillHints;
   final ValueChanged<String>? onSubmitted;
+  final String? Function(String?)? validator;//custom validation function 
 
   const AuthTextField({
     super.key,
@@ -256,6 +257,7 @@ class AuthTextField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.autofillHints,
+    this.validator,
     this.onSubmitted,
   });
 
@@ -266,13 +268,14 @@ class AuthTextField extends StatelessWidget {
       decoration: _glassPill(),
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: obscureText,
         keyboardType: keyboardType,
         textInputAction: textInputAction,
         autofillHints: autofillHints,
-        onSubmitted: onSubmitted,
+        onFieldSubmitted: onSubmitted,
+        validator:validator,
         cursorColor: InSyncColors.primary,
         style: const TextStyle(
           fontSize: 14,
