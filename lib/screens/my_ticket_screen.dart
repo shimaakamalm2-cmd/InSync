@@ -200,12 +200,12 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
 List<Ticket> getSampleTickets() {
   final now = DateTime.now();
 
-  final projectA = Project('InSync', '-');
-  final projectB = Project('SpendWise', '-');
-  final projectC = Project('Elevate', '-');
+  final projectA = Project('InSync', '-','summery',now,3);
+  final projectB = Project('SpendWise', '-','summery',now,3);
+  final projectC = Project('Elevate', '-','summery',now,3);
 
-  final userA = User(Uuid(), 'Shimaa');
-  final userB = User(Uuid(), 'Ahmed');
+  final userA = User(Uuid(), 'Shimaa',Uuid().v4(),'manager');
+  final userB = User(Uuid(), 'Ahmed',Uuid().v4(),'marketing agent');
 
   return [
     Ticket(
