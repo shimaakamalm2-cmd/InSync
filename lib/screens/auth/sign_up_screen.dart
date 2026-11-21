@@ -23,6 +23,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _email = TextEditingController();
   final _password = TextEditingController();
 
+  final _displayNameFormKey = GlobalKey<FormState>();
+  final _emailFormKey = GlobalKey<FormState>();
+  final _passwordFormKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     _displayName.dispose();
@@ -38,32 +42,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return OnboardingSkeleton(
       children: [
-        const AuthTitle('Now, It’s time to\nsign you up.'),
-        const SizedBox(height: 20),
-        AuthTextField(
-          hint: 'Display Name',
-          controller: _displayName,
-          textInputAction: TextInputAction.next,
-          autofillHints: const [AutofillHints.name],
-        ),
-        const SizedBox(height: 20),
-        AuthTextField(
-          hint: 'myemail@provider.com',
-          controller: _email,
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          autofillHints: const [AutofillHints.email],
-        ),
-        const SizedBox(height: 20),
-        AuthTextField(
-          hint: 'mySUpErStrong_Password@12345',
-          controller: _password,
-          obscureText: true,
-          textInputAction: TextInputAction.done,
-          autofillHints: const [AutofillHints.newPassword],
-          onSubmitted: (_) => _signUp(),
-        ),
-        const SizedBox(height: 25),
+        Form(child:
+        Column(
+          crossAxisAlignment: .start,
+          spacing: 20,
+          children: [
+            const AuthTitle('Now, It’s time to\nsign you up.'),
+            AuthTextField(
+              key: _displayNameFormKey,
+              hint: 'Display Name',
+              controller: _displayName,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.name],
+            ),
+            AuthTextField(
+              key: _emailFormKey,
+              hint: 'myemail@provider.com',
+              controller: _email,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.email],
+            ),
+            AuthTextField(
+              key: _passwordFormKey,
+              hint: 'mySUpErStrong_Password@12345',
+              controller: _password,
+              obscureText: true,
+              textInputAction: TextInputAction.done,
+              autofillHints: const [AutofillHints.newPassword],
+              onSubmitted: (_) => _signUp(),
+            ),
+          ],
+        )),
         ActionButton(label: 'Sign up', onPressed: _signUp),
       ],
     );

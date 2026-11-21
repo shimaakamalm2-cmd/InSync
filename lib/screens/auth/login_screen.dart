@@ -16,6 +16,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _email = TextEditingController();
   final _password = TextEditingController();
 
+  final _emailFormKey = GlobalKey<FormState>();
+  final _passwordFormKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     _email.dispose();
@@ -30,25 +33,36 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return OnboardingSkeleton(
       children: [
-        const AuthTitle('Sign back into\nyour account.'),
-        const SizedBox(height: 20),
-        AuthTextField(
-          hint: 'Email',
-          controller: _email,
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          autofillHints: const [AutofillHints.email],
+        Column(
+          crossAxisAlignment: .start,
+          spacing: 20,
+          children: [
+            const AuthTitle('Sign back into\nyour account.'),
+            Form(child: Column(
+              crossAxisAlignment: .start,
+              spacing: 20,
+              children: [
+                AuthTextField(
+                  key: _emailFormKey,
+                  hint: 'Email',
+                  controller: _email,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  autofillHints: const [AutofillHints.email],
+                ),
+                AuthTextField(
+                  key: _passwordFormKey,
+                  hint: 'Password',
+                  controller: _password,
+                  obscureText: true,
+                  textInputAction: TextInputAction.done,
+                  autofillHints: const [AutofillHints.password],
+                  onSubmitted: (_) => _logIn(),
+                ),
+              ],
+            ))
+          ],
         ),
-        const SizedBox(height: 20),
-        AuthTextField(
-          hint: 'Password',
-          controller: _password,
-          obscureText: true,
-          textInputAction: TextInputAction.done,
-          autofillHints: const [AutofillHints.password],
-          onSubmitted: (_) => _logIn(),
-        ),
-        const SizedBox(height: 25),
         ActionButton(label: 'Log in', onPressed: _logIn),
       ],
     );
