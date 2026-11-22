@@ -3,6 +3,7 @@ import 'package:insync/screens/auth/auth_navigation.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
 import '../../widgets/button.dart';
+import '../../widgets/text_field.dart';
 
 /// Figma: Pages / Auth – "Now, It's time to sign you up." (466:4259)
 class SignUpScreen extends StatefulWidget {
@@ -48,14 +49,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           spacing: 20,
           children: [
             const AuthTitle('Now, It’s time to\nsign you up.'),
-            AuthTextField(
+            ActionTextField(
               key: _displayNameFormKey,
               hint: 'Display Name',
               controller: _displayName,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.name],
             ),
-            AuthTextField(
+            ActionTextField(
               key: _emailFormKey,
               hint: 'myemail@provider.com',
               controller: _email,
@@ -63,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
             ),
-            AuthTextField(
+            ActionTextField(
               key: _passwordFormKey,
               hint: 'mySUpErStrong_Password@12345',
               controller: _password,

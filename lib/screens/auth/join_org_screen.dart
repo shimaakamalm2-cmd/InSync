@@ -4,6 +4,7 @@ import 'package:insync/screens/auth/sign_up_screen.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
 import '../../widgets/button.dart';
+import '../../widgets/text_field.dart';
 
 /// Figma: Pages / Auth – "Join your org." (474:4805)
 class JoinOrgScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
               'If you are already part of an organization, ask the administrators '
                   'to issue a code for you to join right away.',
             ),
-            AuthTextField(
+            ActionTextField(
               hint: 'XXXX-XXXX-XXXX-XXXX',
               controller: _code,
               textInputAction: TextInputAction.next,

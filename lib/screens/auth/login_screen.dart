@@ -3,6 +3,7 @@ import 'package:insync/screens/auth/auth_navigation.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
 import '../../widgets/button.dart';
+import '../../widgets/text_field.dart';
 
 /// Figma: Pages / Auth (474:4930, keyboard open: 466:4382)
 class LoginScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: .start,
               spacing: 20,
               children: [
-                AuthTextField(
+                ActionTextField(
                   key: _emailFormKey,
                   hint: 'Email',
                   controller: _email,
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textInputAction: TextInputAction.next,
                   autofillHints: const [AutofillHints.email],
                 ),
-                AuthTextField(
+                ActionTextField(
                   key: _passwordFormKey,
                   hint: 'Password',
                   controller: _password,
