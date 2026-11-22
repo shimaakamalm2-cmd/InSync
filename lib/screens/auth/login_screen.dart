@@ -14,21 +14,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _email = TextEditingController();
-  final _password = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  final _emailFormKey = GlobalKey<FormState>();
-  final _passwordFormKey = GlobalKey<FormState>();
+  // final _emailFormKey = GlobalKey<FormState>();
+  // final _passwordFormKey = GlobalKey<FormState>();
+
+  //only one key for the whole form
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _email.dispose();
-    _password.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   // TODO: Authenticate against the backend once it exists.
-  void _logIn() => enterApp(context);
+  void _logIn() {
+    //if(_formKey.currentState!.validate()){
+      enterApp(context);
+    //}
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -39,29 +47,42 @@ class _LoginScreenState extends State<LoginScreen> {
           spacing: 20,
           children: [
             const AuthTitle('Sign back into\nyour account.'),
-            Form(child: Column(
-              crossAxisAlignment: .start,
-              spacing: 20,
-              children: [
-                ActionTextField(
-                  key: _emailFormKey,
-                  hint: 'Email',
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  autofillHints: const [AutofillHints.email],
-                ),
-                ActionTextField(
-                  key: _passwordFormKey,
-                  hint: 'Password',
-                  controller: _password,
-                  obscureText: true,
-                  textInputAction: TextInputAction.done,
-                  autofillHints: const [AutofillHints.password],
-                  onSubmitted: (_) => _logIn(),
-                ),
-              ],
-            ))
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: .start,
+                spacing: 20,
+                children: [
+                  ActionTextField(
+                    hint: 'Email',
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    autofillHints: const [AutofillHints.email],
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                  ),
+                  ActionTextField(
+                    hint: 'Password',
+                    controller: _passwordController,
+                    obscureText: true,
+                    textInputAction: TextInputAction.done,
+                    autofillHints: const [AutofillHints.password],
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                    onSubmit: (_) => _logIn(),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         ActionButton(label: 'Log in', onPressed: _logIn),

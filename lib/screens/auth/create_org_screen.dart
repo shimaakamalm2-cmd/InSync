@@ -46,7 +46,7 @@ class _CreateOrgScreenState extends State<CreateOrgScreen> {
               hint: 'My InSync Organization',
               controller: _orgName,
               textInputAction: TextInputAction.next,
-              onSubmitted: (_) => _next(),
+              onSubmit: (_) => _next(),
             ),
           ],
         ),

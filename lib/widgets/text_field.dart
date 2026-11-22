@@ -22,7 +22,8 @@ class ActionTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final Iterable<String>? autofillHints;
-  final ValueChanged<String>? onSubmitted;
+  final ValueChanged<String>? onSubmit;
+  final String? Function(String?)? validator;
 
   final FocusNode _focusNode = FocusNode();
 
@@ -34,7 +35,8 @@ class ActionTextField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.autofillHints,
-    this.onSubmitted,
+    this.validator,
+    this.onSubmit,
   });
 
   @override
@@ -51,14 +53,14 @@ class ActionTextField extends StatelessWidget {
         child: Container(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: TextField(
-            focusNode: _focusNode,
+          child: TextFormField(
             controller: controller,
             obscureText: obscureText,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
             autofillHints: autofillHints,
-            onSubmitted: onSubmitted,
+            onFieldSubmitted: onSubmit,
+            validator: validator,
             cursorColor: InSyncColors.primary,
             style: const TextStyle(
               fontSize: 14,
@@ -92,14 +94,14 @@ class ActionTextField extends StatelessWidget {
         decoration: _glassPill(),
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: TextField(
-          focusNode: _focusNode,
+        child: TextFormField(
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
           textInputAction: textInputAction,
           autofillHints: autofillHints,
-          onSubmitted: onSubmitted,
+          onFieldSubmitted: onSubmit,
+          validator: validator,
           cursorColor: InSyncColors.primary,
           style: const TextStyle(
             fontSize: 14,

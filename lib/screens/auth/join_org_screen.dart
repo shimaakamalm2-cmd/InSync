@@ -46,7 +46,7 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
               hint: 'XXXX-XXXX-XXXX-XXXX',
               controller: _code,
               textInputAction: TextInputAction.next,
-              onSubmitted: (_) => _next(),
+              onSubmit: (_) => _next(),
             ),
           ],
         ),

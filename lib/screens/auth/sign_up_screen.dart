@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:insync/screens/auth/auth_navigation.dart';
+import 'package:insync/screens/auth/login_screen.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
+import 'package:insync/widgets/text_field.dart';
 
 import '../../widgets/button.dart';
-import '../../widgets/text_field.dart';
 
 /// Figma: Pages / Auth – "Now, It's time to sign you up." (466:4259)
 class SignUpScreen extends StatefulWidget {
@@ -20,58 +21,88 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _displayName = TextEditingController();
-  final _email = TextEditingController();
-  final _password = TextEditingController();
+  final _displayNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  final _displayNameFormKey = GlobalKey<FormState>();
-  final _emailFormKey = GlobalKey<FormState>();
-  final _passwordFormKey = GlobalKey<FormState>();
+  // final _displayNameFormKey = GlobalKey<FormState>();
+  // final _emailFormKey = GlobalKey<FormState>();
+  // final _passwordFormKey = GlobalKey<FormState>();
 
+  //only one key for the whole form 
+  final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
-    _displayName.dispose();
-    _email.dispose();
-    _password.dispose();
+    _displayNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   // TODO: Create the account (and org / join via code) once the backend exists.
-  void _signUp() => enterApp(context);
+  void _signUp()  {
+    if (_formKey.currentState!.validate()) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
+  }
+  }
 
   @override
   Widget build(BuildContext context) {
     return OnboardingSkeleton(
       children: [
-        Form(child:
-        Column(
+        Form(
+          key: _formKey,
+          child:Column(
           crossAxisAlignment: .start,
           spacing: 20,
           children: [
             const AuthTitle('Now, It’s time to\nsign you up.'),
             ActionTextField(
-              key: _displayNameFormKey,
               hint: 'Display Name',
-              controller: _displayName,
+              controller: _displayNameController,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.name],
+              validator:(value){
+                if(value==null){
+                  return 'Please enter your name';
+                }
+                return null;
+              },
             ),
             ActionTextField(
-              key: _emailFormKey,
               hint: 'myemail@provider.com',
-              controller: _email,
+              controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
+              validator:(value){
+                if(value==null){
+                  return 'Please enter your email';
+                }
+                return null;
+              },
             ),
             ActionTextField(
-              key: _passwordFormKey,
               hint: 'mySUpErStrong_Password@12345',
-              controller: _password,
+              controller: _passwordController,
               obscureText: true,
               textInputAction: TextInputAction.done,
               autofillHints: const [AutofillHints.newPassword],
-              onSubmitted: (_) => _signUp(),
+              onSubmit: (_) => _signUp(),
+              validator:(value){
+                if(value==null){
+                  return 'Please enter a password';
+                }
+                if(value.length <8 ){
+                  return 'Password must be at least 8 characters';
+                }
+                return null;
+              },
             ),
           ],
         )),
