@@ -37,20 +37,19 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
   // ~2s timeline, then hold; plays alternate, infinite.
   late final AnimationController _spin = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1998),
+    duration: const Duration(milliseconds: 3000),
   )..repeat(reverse: true);
 
   late final Animation<double> _turns = Tween<double>(begin: 0, end: 1 / 6)
       .animate(CurvedAnimation(
     parent: _spin,
-    curve: const Interval(0, 0.75, curve: Curves.easeOutBack),
+    curve: const Interval(0.5, 1, curve: Curves.easeInCubic),
   ));
 
   double opacity = 0;
 
   @override
   void initState() {
-    Inspire.warmUp();
     super.initState();
     Future.delayed(Duration(microseconds: 1), () {
       setState(() {
@@ -72,7 +71,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
     final radius = const Radius.circular(62);
 
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      decoration: BoxDecoration(borderRadius: .all(.circular(0)), gradient: LinearGradient(begin: .bottomCenter, end: .topCenter, colors: [InSyncColors.secondary, Theme.of(context).scaffoldBackgroundColor])),
       child: Stack(
           children: [
             AnimatedOpacity(
@@ -92,10 +91,10 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
               appBar: AppBar(
                 forceMaterialTransparency: true,
                 leadingWidth: 58,
-                toolbarHeight: 44,
+                toolbarHeight: media.orientation == .portrait ? 44 : 52,
                 leading: Navigator.canPop(context) && NativeLiquidGlassUtils.supportsLiquidGlass ? Container(
 
-                  padding: .directional(start: 14),
+                  padding: .directional(start: 14, top: media.orientation == .landscape ? 10 : 0),
                   // width: 120,
                   // color: Colors.green,
                   child: CNButton.icon(icon: CNSymbol('chevron.left', size: 16), config: .new(width: 20, minHeight: 40, shrinkWrap: false), onPressed: () {
@@ -110,41 +109,63 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                 child:
                 Column(
                   children: [
-                    Expanded(
+                    Flexible(
                       child: LayoutBuilder(builder: (context, constraints) {
                         final w = constraints.maxWidth;
                         final h = constraints.maxHeight;
 
                         double size;
-                        double top;
                         if (keyboardOpen) {
-                          top = media.padding.top + 25;
-                          size = (h - top - 20).clamp(0.0, 200.0);
+                          if (media.orientation == .portrait) {
+                            size = h / 1.45;
+                          } else {
+                            size = w / 4.5;
+                          }
                         } else {
-                          size = media.size.width + 80;
-
+                          if (media.orientation == .portrait) {
+                            size = h / 1.05;
+                          } else {
+                            size = w / 4.5;
+                          }
                         }
 
-                        return Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            AnimatedPositioned(
-                              duration: const Duration(milliseconds: 1250),
-                              curve: Curves.easeOutCubic,
-                              left: (w - size) / 2,
-                              top: media.padding.top + 24,
-                              width: size,
-                              height: size,
-                              child: AnimatedOpacity(
-                                duration: const Duration(milliseconds: 200),
-                                opacity: size < 40 ? 0 : 1,
+                        return Container(
+                          // color: Colors.green,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            alignment: media.orientation == .landscape ? Alignment.topRight : .topStart,
+                            children: [
+                              media.orientation == .landscape ?
+                              AnimatedPositioned(
+                                  duration: const Duration(milliseconds: 1250),
+                                  curve: Curves.easeOutCubic,
+                                  right: 25,
+                                  top: media.padding.top + 20,
+                                  child: Row(
+                                    crossAxisAlignment: .end,
+                                    children: [
+                                      RotationTransition(
+                                        turns: _turns,
+                                        child: SizedBox(
+                                          width: size,
+                                          child: SvgPicture.asset(_logoAsset),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              ) : AnimatedPositioned(
+                                duration: const Duration(milliseconds: 1250),
+                                curve: Curves.easeOutCubic,
+                                left: (w - size) / 2,
+                                top: media.padding.top + 24,
+                                width: size,
                                 child: RotationTransition(
                                   turns: _turns,
                                   child: SvgPicture.asset(_logoAsset),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          )
                         );
                       }),
                     ),
@@ -156,8 +177,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                           Positioned.fill(
                             child:
                             IgnorePointer(
-                                child: Inspire.backdropBlur(
-                                    config: InspireBlurConfig.bottomToTop(sigmaX: 20, sigmaY: 55)
+                                child: Inspire.backdropBlur(config: InspireBlurConfig.bottomToTop(sigmaY: 27, extent: 1.2, fadeCurve: Curves.linear)
                                 )
                             ),
                           ),
@@ -165,12 +185,14 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                             top: false,
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(
-                                  25, 9, 25, keyboardOpen ? 20 : 0),
-                              child: Column(
-                                spacing: 25,
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: widget.children,
+                                  media.orientation == .landscape && Navigator.of(context).canPop() ? 70 : 25, 9, 25, keyboardOpen ? 20 : 0),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  spacing: 25,
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: widget.children,
+                                ),
                               ),
                             ),
                           ),
@@ -223,76 +245,6 @@ class AuthSubtitle extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(fontSize: 16, height: 1.0, color: Colors.white),
-    );
-  }
-}
-
-/// Translucent pill used by both the "Text Field" and secondary
-/// "Wide Prominiant Button" components.
-BoxDecoration _glassPill() => BoxDecoration(
-      // screen(rgba(34,34,34,0.85)) == white @ 0.85*34/255
-      color: Colors.white.withValues(alpha: 0.85 * 34 / 255),
-      borderRadius: BorderRadius.circular(80),
-      border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-      boxShadow: [
-        BoxShadow(color: Colors.black.withValues(alpha: 0.07), blurRadius: 10),
-      ],
-    );
-
-class AuthTextField extends StatelessWidget {
-  final String hint;
-  final TextEditingController? controller;
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final TextInputAction? textInputAction;
-  final Iterable<String>? autofillHints;
-  final ValueChanged<String>? onSubmitted;
-  final String? Function(String?)? validator;//custom validation function 
-
-  const AuthTextField({
-    super.key,
-    required this.hint,
-    this.controller,
-    this.obscureText = false,
-    this.keyboardType,
-    this.textInputAction,
-    this.autofillHints,
-    this.validator,
-    this.onSubmitted,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      decoration: _glassPill(),
-      alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        autofillHints: autofillHints,
-        onFieldSubmitted: onSubmitted,
-        validator:validator,
-        cursorColor: InSyncColors.primary,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
-        decoration: InputDecoration(
-          isCollapsed: true,
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: Colors.white.withValues(alpha: 0.45),
-          ),
-        ),
-      ),
     );
   }
 }

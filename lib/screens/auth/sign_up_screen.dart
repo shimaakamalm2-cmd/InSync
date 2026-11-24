@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insync/screens/auth/auth_navigation.dart';
 import 'package:insync/screens/auth/login_screen.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
+import 'package:insync/widgets/text_field.dart';
 
 import '../../widgets/button.dart';
 
@@ -61,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           spacing: 20,
           children: [
             const AuthTitle('Now, It’s time to\nsign you up.'),
-            AuthTextField(
+            ActionTextField(
               hint: 'Display Name',
               controller: _displayNameController,
               textInputAction: TextInputAction.next,
@@ -73,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 return null;
               },
             ),
-            AuthTextField(
+            ActionTextField(
               hint: 'myemail@provider.com',
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -86,13 +87,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 return null;
               },
             ),
-            AuthTextField(
+            ActionTextField(
               hint: 'mySUpErStrong_Password@12345',
               controller: _passwordController,
               obscureText: true,
               textInputAction: TextInputAction.done,
               autofillHints: const [AutofillHints.newPassword],
-              onSubmitted: (_) => _signUp(),
+              onSubmit: (_) => _signUp(),
               validator:(value){
                 if(value==null){
                   return 'Please enter a password';

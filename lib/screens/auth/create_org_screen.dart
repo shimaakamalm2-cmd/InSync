@@ -4,6 +4,7 @@ import 'package:insync/screens/auth/sign_up_screen.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
 import '../../widgets/button.dart';
+import '../../widgets/text_field.dart';
 
 /// Figma: Pages / Create an org (458:2894, keyboard open: 462:4152)
 class CreateOrgScreen extends StatefulWidget {
@@ -41,11 +42,11 @@ class _CreateOrgScreenState extends State<CreateOrgScreen> {
               'What should we call your organization?\n'
                   'Alternatively, you can enter an organization code instead.',
             ),
-            AuthTextField(
+            ActionTextField(
               hint: 'My InSync Organization',
               controller: _orgName,
               textInputAction: TextInputAction.next,
-              onSubmitted: (_) => _next(),
+              onSubmit: (_) => _next(),
             ),
           ],
         ),
