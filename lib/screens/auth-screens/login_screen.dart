@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:insync/screens/auth/auth_navigation.dart';
+import 'package:insync/screens/auth-screens/auth_navigation.dart';
 import 'package:insync/services/auth_service.dart';
-import 'package:insync/widgets/auth/auth_components.dart';
+import 'package:insync/widgets/auth_widgets/auth_components.dart';
 
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';

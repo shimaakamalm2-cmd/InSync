@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:insync/screens/auth/auth_navigation.dart';
-import 'package:insync/screens/auth/login_screen.dart';
+import 'package:insync/screens/auth-screens/auth_navigation.dart';
+import 'package:insync/screens/auth-screens/login_screen.dart';
 import 'package:insync/services/OrgServices.dart';
 import 'package:insync/services/auth_service.dart';
-import 'package:insync/widgets/auth/auth_components.dart';
+import 'package:insync/widgets/auth_widgets/auth_components.dart';
 import 'package:insync/widgets/text_field.dart';
 
 import '../../widgets/button.dart';

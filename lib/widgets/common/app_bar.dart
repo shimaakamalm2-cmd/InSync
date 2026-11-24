@@ -6,7 +6,7 @@ import 'package:insync/screens/ticket_detail.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../screens/auth/onboarding_screen.dart';
+import '../../screens/auth-screens/onboarding_screen.dart';
 
 const _defaultDebugPropertiesValue = true;
 

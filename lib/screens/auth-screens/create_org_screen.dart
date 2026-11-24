@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:insync/screens/auth/join_org_screen.dart';
-import 'package:insync/screens/auth/sign_up_screen.dart';
-import 'package:insync/widgets/auth/auth_components.dart';
+import 'package:insync/screens/auth-screens/join_org_screen.dart';
+import 'package:insync/screens/auth-screens/sign_up_screen.dart';
+import 'package:insync/widgets/auth_widgets/auth_components.dart';
 
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';

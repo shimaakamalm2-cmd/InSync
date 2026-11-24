@@ -7,7 +7,8 @@ class AuthService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   //this function registers user with email and pass , ready function in firebase
-  //TODO: edit this with a department and customize it for emp and head
+  //---------------
+
   Future<void> registerWithCode(
     String email,
     String password,
@@ -50,6 +51,11 @@ class AuthService {
           'orgId' : orgId,
           'role':role.name,
         });
+
+        await inviteDoc.reference.update({
+          'isUsed': true,
+        });
+        
       }
     } on FirebaseAuthException catch (e) {
       print(e.code);

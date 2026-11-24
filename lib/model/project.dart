@@ -1,5 +1,4 @@
 class Project {
-
   String name;
   String description;
   String projectSummary;
