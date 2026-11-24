@@ -201,6 +201,7 @@ List<Ticket> getSampleTickets() {
   const uuid = Uuid();
 
   final projectA = Project(
+    uuid.v4(),
     'InSync',
     '-',
     'Summary',
@@ -209,6 +210,7 @@ List<Ticket> getSampleTickets() {
   );
 
   final projectB = Project(
+    uuid.v4(),
     'SpendWise',
     '-',
     'Summary',
@@ -217,6 +219,7 @@ List<Ticket> getSampleTickets() {
   );
 
   final projectC = Project(
+    uuid.v4(),
     'Elevate',
     '-',
     'Summary',
