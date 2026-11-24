@@ -66,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   AuthTextField(
+
                     hint: 'Password',
                     controller: _passwordController,
                     obscureText: true,
