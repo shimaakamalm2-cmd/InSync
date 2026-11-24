@@ -4,8 +4,9 @@ import 'package:insync/screens/auth/sign_up_screen.dart';
 import 'package:insync/widgets/auth/auth_components.dart';
 
 import '../../widgets/button.dart';
+import '../../widgets/text_field.dart';
 
-/// Figma: Pages / Create an org (458:2894, keyboard open: 462:4152)
+
 class CreateOrgScreen extends StatefulWidget {
   const CreateOrgScreen({super.key});
 
@@ -16,6 +17,7 @@ class CreateOrgScreen extends StatefulWidget {
 class _CreateOrgScreenState extends State<CreateOrgScreen> {
   final _orgName = TextEditingController();
 
+//to dispose the controller resources
   @override
   void dispose() {
     _orgName.dispose();
@@ -23,10 +25,25 @@ class _CreateOrgScreenState extends State<CreateOrgScreen> {
   }
 
   void _next() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => SignUpScreen(organizationName: _orgName.text.trim()),
-    ));
+  final orgName = _orgName.text.trim();
+
+  if (orgName.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Please enter your organization name.'),
+      ),
+    );
+    return;
   }
+//  pushing the orgname to the next page for to create the org object
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => SignUpScreen(
+        organizationName: orgName,//maps the org name entered to the constructure in signup
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +58,11 @@ class _CreateOrgScreenState extends State<CreateOrgScreen> {
               'What should we call your organization?\n'
                   'Alternatively, you can enter an organization code instead.',
             ),
-            AuthTextField(
+            ActionTextField(
               hint: 'My InSync Organization',
               controller: _orgName,
               textInputAction: TextInputAction.next,
-              onSubmitted: (_) => _next(),
+              onSubmit: (_) => _next(),
             ),
           ],
         ),
