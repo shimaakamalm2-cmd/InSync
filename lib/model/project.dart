@@ -3,5 +3,7 @@ class Project {
   String name;
   String description;
 
-  Project(this.name, this.description);
+  List<String> departmentIds;
+
+  Project(this.name, this.description, this.departmentIds);
 }
