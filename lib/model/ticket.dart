@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insync/model/project.dart';
 import 'package:insync/model/user.dart';
-import 'package:uuid/uuid.dart';
 
 class Ticket {
   String ticketId;
