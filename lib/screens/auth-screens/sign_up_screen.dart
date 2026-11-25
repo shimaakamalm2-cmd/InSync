@@ -148,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textInputAction: TextInputAction.next,
                 autofillHints: const [AutofillHints.email],
                 validator: (value) {
-                  if (value == null) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Please enter your email';
                   }
                   return null;
@@ -162,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 autofillHints: const [AutofillHints.newPassword],
                 onSubmit: (_) => _signUp(),
                 validator: (value) {
-                  if (value == null) {
+                  if (value == null || value.trim().isEmpty)  {
                     return 'Please enter a password';
                   }
                   if (value.length < 6) {

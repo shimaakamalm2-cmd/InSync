@@ -3,6 +3,7 @@ import 'package:insync/screens/home_screen.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
 import 'package:insync/screens/placeholder_page.dart';
 import 'package:insync/widgets/common/bottom_nav_bar.dart';
+import 'package:insync/widgets/project/project-list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int _selectedIndex = 0;
@@ -10,7 +11,7 @@ int _selectedIndex = 0;
 class StartPage extends StatefulWidget {
 
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-  final List<Widget> tabs = [HomeScreen(), MyTicketScreen(), PlaceholderPage()];
+  final List<Widget> tabs = [HomeScreen(), MyTicketScreen(), MyProjectsScreen()];
 
   StartPage({super.key}) {
     prefs.then((value) {

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+//revise on logic and create services
 class Project {
   String projId;
   String name;
