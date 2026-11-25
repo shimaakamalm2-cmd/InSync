@@ -33,6 +33,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+
+    _displayNameController.addListener((){
+      setState(() {});
+    });
+
+    _emailController.addListener((){
+      setState(() {});
+    });
+
+    _passwordController.addListener((){
+      setState(() {});
+    });
+  }
+
   //only one key for the whole form
   final _formKey = GlobalKey<FormState>();
   @override
