@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
 import 'package:insync/screens/auth-screens/create_org_screen.dart';
 import 'package:insync/screens/auth-screens/sign_up_screen.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
+import 'package:insync/widgets/common/GlassSnackBar.dart';
 
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';
@@ -31,9 +33,11 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
       }
 
       _code.value = _code.value.copyWith(
-        text: cleanedCode.substring(0, 29),
+        text: cleanedCode.length < 28 ? cleanedCode : cleanedCode.substring(0, 28),
         selection: _code.selection
       );
+
+      setState(() {});
     });
   }
 
@@ -44,9 +48,13 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
   }
 
   void _next() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => SignUpScreen(organizationCode: _code.text.trim()),
-    ));
+    if (_code.text.length != 28) {
+      ScaffoldMessenger.of(context).showSnackBar(GlassSnackBar(text: "Code must be 28 characters long", color: InSyncColors.red,));
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => SignUpScreen(organizationCode: _code.text.trim()),
+      ));
+    }
   }
 
   @override
@@ -81,7 +89,7 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
         Column(
           spacing: 15,
           children: [
-            ActionButton(label: 'Next', onPressed: _next, disabled: _code.text.trim().length == 28,),
+            ActionButton(label: 'Next', onPressed: _next, disabled: _code.text.trim().length != 28,),
             ActionButton(
               label: 'Create an org',
               style: ActionButtonStyle.secondary,

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insync/colors.dart';
 import 'package:insync/screens/auth-screens/auth_navigation.dart';
 import 'package:insync/services/auth_service.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
@@ -69,12 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       ;
       ScaffoldMessenger.of(context)
-          .showSnackBar(GlassSnackBar(text: e.code));
+          .showSnackBar(GlassSnackBar(text: e.code, color: InSyncColors.red));
     } catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(GlassSnackBar(text: e.toString()));
+          .showSnackBar(GlassSnackBar(text: e.toString(), color: InSyncColors.red));
     } finally {
       if (mounted) {
         setState(() {

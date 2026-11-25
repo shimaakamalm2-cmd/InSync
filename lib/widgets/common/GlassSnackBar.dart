@@ -7,7 +7,7 @@ import '../../colors.dart';
 class GlassSnackBar extends SnackBar {
 
   final String text;
-  Color? color;
+  final Color? color;
 
   GlassSnackBar({super.key, required this.text, super.animation, this.color}) :
         super(
@@ -27,6 +27,8 @@ class GlassSnackBar extends SnackBar {
             ,
           ),
         ).liquidGlass(
+            shape: .rect,
+            cornerRadius: 25,
             interactive: true,
             effect: .clear,
             tint: color ?? Colors.black.withAlpha(50)

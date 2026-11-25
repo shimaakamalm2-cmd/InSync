@@ -15,11 +15,11 @@ import 'package:uuid/v6.dart';
 /// Invite page is meant to modally presented
 
 final List<Department> _sampleDepartments = [
-  Department('engineering', 'Engineering', 'lead-engineering'),
-  Department('design', 'Design', 'lead-design'),
-  Department('product', 'Product', 'lead-product'),
-  Department('marketing', 'Marketing', 'lead-marketing'),
-  Department('operations', 'Operations', 'lead-operations'),
+  Department(id: 'dep1', name: 'Software Engineering', headId: 'user1'),
+  Department(id: 'dep2', name: 'Human Resources', headId: 'user2'),
+  Department(id: 'dep3', name: 'Quality Assurance', headId: null),
+  Department(id: 'dep4', name: 'Information Technology', headId: 'user3'),
+  Department(id: 'dep5', name: 'Finance', headId: null),
 ];
 
 class InvitePage extends StatefulWidget {

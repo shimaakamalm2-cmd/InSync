@@ -4,6 +4,7 @@ import 'package:insync/screens/auth-screens/sign_up_screen.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
 import 'package:insync/widgets/common/GlassSnackBar.dart';
 
+import '../../colors.dart';
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';
 
@@ -39,7 +40,7 @@ class _CreateOrgScreenState extends State<CreateOrgScreen> {
 
     if (orgName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        GlassSnackBar(text: "Please enter your organization name.")
+        GlassSnackBar(text: "Please enter your organization name.", color: InSyncColors.red)
       );
       return;
     }

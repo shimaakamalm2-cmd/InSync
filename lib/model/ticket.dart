@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insync/model/project.dart';
 import 'package:insync/model/user.dart';
-
+//create services and hook it with users - projects - everything
 class Ticket {
   String ticketId;
   Project belongingProject;
@@ -30,7 +30,7 @@ class Ticket {
 enum Priority {
 
   high,
-  medium,
+  medium, 
   low,
   undetermined;
   

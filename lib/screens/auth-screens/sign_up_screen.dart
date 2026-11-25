@@ -4,10 +4,12 @@ import 'package:insync/screens/auth-screens/login_screen.dart';
 import 'package:insync/services/OrgServices.dart';
 import 'package:insync/services/auth_service.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
+import 'package:insync/widgets/common/GlassSnackBar.dart';
 import 'package:insync/widgets/text_field.dart';
 import 'package:m3e_core/m3e_core.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
+import '../../colors.dart';
 import '../../widgets/button.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -108,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+          .showSnackBar(GlassSnackBar(text: e.toString(), color: InSyncColors.red));
     } finally {
       if (mounted) {
         setState(() {
@@ -148,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textInputAction: TextInputAction.next,
                 autofillHints: const [AutofillHints.email],
                 validator: (value) {
-                  if (value == null) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Please enter your email';
                   }
                   return null;
@@ -162,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 autofillHints: const [AutofillHints.newPassword],
                 onSubmit: (_) => _signUp(),
                 validator: (value) {
-                  if (value == null) {
+                  if (value == null || value.trim().isEmpty)  {
                     return 'Please enter a password';
                   }
                   if (value.length < 6) {
