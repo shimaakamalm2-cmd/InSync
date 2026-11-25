@@ -255,6 +255,7 @@ List<Ticket> getSampleTickets() {
       now,
       userA,
       [userB],
+      true,
     ),
     Ticket(
       uuid.v4(),
@@ -267,6 +268,7 @@ List<Ticket> getSampleTickets() {
       now,
       userB,
       [userA],
+      false,
     ),
     Ticket(
       uuid.v4(),
@@ -279,6 +281,7 @@ List<Ticket> getSampleTickets() {
       now,
       userA,
       [userB],
+      true, // isConfirmed
     ),
     Ticket(
       uuid.v4(),
@@ -291,6 +294,7 @@ List<Ticket> getSampleTickets() {
       now,
       userB,
       [userA],
+      false,
     ),
     Ticket(
       uuid.v4(),
@@ -303,6 +307,7 @@ List<Ticket> getSampleTickets() {
       now,
       userA,
       [userB],
+      true,
     ),
     Ticket(
       uuid.v4(),
@@ -315,6 +320,7 @@ List<Ticket> getSampleTickets() {
       now,
       userB,
       [userA],
+      false,
     ),
   ];
 }

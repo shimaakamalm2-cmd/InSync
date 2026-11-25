@@ -17,10 +17,11 @@ class Ticket {
 
   UserModel assignedBy;
   List<UserModel> assignedTo;
+  bool isConfirmed;
 
   Ticket(this.ticketId, this.belongingProject, this.priority, this.title,
       this.description, this.dueDate, this.lastUpdated, this.creationDate,
-      this.assignedBy, this.assignedTo);
+      this.assignedBy, this.assignedTo ,this.isConfirmed);
 
     String get priorityText => priority.priorityText;  
 
