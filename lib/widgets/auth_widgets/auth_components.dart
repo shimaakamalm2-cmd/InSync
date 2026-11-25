@@ -47,6 +47,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
   ));
 
   double opacity = 0;
+  int logoOffset = 0;
 
   @override
   void initState() {
@@ -98,7 +99,15 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                   // width: 120,
                   // color: Colors.green,
                   child: CNButton.icon(icon: CNSymbol('chevron.left', size: 16), config: .new(width: 20, minHeight: 40, shrinkWrap: false), onPressed: () {
-                    if (Navigator.canPop(context)) Navigator.pop(context);
+                    Navigator.maybePop(context).then((onValue) {
+                      if (onValue) {
+                        if (Navigator.canPop(context)) {
+                          logoOffset = 250;
+                          setState(() {});
+                          Navigator.pop(context);
+                        }
+                      }
+                    });
                   },),
                 ) : null,
               ),
@@ -154,7 +163,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                             ) : AnimatedPositioned(
                               duration: const Duration(milliseconds: 1250),
                               curve: Curves.easeOutCubic,
-                              left: (w - size) / 2,
+                              left: ((w - size) / 2) + logoOffset,
                               top: media.padding.top + 24,
                               width: size,
                               child: RotationTransition(
