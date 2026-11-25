@@ -21,7 +21,9 @@ let package = Package(
         .package(name: "firebase_auth", path: "../.packages/firebase_auth-7.1.0"),
         .package(name: "firebase_core", path: "../.packages/firebase_core-5.2.0"),
         .package(name: "firebase_storage", path: "../.packages/firebase_storage-14.1.0"),
+        .package(name: "flutter_email_sender_method_channel", path: "../.packages/flutter_email_sender_method_channel-2.0.1"),
         .package(name: "shared_preferences_foundation", path: "../.packages/shared_preferences_foundation-2.6.1"),
+        .package(name: "url_launcher_macos", path: "../.packages/url_launcher_macos-3.2.6"),
         .package(name: "FlutterFramework", path: "../.packages/FlutterFramework")
     ],
     targets: [
@@ -34,7 +36,9 @@ let package = Package(
                 .product(name: "firebase-auth", package: "firebase_auth"),
                 .product(name: "firebase-core", package: "firebase_core"),
                 .product(name: "firebase-storage", package: "firebase_storage"),
+                .product(name: "flutter-email-sender-method-channel", package: "flutter_email_sender_method_channel"),
                 .product(name: "shared-preferences-foundation", package: "shared_preferences_foundation"),
+                .product(name: "url-launcher-macos", package: "url_launcher_macos"),
                 .product(name: "FlutterFramework", package: "FlutterFramework")
             ]
         )

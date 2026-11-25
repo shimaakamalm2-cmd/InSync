@@ -1,3 +1,4 @@
+import 'package:cupertino_native_better/components/tab_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:inspire_blur/inspire_blur.dart';
@@ -107,7 +108,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      navigatorObservers: [LiquidGlassNavigatorObserver()],
+      navigatorObservers: [LiquidGlassNavigatorObserver(), CNTabBarRouteObserver()],
       home: StartPage(),
     );
   }

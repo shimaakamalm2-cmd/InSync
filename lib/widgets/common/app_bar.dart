@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:insync/screens/my_ticket_screen.dart';
 import 'package:insync/screens/ticket_detail.dart';
+import 'package:insync/widgets/common/modal.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../screens/auth/onboarding_screen.dart';
+import '../../screens/invite_sheet.dart';
 
 const _defaultDebugPropertiesValue = true;
 
@@ -49,7 +51,7 @@ class InSyncAppBarState extends State<InSyncAppBar> {
 
     return AppBar(
       centerTitle: false,
-      // backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
       toolbarHeight: 65,
       automaticallyImplyLeading: widget.showBackButton,
       title: Text(
@@ -80,16 +82,22 @@ class InSyncAppBarState extends State<InSyncAppBar> {
 
         NativeLiquidGlassUtils.supportsLiquidGlass ?
          CNPopupMenuButton.icon(items: [
-           const CNPopupMenuItem(
-             label: 'Show sample ticket',
-             icon: CNSymbol('ticket', size: 16),
-           ),
-           const CNPopupMenuItem(
-             label: 'Show onboarding',
-             subtitle: "Replaces the current navigation stack with the onboarding sequence",
-             icon: CNSymbol('door.left.hand.open', size: 16),
-           ),
            CNPopupMenuDivider(),
+           CNPopupMenuSubmenu(label: "Pages", items: [
+             const CNPopupMenuItem(
+               label: 'Example ticket',
+               icon: CNSymbol('ticket', size: 16),
+             ),
+             const CNPopupMenuItem(
+               label: 'Show onboarding',
+               subtitle: "Replaces the current navigation stack with the onboarding sequence",
+               icon: CNSymbol('door.left.hand.open', size: 16),
+             ),
+             const CNPopupMenuItem(
+               label: 'Invite',
+               icon: CNSymbol('person.badge.plus', size: 16),
+             ),
+           ]),
            CNPopupMenuSubmenu(label: 'Default tab bar index', items: [
               CNPopupMenuItem(
                label: 'Home',
@@ -106,39 +114,42 @@ class InSyncAppBarState extends State<InSyncAppBar> {
            ])
          ],  buttonIcon: CNSymbol('ladybug', size: 18), onSelected: (path) {
 
-         }, onPathSelected: (path) {
+         }, onPathSelected: (path) async {
            switch (path.first) {
-             case 2 :
+             case 2:
+               setState(() {
+                 selectedTabIndex = path.last;
+               });
+               prefs.then((onValue) {
+                 onValue.setInt("tab_index", path.last);
+               });
+             case 1:
                switch (path.last) {
                  case 0:
-                   setState(() {
-                     selectedTabIndex = 0;
-                   });
+                 // TODO: Resolve Navigator issue
+                 // Navigator.pushNamed(
+                 //   context,
+                 //   "ticket_detail"
+                 // );
+                   Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0])));
                    break;
                  case 1:
-                   setState(() {
-                     selectedTabIndex = 1;
-                   });
+                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => OnboardingScreen()), (_) => false);
                    break;
                  case 2:
-                 setState(() {
-                   selectedTabIndex = 2;
-                 });
-                 break;
+                   showAdaptiveModalSheet(context, (_) {
+                     return Container(
+                       decoration:
+                         BoxDecoration(
+                           borderRadius: .all(.circular(35))
+                         ),
+                       clipBehavior: .hardEdge,
+                       child: InvitePage(),
+                     );
+                   });
                }
-             case 1:
-               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => OnboardingScreen()), (_) => false);
-               break;
-             case 0:
-               // TODO: Resolve Navigator issue
-               // Navigator.pushNamed(
-               //   context,
-               //   "ticket_detail"
-               // );
-               Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (builder) => TicketDetailPage(ticket: getSampleTickets()[0])));
-               break;
            }
          })
         :
@@ -164,6 +175,13 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                 onTap: () {
 
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => OnboardingScreen()), (_) => false);
+                },
+              ),
+              PopupMenuItem(
+                child: const Text('Invite'),
+                onTap: () {
+
+                  showAdaptiveModalSheet(context, (_) => DraggableScrollableSheet(builder: (_, _) => InvitePage()));
                 },
               ),
             ];

@@ -129,43 +129,40 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                           }
                         }
 
-                        return Container(
-                          // color: Colors.green,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            alignment: media.orientation == .landscape ? Alignment.topRight : .topStart,
-                            children: [
-                              media.orientation == .landscape ?
-                              AnimatedPositioned(
-                                  duration: const Duration(milliseconds: 1250),
-                                  curve: Curves.easeOutCubic,
-                                  right: 25,
-                                  top: media.padding.top + 20,
-                                  child: Row(
-                                    crossAxisAlignment: .end,
-                                    children: [
-                                      RotationTransition(
-                                        turns: _turns,
-                                        child: SizedBox(
-                                          width: size,
-                                          child: SvgPicture.asset(_logoAsset),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                              ) : AnimatedPositioned(
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          alignment: media.orientation == .landscape ? Alignment.topRight : .topStart,
+                          children: [
+                            media.orientation == .landscape ?
+                            AnimatedPositioned(
                                 duration: const Duration(milliseconds: 1250),
                                 curve: Curves.easeOutCubic,
-                                left: (w - size) / 2,
-                                top: media.padding.top + 24,
-                                width: size,
-                                child: RotationTransition(
-                                  turns: _turns,
-                                  child: SvgPicture.asset(_logoAsset),
-                                ),
+                                right: 25,
+                                top: media.padding.top + 20,
+                                child: Row(
+                                  crossAxisAlignment: .end,
+                                  children: [
+                                    RotationTransition(
+                                      turns: _turns,
+                                      child: SizedBox(
+                                        width: size,
+                                        child: SvgPicture.asset(_logoAsset),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            ) : AnimatedPositioned(
+                              duration: const Duration(milliseconds: 1250),
+                              curve: Curves.easeOutCubic,
+                              left: (w - size) / 2,
+                              top: media.padding.top + 24,
+                              width: size,
+                              child: RotationTransition(
+                                turns: _turns,
+                                child: SvgPicture.asset(_logoAsset),
                               ),
-                            ],
-                          )
+                            ),
+                          ],
                         );
                       }),
                     ),
