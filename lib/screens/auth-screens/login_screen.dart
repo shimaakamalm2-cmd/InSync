@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:insync/screens/auth-screens/auth_navigation.dart';
 import 'package:insync/services/auth_service.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
+import 'package:insync/widgets/common/GlassSnackBar.dart';
 
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+          .showSnackBar(GlassSnackBar(text: e.toString()));
     } finally {
       if (mounted) {
         setState(() {
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.next,
                     autofillHints: const [AutofillHints.email],
                     validator: (value) {
-                      if (value == null) {
+                      if (value == null || value.trim().isEmpty) {
                         return 'Please enter your email';
                       }
                       return null;
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.done,
                     autofillHints: const [AutofillHints.password],
                     validator: (value) {
-                      if (value == null) {
+                      if (value == null || value.isEmpty) {
                         return 'Please enter your password';
                       }
                       return null;
@@ -115,10 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-        ActionButton(
-          label: 'Log in',
-          onPressed: _logIn,
-        ),
+        ActionButton(label: 'Log in', onPressed: _logIn),
         if (_isLoading) const CircularProgressIndicator(),
       ],
     );
