@@ -41,8 +41,8 @@ class AppNavBar extends StatelessWidget {
           icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
         ),
         LiquidGlassTabItem(
-          label: 'Search',
-          icon: NativeLiquidGlassIcon.sfSymbol('magnifyingglass'),
+          label: 'Projects',
+          icon: NativeLiquidGlassIcon.sfSymbol('app.shadow'),
         ),
       ],
       currentIndex: selectedIndex,
@@ -78,7 +78,7 @@ class AppNavBar extends StatelessWidget {
         ),
         NavigationDestination(
           icon: Icon(Icons.search_rounded),
-          label: 'Search',
+          label: 'Projects',
         ),
       ],
     );

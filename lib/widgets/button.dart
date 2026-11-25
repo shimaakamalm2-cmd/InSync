@@ -21,6 +21,7 @@ class ActionButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final ActionButtonStyle style;
+  final bool disabled;
 
   /// 60 on the Onboarding screen, 45 everywhere else.
   final ActionButtonSize size;
@@ -30,6 +31,7 @@ class ActionButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.style = ActionButtonStyle.primary,
+    this.disabled = false,
     this.size = .normal,
   });
 
@@ -49,7 +51,20 @@ class ActionButton extends StatelessWidget {
     )
         : _glassPill();
 
-    return NativeLiquidGlassUtils.supportsLiquidGlass ? CNButton(label: label, onPressed: onPressed, config: .new(minHeight: size == .expanded ? 60 : 45, style: style == .primary ? .prominentGlass : .clearGlass, labelFontWeight: .bold, labelFontSize: size == .expanded ? 18 : 16, labelColor: InSyncColors.white)) :
+    return NativeLiquidGlassUtils.supportsLiquidGlass ?
+    CNButton(
+        enabled: !disabled,
+        label: label,
+        onPressed: onPressed,
+        config:
+            .new(
+                minHeight: size == .expanded ? 60 : 45,
+                style: style == .primary ? .prominentGlass : .clearGlass,
+                labelFontWeight: .bold,
+                labelFontSize: size == .expanded ? 18 : 16,
+                labelColor: style == .secondary ? InSyncColors.white : null
+            )
+    ) :
 
     Container(
       height: size == .expanded ? 60 : 45,

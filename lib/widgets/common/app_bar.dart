@@ -64,12 +64,34 @@ class InSyncAppBarState extends State<InSyncAppBar> {
       ),
       actions: [
         NativeLiquidGlassUtils.supportsLiquidGlass
-            ? LiquidGlassButton.icon(
-                onPressed: () {},
-                icon: NativeLiquidGlassIcon.sfSymbol('gear'),
-              )
+            ? GlassButton(
+          SFSymbolName: "person.fill.badge.plus",
+          onPressed: () {
+            showAdaptiveModalSheet(context, (_) {
+              return Container(
+                decoration:
+                BoxDecoration(
+                    borderRadius: .all(.circular(35))
+                ),
+                clipBehavior: .hardEdge,
+                child: InvitePage(),
+              );
+            });
+          },
+        )
             : IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showAdaptiveModalSheet(context, (_) {
+                    return Container(
+                      decoration:
+                      BoxDecoration(
+                          borderRadius: .all(.circular(35))
+                      ),
+                      clipBehavior: .hardEdge,
+                      child: InvitePage(),
+                    );
+                  });
+                },
                 icon: const Icon(CupertinoIcons.settings_solid),
               ),
         SizedBox.fromSize(
@@ -92,10 +114,6 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                label: 'Show onboarding',
                subtitle: "Replaces the current navigation stack with the onboarding sequence",
                icon: CNSymbol('door.left.hand.open', size: 16),
-             ),
-             const CNPopupMenuItem(
-               label: 'Invite',
-               icon: CNSymbol('person.badge.plus', size: 16),
              ),
            ]),
            CNPopupMenuSubmenu(label: 'Default tab bar index', items: [
@@ -138,17 +156,6 @@ class InSyncAppBarState extends State<InSyncAppBar> {
                  case 1:
                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => OnboardingScreen()), (_) => false);
                    break;
-                 case 2:
-                   showAdaptiveModalSheet(context, (_) {
-                     return Container(
-                       decoration:
-                         BoxDecoration(
-                           borderRadius: .all(.circular(35))
-                         ),
-                       clipBehavior: .hardEdge,
-                       child: InvitePage(),
-                     );
-                   });
                }
            }
          })

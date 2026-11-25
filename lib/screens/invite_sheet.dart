@@ -2,8 +2,10 @@ import 'package:cupertino_native_better/components/date_picker.dart';
 import 'package:cupertino_native_better/components/pop_up_button.dart';
 import 'package:cupertino_native_better/cupertino_native.dart'
     hide LiquidGlassContainer;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:insync/model/department.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/widgets/button.dart';
 import 'package:insync/widgets/common/GlassSnackBar.dart';
@@ -11,6 +13,14 @@ import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:uuid/v6.dart';
 
 /// Invite page is meant to modally presented
+
+final List<Department> _sampleDepartments = [
+  Department('engineering', 'Engineering', 'lead-engineering'),
+  Department('design', 'Design', 'lead-design'),
+  Department('product', 'Product', 'lead-product'),
+  Department('marketing', 'Marketing', 'lead-marketing'),
+  Department('operations', 'Operations', 'lead-operations'),
+];
 
 class InvitePage extends StatefulWidget {
   final isModal = false;
@@ -21,11 +31,16 @@ class InvitePage extends StatefulWidget {
   State<StatefulWidget> createState() => _InvitePageState();
 }
 
-class _InvitePageState extends State<InvitePage> with SingleTickerProviderStateMixin {
-  String _selectedSize = 's';
-  String? generatedCode;
+class _InvitePageState extends State<InvitePage>
+    with SingleTickerProviderStateMixin {
 
-  late final animation = AnimationController(vsync: this, lowerBound: 20);
+  Department? selectedDepartment;
+
+  String? generatedCode;
+  DateTime expiryDate = .now().add(Duration(days: 7));
+  bool teamLead = false;
+
+  late final animation = AnimationController(vsync: this, duration: Duration(seconds: 20));
 
   @override
   void dispose() {
@@ -60,16 +75,14 @@ class _InvitePageState extends State<InvitePage> with SingleTickerProviderStateM
                 customPath: [.close()],
                 customPathSize: Size(10, 10),
               ),
-              child: Text("Invite", style: .new(fontWeight: .bold, fontSize: 23)),
+              child: Text(
+                "Invite",
+                style: .new(fontWeight: .bold, fontSize: 23),
+              ),
             ),
           ),
           actions: [
-            GlassButton(
-              SFSymbolName: "person.badge.clock.fill",
-              onPressed: () {
-                if (Navigator.canPop(context)) Navigator.of(context).pop();
-              },
-            ),
+            GlassButton(SFSymbolName: "clock.fill", onPressed: () {}),
             SizedBox(width: 10),
             GlassButton(
               SFSymbolName: "xmark",
@@ -87,54 +100,69 @@ class _InvitePageState extends State<InvitePage> with SingleTickerProviderStateM
           clipBehavior: .none,
           physics: NeverScrollableScrollPhysics(),
           children: [
-
             SizedBox(height: 15),
             Row(
               spacing: 10,
               children: [
-                Expanded(child:
-                Container(
-                  height: 45,
-                  padding: .symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
+                Expanded(
+                  child: Container(
+                    height: 45,
+                    padding: .symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
                       borderRadius: .all(.circular(80)),
-                      color: Theme.of(context).colorScheme.secondaryContainer
-                  ),
-                  child: Column(
-                    mainAxisAlignment: .center,
-                    crossAxisAlignment: .start,
-                    children: [
-                      GlassFriendlyBoundary(
-                        child: SingleChildScrollView(
-                          child: SelectableText(generatedCode ?? "Generated code will appear here.", style: .new(fontWeight: .w500, color: generatedCode == null ? Theme.of(context).colorScheme.onSurfaceVariant : null), maxLines: 1),
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: .center,
+                      crossAxisAlignment: .start,
+                      children: [
+                        GlassFriendlyBoundary(
+                          child: SingleChildScrollView(
+                            child: SelectableText(
+                              generatedCode ??
+                                  "Generated code will appear here.",
+                              style: .new(
+                                fontWeight: .w500,
+                                color: generatedCode == null
+                                    ? Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant
+                                    : null,
+                              ),
+                              maxLines: 1,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ),
+                      ],
+                    ),
+                  ),
                 ),
                 CNButton.icon(
-                  onPressed: generatedCode == null ? null : () {
-                    Clipboard.setData(.new(text: generatedCode!));
-                    ScaffoldMessenger.of(context).showSnackBar(GlassSnackBar(
-                      text: "Copied to clipboard",
-                      animation: CurvedAnimation(parent: animation, curve: Curves.easeInCubic),
-                    ));
-                  },
+                  onPressed: generatedCode == null
+                      ? null
+                      : () {
+                          Clipboard.setData(.new(text: generatedCode!));
+                          if (defaultTargetPlatform == .iOS) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              GlassSnackBar(
+                                text: "Copied to clipboard",
+                                animation: CurvedAnimation(
+                                  parent: animation,
+                                  curve: Curves.easeInCubic,
+                                ),
+                              ),
+                            );
+                          }
+                        },
                   icon: CNSymbol("link", size: 16),
-                  config: .
-                  new(
-                    interaction: true,
-                    style: .prominentGlass
-                  ),
-                )
+                  config: .new(interaction: true, style: .prominentGlass),
+                ),
               ],
             ),
             SizedBox(height: 30),
 
             GlassFriendlyBoundary(
-              child:
-              InSyncList(
+              child: InSyncList(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 items: [
@@ -150,53 +178,65 @@ class _InvitePageState extends State<InvitePage> with SingleTickerProviderStateM
                     // ),
                     trailingAccessory: Row(
                       children: [
-                        CNDatePicker(style: .automatic, mode: .dateAndTime, value: .new(2027), onChanged: (_){}),
+                        CNDatePicker(
+                          style: .automatic,
+                          mode: .dateAndTime,
+                          value: expiryDate,
+                          onChanged: (newDate) {
+                            expiryDate = newDate;
+                          },
+                        ),
                       ],
                     ),
                   ),
                   InSyncListItem(
                     title: "Department",
-                    trailingAccessory: CNPopUpButton<String>(
+                    trailingAccessory: CNPopUpButton<Department?>(
                       height: 16,
-                      value: _selectedSize,
-                      items: const [
-                        CNPopUpButtonItem(
-                          value: 's',
-                          label: 'Small',
-                          icon: CNSymbol('tortoise'),
+                      value: selectedDepartment,
+                      items: [
+                        const CNPopUpButtonItem(
+                          value: null,
+                          label: 'Select department',
+                          enabled: false
                         ),
-                        CNPopUpButtonItem(value: 'm', label: 'Medium'),
-                        CNPopUpButtonDivider(),
-                        CNPopUpButtonSection(
-                          title: 'More',
-                          items: [
-                            CNPopUpButtonItem(
-                              value: 'l',
-                              label: 'Large',
-                              enabled: false,
-                            ),
-                          ],
-                        ),
+                        for (final department in _sampleDepartments)
+                          CNPopUpButtonItem(
+                            value: department,
+                            label: department.name,
+                          ),
                       ],
-                      onChanged: (String value) {
+                      onChanged: (Department? department) {
                         setState(() {
-                          _selectedSize = value;
+                          selectedDepartment = department;
                         });
                       },
                     ),
                   ),
                   InSyncListItem(
                     title: "Team lead",
-                    trailingAccessory: Padding(padding: .only(right: 15), child: CNSwitch(height: 22, value: false, onChanged: (_) {},)),
-                  )
+                    trailingAccessory: Padding(
+                      padding: .only(right: 15),
+                      child: CNSwitch(
+                        height: 22,
+                        value: teamLead,
+                        onChanged: (newValue) {
+                          teamLead = newValue;
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-            ActionButton(label: "Create Invite", onPressed: () {
-              setState(() {
-                generatedCode = UuidV6().generate();
-              });
-            })
+            ActionButton(
+              label: "Create Invite",
+              onPressed: () {
+                setState(() {
+                  generatedCode = UuidV6().generate();
+                });
+              },
+            ),
           ],
         ),
       ),
@@ -232,17 +272,14 @@ class GlassButton extends StatelessWidget {
 }
 
 class GlassFriendlyBoundary extends StatelessWidget {
-
   final Widget child;
 
   const GlassFriendlyBoundary({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
-
-    return
-      NativeLiquidGlassUtils.supportsLiquidGlass ?
-        LiquidGlassContainer(
+    return NativeLiquidGlassUtils.supportsLiquidGlass
+        ? LiquidGlassContainer(
             config: .new(
               effect: .regular,
               shape: .custom,
@@ -251,8 +288,7 @@ class GlassFriendlyBoundary extends StatelessWidget {
               customPathSize: Size(10, 10),
             ),
             child: child,
-        )
-      :
-      child;
-    }
+          )
+        : child;
+  }
 }

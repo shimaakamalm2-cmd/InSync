@@ -62,7 +62,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final name = _displayNameController.text.trim();
       final email = _emailController.text.trim();
       final password = _passwordController.text;
-      // widget. means the org name was passed through a consrtuctor + it gives access to the statful widget
+
+      // widget. means the org name was passed through a constructor + it gives access to the statful widget
       if (widget.organizationName != null) {
         // creating a new organization + its admin
         await _orgService.createOrgWithAdmin(
@@ -145,8 +146,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   if (value == null) {
                     return 'Please enter a password';
                   }
-                  if (value.length < 8) {
-                    return 'Password must be at least 8 characters';
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
                   }
                   return null;
                 },
