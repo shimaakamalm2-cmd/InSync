@@ -51,6 +51,7 @@ class InSyncAppBarState extends State<InSyncAppBar> {
 
     return AppBar(
       centerTitle: false,
+      forceMaterialTransparency: true,
       backgroundColor: Colors.transparent,
       toolbarHeight: 65,
       automaticallyImplyLeading: widget.showBackButton,

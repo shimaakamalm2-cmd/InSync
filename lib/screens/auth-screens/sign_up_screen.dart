@@ -5,6 +5,8 @@ import 'package:insync/services/OrgServices.dart';
 import 'package:insync/services/auth_service.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
 import 'package:insync/widgets/text_field.dart';
+import 'package:m3e_core/m3e_core.dart';
+import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 import '../../widgets/button.dart';
 
@@ -155,8 +157,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ],
           ),
         ),
-        ActionButton(label: 'Sign up', onPressed: _signUp),
-        if (_isLoading) const CircularProgressIndicator(),
+        Stack(
+          alignment: .center,
+          children: [
+            ActionButton(label: !_isLoading ? 'Log in' : '', onPressed: _signUp, disabled: _isLoading || _passwordController.text.trim().isEmpty || _emailController.text.trim().isEmpty || _displayNameController.text.trim().isEmpty,),
+            NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassActivityIndicator(animating: _isLoading,) : _isLoading ? M3ELoadingIndicator() : Container()
+          ],
+        )
       ],
     );
   }

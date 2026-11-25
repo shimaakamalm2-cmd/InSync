@@ -7,13 +7,14 @@ import '../../colors.dart';
 class GlassSnackBar extends SnackBar {
 
   final String text;
+  Color? color;
 
-  GlassSnackBar({super.key, required this.text, super.animation}) :
+  GlassSnackBar({super.key, required this.text, super.animation, this.color}) :
         super(
         clipBehavior: .none,
         padding: .symmetric(horizontal: 25, vertical: 22),
         elevation: NativeLiquidGlassUtils.supportsLiquidGlass ? 0 : null,
-        backgroundColor: NativeLiquidGlassUtils.supportsLiquidGlass ? Colors.transparent : null,
+        backgroundColor: NativeLiquidGlassUtils.supportsLiquidGlass ? Colors.transparent : color,
         behavior: !NativeLiquidGlassUtils.supportsLiquidGlass ? .floating : null,
         content: NativeLiquidGlassUtils.supportsLiquidGlass ?
         Padding(
@@ -28,7 +29,7 @@ class GlassSnackBar extends SnackBar {
         ).liquidGlass(
             interactive: true,
             effect: .clear,
-            tint: Colors.black.withAlpha(50)
+            tint: color ?? Colors.black.withAlpha(50)
         )
             :
         Text(text)

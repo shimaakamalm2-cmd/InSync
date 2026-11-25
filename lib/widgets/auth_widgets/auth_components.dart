@@ -98,7 +98,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                   // width: 120,
                   // color: Colors.green,
                   child: CNButton.icon(icon: CNSymbol('chevron.left', size: 16), config: .new(width: 20, minHeight: 40, shrinkWrap: false), onPressed: () {
-                    Navigator.pop(context);
+                    if (Navigator.canPop(context)) Navigator.pop(context);
                   },),
                 ) : null,
               ),
@@ -186,7 +186,7 @@ class _OnboardingSkeletonState extends State<OnboardingSkeleton>
                               child: SingleChildScrollView(
                                 child: Column(
                                   spacing: 25,
-                                  mainAxisSize: MainAxisSize.min,
+                                  // mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: widget.children,
                                 ),

@@ -4,6 +4,8 @@ import 'package:insync/screens/auth-screens/auth_navigation.dart';
 import 'package:insync/services/auth_service.dart';
 import 'package:insync/widgets/auth_widgets/auth_components.dart';
 import 'package:insync/widgets/common/GlassSnackBar.dart';
+import 'package:m3e_core/m3e_core.dart';
+import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';
@@ -32,6 +34,19 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+    _emailController.addListener(() {
+      setState(() {});
+    });
+
+    _passwordController.addListener(() {
+      setState(() {});
+    });
+  }
+
   Future<void> _logIn() async {
     if (_isLoading) return;
 
@@ -52,9 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
       enterApp(context);
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
-
+      ;
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.code)));
+          .showSnackBar(GlassSnackBar(text: e.code));
     } catch (e) {
       if (!mounted) return;
 
@@ -116,8 +131,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-        ActionButton(label: 'Log in', onPressed: _logIn),
-        if (_isLoading) const CircularProgressIndicator(),
+        Stack(
+          alignment: .center,
+          children: [
+            ActionButton(label: !_isLoading ? 'Log in' : '', onPressed: _logIn, disabled: _isLoading || _passwordController.text.trim().isEmpty || _emailController.text.trim().isEmpty,),
+            NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassActivityIndicator(animating: _isLoading,) : _isLoading ? M3ELoadingIndicator() : Container()
+          ],
+        )
       ],
     );
   }

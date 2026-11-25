@@ -46,7 +46,7 @@ class ActionTextField extends StatelessWidget {
       return LiquidGlassContainer(
         // animateChanges: true,
         config: .new(shape: .capsule, interactive: true),
-        height: 45,
+        height: 50,
         onTap: () {
           _focusNode.requestFocus();
         },

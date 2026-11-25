@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:insync/screens/auth-screens/create_org_screen.dart';
 import 'package:insync/screens/auth-screens/sign_up_screen.dart';
@@ -16,6 +17,25 @@ class JoinOrgScreen extends StatefulWidget {
 
 class _JoinOrgScreenState extends State<JoinOrgScreen> {
   final _code = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _code.addListener(() {
+
+      String cleanedCode = _code.text.trim().replaceAll(RegExp(r'[^A-Za-z0-9]'), '');
+
+      if (kDebugMode) {
+        print("Cleaned Code: $cleanedCode");
+      }
+
+      _code.value = _code.value.copyWith(
+        text: cleanedCode.substring(0, 29),
+        selection: _code.selection
+      );
+    });
+  }
 
   @override
   void dispose() {
@@ -47,19 +67,34 @@ class _JoinOrgScreenState extends State<JoinOrgScreen> {
               controller: _code,
               textInputAction: TextInputAction.next,
               onSubmit: (_) => _next(),
+              validator: (value) {
+                if (value != null && value.trim().length < 28) {
+                  return "Must be 28 characters long";
+                } else if (value != null && value.trim().length > 28) {
+                  return "Must be exactly 28 characters long";
+                }
+                return null;
+              },
             ),
           ],
         ),
         Column(
           spacing: 15,
           children: [
-            ActionButton(label: 'Next', onPressed: _next),
+            ActionButton(label: 'Next', onPressed: _next, disabled: _code.text.trim().length == 28,),
             ActionButton(
               label: 'Create an org',
               style: ActionButtonStyle.secondary,
-              onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const CreateOrgScreen()),
-              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Future.delayed(Duration(milliseconds: 500), () {
+                  if (!mounted) return;
+                  Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: (_) => const CreateOrgScreen()),
+                  );
+                });
+              }
             ),
           ],
         ),

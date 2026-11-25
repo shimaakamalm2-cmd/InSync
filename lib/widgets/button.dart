@@ -1,5 +1,6 @@
 import 'package:cupertino_native_better/components/button.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_core/m3e_core.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
 import '../colors.dart';
@@ -66,28 +67,22 @@ class ActionButton extends StatelessWidget {
             )
     ) :
 
-    Container(
-      height: size == .expanded ? 60 : 45,
-      decoration: decoration,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(80),
-          onTap: onPressed,
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: size == .expanded ? 18 : 16,
-                fontWeight: FontWeight.bold,
-                color: primary
-                    ? Colors.white.withValues(alpha: 0.85)
-                    : Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ),
+    Row(
+      children: [
+        Expanded(
+            child:
+              M3EButton(
+                enabled: !disabled,
+                onPressed: onPressed,
+                size: .md,
+                decoration:
+                M3EButtonDecoration(
+                    backgroundColor: style == .primary ? .all(InSyncColors.primary) : .all(InSyncColors.contenderSecondary)
+                ),
+                child: Text(label, style: .new(fontSize: size == .expanded ? 18: 16, fontWeight: .bold, fontFamily: "Inter"),),
+              )
+        )
+      ],
     );
   }
 }
