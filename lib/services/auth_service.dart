@@ -55,7 +55,7 @@ class AuthService {
         await inviteDoc.reference.update({
           'isUsed': true,
         });
-        
+
       }
     } on FirebaseAuthException catch (e) {
       print(e.code);
@@ -74,7 +74,7 @@ class AuthService {
 
       //print(user?.uid);
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+       rethrow;
     }
   }
 
