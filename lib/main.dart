@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inspire_blur/inspire_blur.dart';
 import 'package:insync/colors.dart';
 import 'package:insync/firebase_options.dart';
-import 'package:insync/screens/auth/onboarding_screen.dart';
+import 'package:insync/screens/auth-screens/onboarding_screen.dart';
 import 'package:insync/screens/start_page.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 

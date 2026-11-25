@@ -1,11 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:insync/screens/auth/auth_navigation.dart';
-import 'package:insync/widgets/auth/auth_components.dart';
+import 'package:insync/screens/auth-screens/auth_navigation.dart';
+import 'package:insync/services/auth_service.dart';
+import 'package:insync/widgets/auth_widgets/auth_components.dart';
 
 import '../../widgets/button.dart';
 import '../../widgets/text_field.dart';
 
-/// Figma: Pages / Auth (474:4930, keyboard open: 466:4382)
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -17,8 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // final _emailFormKey = GlobalKey<FormState>();
-  // final _passwordFormKey = GlobalKey<FormState>();
+  final _authService = AuthService();
+  bool _isLoading = false;
 
   //only one key for the whole form
   final _formKey = GlobalKey<FormState>();
@@ -30,13 +31,42 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // TODO: Authenticate against the backend once it exists.
-  void _logIn() {
-    //if(_formKey.currentState!.validate()){
+  Future<void> _logIn() async {
+    if (_isLoading) return;
+
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _authService.login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+
+      if (!mounted) return;
+
       enterApp(context);
-    //}
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.code)));
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     autofillHints: const [AutofillHints.password],
                     validator: (value) {
                       if (value == null) {
-                        return 'Please enter your email';
+                        return 'Please enter your password';
                       }
                       return null;
                     },
@@ -85,7 +115,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-        ActionButton(label: 'Log in', onPressed: _logIn),
+        ActionButton(
+          label: 'Log in',
+          onPressed: _logIn,
+        ),
+        if (_isLoading) const CircularProgressIndicator(),
       ],
     );
   }

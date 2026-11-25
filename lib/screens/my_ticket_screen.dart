@@ -195,21 +195,57 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
   }
 }
 
-//example tickets for testing , use it instead of listitem thingy
-//also fix due date to day count not wtv this is ( sorry its generated for testing lol)
+//---------------------example tickets for testing , use it instead of listitem thingy
 List<Ticket> getSampleTickets() {
   final now = DateTime.now();
+  const uuid = Uuid();
 
-  final projectA = Project('InSync', '-','summery',now,3);
-  final projectB = Project('SpendWise', '-','summery',now,3);
-  final projectC = Project('Elevate', '-','summery',now,3);
+  final projectA = Project(
+    uuid.v4(),
+    'InSync',
+    '-',
+    'Summary',
+    now,
+    3,
+  );
 
-  final userA = User(Uuid(), 'Shimaa',Uuid().v4(),'manager');
-  final userB = User(Uuid(), 'Ahmed',Uuid().v4(),'marketing agent');
+  final projectB = Project(
+    uuid.v4(),
+    'SpendWise',
+    '-',
+    'Summary',
+    now,
+    3,
+  );
+
+  final projectC = Project(
+    uuid.v4(),
+    'Elevate',
+    '-',
+    'Summary',
+    now,
+    3,
+  );
+
+  final userA = UserModel(
+    id: uuid.v4(),
+    name: 'Shimaa',
+    email: 'shimaa@example.com',
+    role: UserRole.depHead,
+    orgId: 'org1',
+  );
+
+  final userB = UserModel(
+    id: uuid.v4(),
+    name: 'Ahmed',
+    email: 'ahmed@example.com',
+    role: UserRole.employee,
+    orgId: 'org1',
+  );
 
   return [
     Ticket(
-      Uuid(),
+      uuid.v4(),
       projectA,
       Priority.high,
       'Fix login authentication',
@@ -221,7 +257,7 @@ List<Ticket> getSampleTickets() {
       [userB],
     ),
     Ticket(
-      Uuid(),
+      uuid.v4(),
       projectB,
       Priority.medium,
       'Update dashboard UI',
@@ -233,7 +269,7 @@ List<Ticket> getSampleTickets() {
       [userA],
     ),
     Ticket(
-      Uuid(),
+      uuid.v4(),
       projectC,
       Priority.low,
       'Update documentation',
@@ -245,7 +281,7 @@ List<Ticket> getSampleTickets() {
       [userB],
     ),
     Ticket(
-      Uuid(),
+      uuid.v4(),
       projectA,
       Priority.high,
       'Fix database connection',
@@ -257,7 +293,7 @@ List<Ticket> getSampleTickets() {
       [userA],
     ),
     Ticket(
-      Uuid(),
+      uuid.v4(),
       projectB,
       Priority.medium,
       'Add profile settings',
@@ -269,7 +305,7 @@ List<Ticket> getSampleTickets() {
       [userB],
     ),
     Ticket(
-      Uuid(),
+      uuid.v4(),
       projectC,
       Priority.undetermined,
       'Review new feature',
