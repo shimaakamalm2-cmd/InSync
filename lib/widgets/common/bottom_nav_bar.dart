@@ -1,3 +1,6 @@
+import 'package:cupertino_native_better/components/popup_menu_button.dart';
+import 'package:cupertino_native_better/components/tab_bar.dart';
+import 'package:cupertino_native_better/style/sf_symbol.dart';
 import 'package:flutter/material.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 
@@ -13,52 +16,57 @@ class AppNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // return CNTabBar(items: [
-    //   CNTabBarItem(label: 'Home', icon: CNSymbol('house.fill')),
-    //   CNTabBarItem(label: 'Ticket', icon: CNSymbol('ticket.fill')),
-    //   CNTabBarItem(label: 'Search', icon: CNSymbol('magnifyingglass')),
-    //   CNTabBarItem(icon: CNSymbol('plus'), menuItems: [
-    //     CNPopupMenuItem(label: 'New Checklist', icon: CNSymbol('checklist')),
-    //   ]),
-    // ], currentIndex: 0, onTap: (onTap){
+    // LiquidGlassTabBar(
+    //   items: const [
+    //     LiquidGlassTabItem(
+    //       label: 'Home',
+    //       icon: NativeLiquidGlassIcon.sfSymbol('house'),
+    //     ),
+    //     LiquidGlassTabItem(
+    //       label: 'Ticket',
+    //       icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
+    //     ),
+    //     LiquidGlassTabItem(
+    //       label: 'Projects',
+    //       icon: NativeLiquidGlassIcon.sfSymbol('app.shadow'),
+    //     ),
+    //   ],
+    //   currentIndex: selectedIndex,
+    //   onTabSelected: (int index) {
     //
-    // },
-    //   splitSpacing: 0,
-    //   iconSize: 18,
-    //   shrinkCentered: false,
-    //   split: true,
+    //     onTabChange(index);
+    //   },
+    //   iosActionButton: .new(
+    //     label: 'New',
+    //     icon: NativeLiquidGlassIcon.sfSymbol('plus'),
+    //     iconSize: 19,
+    //     selectedItemColor:
+    //     Theme.of(context).colorScheme.primary,
+    //   ),
+    //   selectedItemColor:
+    //   Theme.of(context).colorScheme.primary,
     // );
 
     return NativeLiquidGlassUtils.supportsLiquidGlass
-        ? LiquidGlassTabBar(
-      items: const [
-        LiquidGlassTabItem(
-          label: 'Home',
-          icon: NativeLiquidGlassIcon.sfSymbol('house'),
-        ),
-        LiquidGlassTabItem(
-          label: 'Ticket',
-          icon: NativeLiquidGlassIcon.sfSymbol('ticket'),
-        ),
-        LiquidGlassTabItem(
-          label: 'Projects',
-          icon: NativeLiquidGlassIcon.sfSymbol('app.shadow'),
+        ? CNTabBar(
+      items: [
+        CNTabBarItem(label: 'Home', icon: CNSymbol('house.fill')),
+        CNTabBarItem(label: 'Ticket', icon: CNSymbol('airplane.ticket.fill')),
+        CNTabBarItem(label: 'Projects', icon: CNSymbol('app.shadow')),
+        CNTabBarItem(icon: CNSymbol('plus'), menuItems: [
+          CNPopupMenuItem(label: 'New Ticket', icon: CNSymbol('checklist')),
+        ]
         ),
       ],
       currentIndex: selectedIndex,
-      onTabSelected: (int index) {
-
+      onTap: (index) {
         onTabChange(index);
       },
-      iosActionButton: .new(
-        label: 'New',
-        icon: NativeLiquidGlassIcon.sfSymbol('plus'),
-        iconSize: 19,
-        selectedItemColor:
-        Theme.of(context).colorScheme.primary,
-      ),
-      selectedItemColor:
-      Theme.of(context).colorScheme.primary,
+      autoHideOnPageTransition: false,
+      autoHideOnModal: false,
+      splitSpacing: 25,
+      iconSize: 18,
+      split: true,
     )
         :
     NavigationBar(

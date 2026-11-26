@@ -6,9 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:insync/model/department.dart';
+import 'package:insync/screens/invite/invite_history.dart';
 import 'package:insync/widgets/InSync_list.dart';
 import 'package:insync/widgets/button.dart';
 import 'package:insync/widgets/common/GlassSnackBar.dart';
+import 'package:insync/widgets/common/modal.dart';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:uuid/v6.dart';
 
@@ -53,8 +55,9 @@ class _InvitePageState extends State<InvitePage>
     return ConstrainedBox(
       constraints: .tight(.fromHeight(460)),
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.secondaryContainer
-            .withValues(alpha: 1, red: 0.09, green: 0.09, blue: 0.09),
+        backgroundColor: MediaQuery.of(context).platformBrightness == .dark ? Theme.of(context).colorScheme.secondaryContainer
+            .withValues(alpha: 1, red: 0.09, green: 0.09, blue: 0.09) : Theme.of(context).colorScheme.secondaryContainer
+            .withValues(alpha: 1, red: 0.86, green: 0.86, blue: 0.86) ,
         appBar: AppBar(
           centerTitle: false,
           backgroundColor: Colors.transparent,
@@ -82,7 +85,9 @@ class _InvitePageState extends State<InvitePage>
             ),
           ),
           actions: [
-            GlassButton(SFSymbolName: "clock.fill", onPressed: () {}),
+            GlassButton(SFSymbolName: "clock.fill", onPressed: () {
+              showAdaptiveModalSheet(context, (builder) => InviteHistory());
+            }),
             SizedBox(width: 10),
             GlassButton(
               SFSymbolName: "xmark",

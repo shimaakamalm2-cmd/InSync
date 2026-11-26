@@ -10,6 +10,7 @@ class PlaceholderPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         spacing: 20,
         mainAxisAlignment: .center,

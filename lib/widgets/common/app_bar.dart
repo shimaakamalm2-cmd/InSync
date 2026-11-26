@@ -8,7 +8,7 @@ import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../screens/auth-screens/onboarding_screen.dart';
-import '../../screens/invite_sheet.dart';
+import '../../screens/invite/invite_sheet.dart';
 
 const _defaultDebugPropertiesValue = true;
 

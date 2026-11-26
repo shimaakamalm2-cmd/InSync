@@ -5,7 +5,7 @@ import "package:insync/model/project.dart";
 import "package:insync/model/ticket.dart";
 import "package:insync/model/user.dart";
 import "package:insync/widgets/InSync_list.dart";
-import "package:insync/widgets/tickets/Sorting_Tickets.dart";
+import "package:insync/widgets/tickets/sorting_tickets.dart";
 import "package:insync/widgets/tickets/buildSection.dart";
 import "package:insync/widgets/calendar_carousel.dart";
 import "package:insync/widgets/tickets/ticket_Builder.dart";

@@ -57,7 +57,7 @@ class AuthService {
         });
 
       }
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (_) {
       rethrow;
     }
   }

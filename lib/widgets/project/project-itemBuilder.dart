@@ -11,7 +11,10 @@ class ProjectListItemBuilder {
       return InSyncListItem(
         title: project.name,
         subtext: project.description,
-        trailingAccessory: ListChevronAccessory(),
+        // trailingAccessory: ListChevronAccessory(),
+        trailingAccessory: Container(
+          width: 2,
+        ),
         spacing: 12,
         leadingAccessory: Container(
           padding: const EdgeInsets.all(2),

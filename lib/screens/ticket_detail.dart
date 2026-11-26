@@ -96,12 +96,12 @@ class TicketDetailPageState extends State<TicketDetailPage> {
                 leading: NativeLiquidGlassUtils.supportsLiquidGlass ? LiquidGlassButton.icon(onPressed: () { Navigator.pop(context); }, icon: NativeLiquidGlassIcon.sfSymbol("chevron.left")) : IconButton(onPressed: () { Navigator.pop(context); }, icon: Icon(Icons.arrow_back_ios_new),),
 
                 actions: [
-                  NativeLiquidGlassUtils.supportsLiquidGlass ?
-                  LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("ellipsis")) :
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(CupertinoIcons.ellipsis),
-                  ),
+                  // NativeLiquidGlassUtils.supportsLiquidGlass ?
+                  // LiquidGlassButton.icon(onPressed: (){}, icon: NativeLiquidGlassIcon.sfSymbol("ellipsis")) :
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: const Icon(CupertinoIcons.ellipsis),
+                  // ),
                 ],
 
                 leadingWidth: 45,
